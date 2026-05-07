@@ -311,9 +311,9 @@ function Navbar({ dark, toggleDark }: { dark: boolean; toggleDark: () => void })
   }, []);
 
   return (
-    <header className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav", scrolled ? "py-2" : "py-4")}>
+    <header className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav")}>
       <div className={cn(
-        "mx-4 flex items-center justify-between gap-4 rounded-2xl border px-5 py-3 transition-all duration-500",
+        "flex items-center mx-auto max-w-7xl px-6 justify-between gap-4 rounded-2xl border py-3 transition-all duration-500",
         scrolled
           ? "nav-scrolled border-[hsl(var(--border))]"
           : "border-transparent bg-transparent"
@@ -400,12 +400,6 @@ function Hero() {
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-16 lg:grid-cols-12">
           <div className="lg:col-span-7 animate-fade-up">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--blue-100))] dark:border-[hsl(var(--blue-100))]/20 bg-white/70 dark:bg-white/5 px-4 py-1.5 text-xs font-medium text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))] backdrop-blur">
-              <Sparkles className="h-3.5 w-3.5" />
-              New · Vera Intelligence v4 is live
-              <span className="mx-1 h-1.5 w-1.5 rounded-full bg-[hsl(var(--blue-500))] animate-pulse-dot" />
-            </div>
-
             <h1 className="mt-6 text-balance font-display text-5xl font-semibold leading-[1.05] tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl lg:text-7xl">
               From compliance to{" "}
               <span className="text-gradient-blue">real-time</span> intelligence.
