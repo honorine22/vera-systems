@@ -604,9 +604,6 @@ function Services() {
               <article key={s.title} data-reveal
                 className={cn("group relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] dark:border-white/8 bg-white dark:bg-[hsl(var(--card))] shadow-vera transition-all duration-500 hover:-translate-y-2 hover:shadow-glow", `reveal-delay-${idx + 1}`)}>
 
-                {/* Color accent top bar */}
-                <div className="h-1.5 w-full" style={{ background: `linear-gradient(90deg, ${s.accent}, ${s.accent}88)` }} />
-
                 <div className="p-7">
                   <div className="flex items-start justify-between gap-4">
                     <div>
@@ -1142,8 +1139,8 @@ function ReportsDashboard() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {reports.map(([badge, title, body, color]) => (
-        <article key={title} className="group rounded-3xl border border-[hsl(var(--border))] dark:border-white/8 bg-white dark:bg-[hsl(var(--card))] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-vera overflow-hidden relative">
-          <div className="absolute top-0 left-0 right-0 h-0.5" style={{ background: color }} />
+        <article key={title} className="group rounded-3xl bg-white dark:bg-[hsl(var(--card))] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-vera overflow-hidden relative">
+          <div className="absolute top-0 left-0 right-0 h-0.5" />
           <span className="inline-flex rounded-lg px-2.5 py-1 text-[10px] font-black tracking-[0.22em] text-white"
             style={{ background: color }}>
             {badge}
