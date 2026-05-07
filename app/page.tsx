@@ -1,407 +1,372 @@
 "use client";
 
-import type { FormEvent, ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
+import {
+  ArrowRight, PlayCircle, Sparkles, TrendingUp, Shield, Zap, BarChart3,
+  Clock, CheckCircle2, AlertTriangle, Activity, Mail, Phone, MapPin, Menu, X,
+} from "lucide-react";
+import {
+  AreaChart, Area, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid,
+  ResponsiveContainer, Tooltip,
+} from "recharts";
 
-type Theme = "light" | "dark";
-type DemoTab = "overview" | "ccp" | "suppliers" | "reports";
-type Tone = "success" | "warning" | "danger" | "info";
+/* ============================================================================
+ * Vera Systems — single-page marketing site (Next.js + Tailwind + Recharts)
+ * Drop into app/page.tsx. Pair with the included globals.css + tailwind config.
+ * ========================================================================== */
+
+type DemoTab = "ccp" | "deviations" | "suppliers" | "reports";
+
+const BLUE = { deep: "#1e3a5f", mid: "#4a7baf", light: "#7fb3e8", pale: "#c8dcf0" };
+const GREEN = "#22c55e";
+
+/* ---------- Data ---------- */
 
 const navItems = [
   { label: "About", href: "about" },
   { label: "Services", href: "services" },
   { label: "Platform", href: "platform" },
   { label: "Why Vera", href: "why" },
+  { label: "Insights", href: "insights" },
   { label: "Contact", href: "contact" },
 ];
 
 const services = [
   {
     label: "Food Safety Consultancy",
-    title: "Certification-ready compliance",
-    eyebrow: "HACCP · ISO 22000 · Audits",
-    image:
-      "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=85",
-    body:
-      "Expert advisory, auditing, staff training, corrective-action planning, and implementation support for teams that need defensible food safety systems.",
-    bullets: ["HACCP system design", "ISO 22000 readiness", "Facility audits", "Training & verification"],
+    title: "Certification-grade compliance systems",
+    image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=85",
+    impact: "Eliminate compliance gaps that expose your operation to audit failure, regulatory risk, and preventable downtime.",
+    body: "HACCP design, ISO 22000 gap analysis, facility audits, verification schedules, staff training, and corrective action planning built to hold under external scrutiny.",
+    bullets: [
+      "HACCP system design and implementation",
+      "ISO 22000 certification readiness",
+      "On-site kitchen and facility audits",
+      "Food handler training and verification tools",
+    ],
   },
   {
     label: "Digital Intelligence & Software",
-    title: "Real-time operational visibility",
-    eyebrow: "Dashboards · Alerts · Evidence",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=85",
-    body:
-      "Live CCP monitoring, hygiene tracking, supplier scorecards, deviation workflows, and compliance reports that turn safety data into daily decisions.",
-    bullets: ["Live CCP dashboards", "Deviation alerts", "Digital hygiene logs", "Supplier analytics"],
+    title: "Real-time HACCP visibility",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=85",
+    impact: "Replace paper logs with live dashboards, automated alerts, audit trails, and supplier scorecards your team can act on immediately.",
+    body: "A practical data layer for CCP monitoring, hygiene tracking, deviation alerts, supplier performance, and compliance reporting across food operations.",
+    bullets: [
+      "Live CCP monitoring dashboards",
+      "Automated deviation notifications",
+      "Digital hygiene logs and sign-offs",
+      "Supplier performance analytics",
+    ],
   },
 ];
 
-const processCards = [
+const insights = [
   {
-    step: "01",
-    title: "Diagnose",
-    body: "Map the real risk on the floor: CCPs, hygiene routines, supplier gaps, documentation quality, and audit exposure.",
-    metric: "72h",
-    label: "first risk view",
+    tag: "Case Insight",
+    title: "How a Kigali processor cut deviation response time by 68%",
+    body: "Automated CCP alerts reduced corrective-action delays by replacing end-of-shift paper log reviews with live deviation notifications.",
+    read: "6 min read",
+    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=1200&q=85",
   },
   {
-    step: "02",
-    title: "Systemize",
-    body: "Turn SOPs, checklists, training records, and corrective actions into usable workflows that teams can follow daily.",
-    metric: "4x",
-    label: "faster evidence retrieval",
+    tag: "Data Trend",
+    title: "Supplier non-compliance patterns from 140+ audit checks",
+    body: "Certificate lapses, receiving temperature failures, and incomplete traceability records remain the most common upstream risk signals.",
+    read: "5 min read",
+    image: "https://images.unsplash.com/photo-1506617564039-2f3b650b7010?auto=format&fit=crop&w=900&q=85",
   },
   {
-    step: "03",
-    title: "Monitor",
-    body: "Track CCP status, deviations, supplier scorecards, hygiene logs, and readiness signals in one control center.",
-    metric: "Live",
-    label: "operational dashboard",
+    tag: "Risk Analysis",
+    title: "The hidden cost of paper-based HACCP in high-throughput operations",
+    body: "Manual CCP logging often creates a time gap between breach, detection, and corrective action — risk that looks compliant on paper but late in practice.",
+    read: "7 min read",
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=85",
   },
   {
-    step: "04",
-    title: "Improve",
-    body: "Use trend reports and management reviews to reduce repeat deviations and improve compliance performance over time.",
-    metric: "ISO",
-    label: "audit-ready reports",
-  },
-];
-
-const insightCards = [
-  {
-    tag: "Risk Signal",
-    title: "When paper logs look compliant but action comes late",
-    body: "Manual HACCP records often hide the time gap between breach, detection, escalation, and corrective action.",
-  },
-  {
-    tag: "Supplier Data",
-    title: "Supplier risk needs more than certificates",
-    body: "Receiving temperature, rejection patterns, traceability gaps, and corrective-action closure reveal the real supplier picture.",
-  },
-  {
-    tag: "Operations",
-    title: "Dashboards create accountability across shifts",
-    body: "The best system is not just beautiful. It gives operators, supervisors, and managers the same evidence at the same time.",
+    tag: "Field Notes",
+    title: "Inside Vera: how we model forecast confidence",
+    body: "A practical look at how we score CCP stability, supplier reliability, and deviation likelihood before they become incidents.",
+    read: "6 min read",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=85",
   },
 ];
 
 const whyCards = [
-  {
-    title: "Scientific rigor",
-    body: "Recommendations are tied to CCPs, ISO clauses, audit evidence, and operating data — not generic consulting templates.",
-  },
-  {
-    title: "Real-time control",
-    body: "Live dashboards make risk visible before it becomes an incident, audit failure, or customer trust problem.",
-  },
-  {
-    title: "Designed for local operations",
-    body: "Built around the reality of kitchens, processors, hotels, caterers, cold-chain teams, and East African supply chains.",
-  },
-  {
-    title: "Evidence-first reporting",
-    body: "Every finding, control, deviation, and action becomes trackable evidence your team can defend confidently.",
-  },
+  { title: "Precision food safety", body: "Recommendations are tied to HACCP control points, ISO clauses, audit evidence, or operating data — not generic consulting frameworks." },
+  { title: "Real-time risk visibility", body: "Dashboards replace scattered paper logs so the team can see CCP status, deviation alerts, and corrective action progress from any device." },
+  { title: "Compliance-to-data mapping", body: "Every audit finding becomes a measurable system output, making compliance easier to verify and management decisions easier to defend." },
+  { title: "Built for East African operations", body: "Designed around local supply-chain realities, food-business constraints, and the pace of kitchens, factories, hotels, and processors." },
+];
+
+const stackCards = [
+  { eyebrow: "01 / Diagnose", title: "Map the real operating risk", body: "We start on the kitchen or factory floor: CCPs, hygiene behavior, supplier risk, documentation gaps, staff routines, and audit pressure points.", metric: "72h", label: "first-risk snapshot" },
+  { eyebrow: "02 / Systemize", title: "Turn compliance into workflow", body: "Your procedures become practical checklists, live controls, escalation paths, and evidence trails that your team can use every day.", metric: "4×", label: "faster evidence retrieval" },
+  { eyebrow: "03 / Monitor", title: "Visualize performance in real time", body: "Dashboards show CCP status, deviations, supplier scores, hygiene logs, and readiness indicators before issues turn into incidents.", metric: "Live", label: "CCP intelligence" },
+  { eyebrow: "04 / Improve", title: "Use data to reduce repeat failures", body: "Management receives trends, corrective-action loops, supplier patterns, and practical recommendations tied directly to operational outcomes.", metric: "ISO", label: "audit-ready reporting" },
 ];
 
 const tabs: Array<{ id: DemoTab; label: string }> = [
-  { id: "overview", label: "Overview" },
-  { id: "ccp", label: "CCP Monitor" },
+  { id: "ccp", label: "Live CCP" },
+  { id: "deviations", label: "Deviations" },
   { id: "suppliers", label: "Suppliers" },
   { id: "reports", label: "Reports" },
 ];
 
-function cn(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(" ");
-}
+/* Recharts datasets */
+const ccpTrend = [
+  { m: "W1", v: 88, p: 90 }, { m: "W2", v: 92, p: 91 }, { m: "W3", v: 90, p: 92 },
+  { m: "W4", v: 95, p: 93 }, { m: "W5", v: 96, p: 94 }, { m: "W6", v: 97, p: 95 }, { m: "W7", v: 98, p: 96 },
+];
+const segmentData = [
+  { name: "Processors", v: 86 }, { name: "Restaurants", v: 64 },
+  { name: "Hotels", v: 47 }, { name: "Cold chain", v: 72 },
+];
 
+/* ---------- Helpers ---------- */
+
+function cn(...c: Array<string | false | null | undefined>) {
+  return c.filter(Boolean).join(" ");
+}
 function scrollToId(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (typeof document !== "undefined")
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
-
 function useRevealOnScroll() {
   useEffect(() => {
-    const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.14, rootMargin: "0px 0px -70px 0px" }
+    const els = Array.from(document.querySelectorAll("[data-reveal]"));
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+      }),
+      { threshold: 0.14, rootMargin: "0px 0px -60px 0px" }
     );
-
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
 }
-
 function useScrollProgress() {
-  const [progress, setProgress] = useState(0);
-
+  const [p, setP] = useState(0);
   useEffect(() => {
-    const update = () => {
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(scrollHeight > 0 ? (window.scrollY / scrollHeight) * 100 : 0);
+    const u = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      setP(h > 0 ? (window.scrollY / h) * 100 : 0);
     };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
+    u(); window.addEventListener("scroll", u, { passive: true }); window.addEventListener("resize", u);
+    return () => { window.removeEventListener("scroll", u); window.removeEventListener("resize", u); };
   }, []);
-
-  return progress;
+  return p;
 }
 
-function Logo({ theme = "light", compact = false }: { theme?: Theme; compact?: boolean }) {
+/* ---------- Atoms ---------- */
+
+function Logo({ compact = false }: { compact?: boolean }) {
   return (
-    <img
-      src={theme === "dark" ? "/logos/vera-logo-light.png" : "/logos/vera-logo-dark.png"}
-      alt="Vera Systems logo"
-      className={cn("object-contain", compact ? "h-10 w-32" : "h-16 w-52")}
-    />
-  );
-}
-
-function ThemeToggle({ theme, setTheme }: { theme: Theme; setTheme: (theme: Theme) => void }) {
-  return (
-    <button
-      type="button"
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="group relative grid h-12 w-12 place-items-center overflow-hidden rounded-full border border-slate-200 bg-white text-vera-navy shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg dark:border-white/10 dark:bg-white/10 dark:text-vera-light"
-      aria-label="Toggle dark mode"
-    >
-      <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-vera-light/40 to-transparent transition duration-700 group-hover:translate-x-full" />
-      {theme === "dark" ? <MoonIcon /> : <SunIcon />}
-    </button>
-  );
-}
-
-function Navbar({ theme, setTheme }: { theme: Theme; setTheme: (theme: Theme) => void }) {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 18);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
-
-  return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500",
-        scrolled
-          ? "border-vera-navy/10 bg-white/[0.82] shadow-[0_12px_40px_rgba(15,37,64,.08)] backdrop-blur-2xl dark:border-white/10 dark:bg-[#0B1117]/[0.82]"
-          : "border-transparent bg-transparent"
+    <div className="flex items-center gap-2.5">
+      <div className="relative grid h-9 w-9 place-items-center rounded-xl bg-[hsl(var(--navy-950))] text-white shadow-md">
+        <span className="text-base font-black tracking-tight">V</span>
+        <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-success ring-2 ring-white" />
+      </div>
+      {!compact && (
+        <div className="leading-tight">
+          <p className="text-sm font-extrabold tracking-tight text-[hsl(var(--navy-950))] dark:text-white">Vera Systems</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[hsl(var(--blue-700))]">Precision food safety</p>
+        </div>
       )}
-    >
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <button type="button" onClick={() => scrollToId("hero")} className="-ml-2 flex items-center">
-          <Logo theme={theme} compact />
-        </button>
+    </div>
+  );
+}
 
+function SectionHeader({ eyebrow, title, body, light = false, centered = false }:
+  { eyebrow: string; title: string; body?: string; light?: boolean; centered?: boolean }) {
+  return (
+    <div className={cn("max-w-3xl", centered && "mx-auto text-center")} data-reveal>
+      <p className={cn("inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.24em]",
+        light ? "text-[hsl(var(--blue-300))]" : "text-[hsl(var(--blue-700))]")}>
+        <span className="h-px w-8 bg-current opacity-60" />
+        {eyebrow}
+      </p>
+      <h2 className={cn("mt-4 text-balance text-3xl font-semibold tracking-tight md:text-5xl",
+        light ? "text-white" : "text-[hsl(var(--navy-950))] dark:text-white")}>
+        {title}
+      </h2>
+      {body && (
+        <p className={cn("mt-5 max-w-2xl text-base leading-relaxed md:text-lg",
+          light ? "text-[hsl(var(--blue-100))]/80" : "text-[hsl(var(--muted-foreground))]",
+          centered && "mx-auto")}>
+          {body}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/* ---------- Navbar ---------- */
+
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const u = () => setScrolled(window.scrollY > 24);
+    u(); window.addEventListener("scroll", u, { passive: true });
+    return () => window.removeEventListener("scroll", u);
+  }, []);
+  return (
+    <header className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-500", scrolled ? "py-3" : "py-5")}>
+      <div className={cn(
+        "mx-4 flex items-center justify-between gap-4 rounded-full border px-5 py-3 transition-all duration-500",
+        scrolled
+          ? "border-[hsl(var(--border))] bg-white/85 shadow-vera backdrop-blur-xl"
+          : "border-transparent bg-transparent"
+      )}>
+        <button onClick={() => scrollToId("hero")} className="-ml-1" aria-label="Vera Systems home">
+          <Logo />
+        </button>
         <nav className="hidden items-center gap-7 lg:flex">
-          {navItems.map((item) => (
-            <button
-              key={item.href}
-              type="button"
-              onClick={() => scrollToId(item.href)}
-              className="text-[11px] font-black uppercase tracking-[0.22em] text-vera-navy/[0.62] transition hover:text-vera-mid dark:text-vera-light/60 dark:hover:text-white"
-            >
-              {item.label}
+          {navItems.map((i) => (
+            <button key={i.href} onClick={() => scrollToId(i.href)}
+              className="story-link text-[11px] font-bold uppercase tracking-[0.2em] text-[hsl(var(--navy-900))]/70 transition hover:text-[hsl(var(--navy-950))]">
+              {i.label}
             </button>
           ))}
         </nav>
-
-        <div className="flex items-center gap-3">
-          <ThemeToggle theme={theme} setTheme={setTheme} />
-          <button
-            type="button"
-            onClick={() => scrollToId("contact")}
-            className="hidden rounded-full bg-vera-navy px-6 py-3.5 text-[11px] font-black uppercase tracking-[0.2em] text-white shadow-[0_18px_40px_rgba(26,58,92,.18)] transition hover:-translate-y-0.5 hover:bg-vera-deep dark:bg-vera-light dark:text-[#0B1117] dark:hover:bg-white sm:inline-flex"
-          >
-            Book Demo
+        <div className="flex items-center gap-2">
+          <button onClick={() => scrollToId("contact")}
+            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-[hsl(var(--navy-950))] px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white shadow-lg shadow-blue-900/20 transition hover:bg-[hsl(var(--blue-700))]">
+            Book Demo <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+          <button onClick={() => setOpen(v => !v)} aria-label="Menu"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[hsl(var(--border))] bg-white/70 lg:hidden">
+            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </div>
+      </div>
+      <div className={cn(
+        "mx-4 mt-2 origin-top overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/95 backdrop-blur-xl transition-all duration-500 lg:hidden",
+        open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+      )}>
+        <nav className="flex flex-col gap-1 p-4">
+          {navItems.map(i => (
+            <button key={i.href} onClick={() => { setOpen(false); scrollToId(i.href); }}
+              className="rounded-xl px-3 py-3 text-left text-sm font-semibold text-[hsl(var(--navy-950))] hover:bg-[hsl(var(--blue-100))]/50">
+              {i.label}
+            </button>
+          ))}
+        </nav>
       </div>
     </header>
   );
 }
 
-function SectionHeader({
-  eyebrow,
-  title,
-  body,
-  light = false,
-  centered = false,
-}: {
-  eyebrow: string;
-  title: string;
-  body?: string;
-  light?: boolean;
-  centered?: boolean;
-}) {
-  return (
-    <div className={cn("max-w-3xl", centered && "mx-auto text-center")} data-reveal>
-      <p
-        className={cn(
-          "mb-4 text-[11px] font-black uppercase tracking-[0.28em]",
-          light ? "text-vera-light/75" : "text-vera-mid"
-        )}
-      >
-        {eyebrow}
-      </p>
-      <h2
-        className={cn(
-          "text-balance text-3xl font-black uppercase leading-[1.05] tracking-[0.035em] sm:text-4xl lg:text-5xl",
-          light ? "text-white" : "text-vera-navy dark:text-white"
-        )}
-      >
-        {title}
-      </h2>
-      {body ? (
-        <p
-          className={cn(
-            "mt-5 max-w-2xl text-sm leading-8 sm:text-base",
-            centered && "mx-auto",
-            light ? "text-vera-light/[0.72]" : "text-vera-navy/[0.68] dark:text-slate-300"
-          )}
-        >
-          {body}
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-export default function VeraSystemsPage() {
-  const [theme, setThemeState] = useState<Theme>("light");
-  const progress = useScrollProgress();
-  useRevealOnScroll();
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem("vera-theme") as Theme | null;
-    const initial = stored || "light";
-    setThemeState(initial);
-    document.documentElement.classList.toggle("dark", initial === "dark");
-  }, []);
-
-  const setTheme = (next: Theme) => {
-    setThemeState(next);
-    window.localStorage.setItem("vera-theme", next);
-    document.documentElement.classList.toggle("dark", next === "dark");
-  };
-
-  return (
-    <main className="min-h-screen overflow-hidden bg-[#F6FAFD] text-vera-navy transition-colors duration-500 dark:bg-[#0B1117] dark:text-vera-ice">
-      <div
-        className="fixed left-0 top-0 z-[70] h-1 bg-gradient-to-r from-vera-navy via-vera-mid to-vera-light transition-[width] duration-150"
-        style={{ width: `${progress}%` }}
-      />
-      <Navbar theme={theme} setTheme={setTheme} />
-      <Hero />
-      <About />
-      <ProcessStack />
-      <Services />
-      <Insights />
-      <PlatformDemo />
-      <WhyVera />
-      <ClientTypes />
-      <Contact />
-      <Footer />
-    </main>
-  );
-}
+/* ---------- HERO ---------- */
 
 function Hero() {
   return (
-    <section id="hero" className="relative flex min-h-screen items-center overflow-hidden pt-20">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,#F8FCFF_0%,#E8F2FA_44%,#FFFFFF_100%)] dark:bg-[linear-gradient(135deg,#0B1117_0%,#121A22_46%,#0D1621_100%)]" />
-      <div className="absolute inset-0 grid-paper opacity-70 dark:opacity-30" />
-      <div className="absolute left-[-12%] top-16 h-[36rem] w-[36rem] rounded-full bg-vera-light/55 blur-3xl dark:bg-vera-mid/[0.12]" />
-      <div className="absolute bottom-[-16%] right-[-12%] h-[38rem] w-[38rem] rounded-full bg-white blur-3xl dark:bg-[#263241]/60" />
-      <div className="absolute right-[8%] top-32 hidden h-[28rem] w-[28rem] rounded-full border border-vera-mid/10 lg:block dark:border-white/5" />
+    <section id="hero" className="relative overflow-hidden pt-32 pb-28">
+      <div className="aurora" />
+      <div className="absolute inset-0 grid-bg" />
+      <div className="relative mx-auto max-w-7xl px-6">
+        <div className="grid items-center gap-16 lg:grid-cols-12">
+          {/* Copy */}
+          <div className="lg:col-span-7 animate-fade-up">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--blue-100))] bg-white/70 px-4 py-1.5 text-xs font-medium text-[hsl(var(--blue-700))] backdrop-blur">
+              <Sparkles className="h-3.5 w-3.5" />
+              New · Vera Intelligence v4 is live
+              <span className="mx-1 h-1.5 w-1.5 rounded-full bg-[hsl(var(--blue-500))] animate-pulse-dot" />
+            </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-4 py-20 sm:px-6 lg:grid-cols-[.96fr_1.04fr] lg:px-8 lg:py-28">
-        <div className="reveal" data-reveal>
-          <div className="mb-8 inline-flex max-w-full flex-wrap items-center gap-3 rounded-full border border-vera-navy/10 bg-white/[0.08]0 px-4 py-2.5 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.06]">
-            <span className="grid h-7 w-7 place-items-center rounded-full bg-vera-navy text-white dark:bg-vera-light dark:text-[#0B1117]">
-              <span className="h-2 w-2 rounded-full bg-current" />
-            </span>
-            <span className="text-[10px] font-black uppercase tracking-[0.28em] text-vera-navy/70 dark:text-vera-light/70">East Africa</span>
-            <span className="text-vera-navy/20 dark:text-white/20">•</span>
-            <span className="text-[10px] font-black uppercase tracking-[0.28em] text-vera-mid dark:text-vera-light/80">B2B Food Safety</span>
+            <h1 className="mt-6 text-balance text-5xl font-semibold leading-[1.05] tracking-tight text-[hsl(var(--navy-950))] md:text-6xl lg:text-7xl">
+              From compliance to{" "}
+              <span className="text-gradient-blue">real-time</span> intelligence.
+            </h1>
+
+            <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-[hsl(var(--muted-foreground))]">
+              Vera unifies HACCP, ISO 22000 and live CCP monitoring into one calm interface — so food
+              operations act on truth, not noise. Built for teams that move with conviction.
+            </p>
+
+            <div className="mt-9 flex flex-wrap items-center gap-3">
+              <button onClick={() => scrollToId("contact")}
+                className="group inline-flex items-center gap-2 rounded-full bg-[hsl(var(--navy-950))] px-6 py-3.5 text-sm font-medium text-white shadow-lg shadow-blue-900/20 transition hover:bg-[hsl(var(--blue-700))]">
+                Book consultation
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+              </button>
+              <button onClick={() => scrollToId("platform")}
+                className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--border))] bg-white/80 px-6 py-3.5 text-sm font-medium text-[hsl(var(--navy-900))] backdrop-blur transition hover:border-[hsl(var(--blue-400))] hover:text-[hsl(var(--blue-700))]">
+                <PlayCircle className="h-4 w-4" />
+                Explore the platform
+              </button>
+            </div>
+
+            <div className="mt-10 grid max-w-lg grid-cols-3 gap-3">
+              {[
+                { k: "98.7%", l: "audit readiness" },
+                { k: "3.4×", l: "faster response" },
+                { k: "240+", l: "controls monitored" },
+              ].map((s) => (
+                <div key={s.l} className="group rounded-2xl border border-[hsl(var(--border))] bg-white/70 px-4 py-3 backdrop-blur transition hover:-translate-y-0.5 hover:border-[hsl(var(--blue-400))] hover:shadow-md">
+                  <div className="text-xl font-semibold text-[hsl(var(--navy-950))]">{s.k}</div>
+                  <div className="text-[11px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">{s.l}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <h1 className="text-balance text-[3.1rem] font-black uppercase leading-[0.92] tracking-[-0.035em] text-vera-navy sm:text-6xl lg:text-7xl xl:text-8xl dark:text-white">
-            Compliance that feels <span className="text-vera-mid dark:text-vera-light">alive.</span>
-          </h1>
-          <p className="mt-7 max-w-2xl text-base leading-8 text-vera-navy/70 sm:text-lg dark:text-slate-300">
-            Vera Systems combines food safety consultancy and digital intelligence to help high-risk food operations monitor CCPs, close deviations, and prove audit readiness in real time.
-          </p>
+          {/* Visual */}
+          <div className="lg:col-span-5 animate-fade-up [animation-delay:120ms]">
+            <div className="relative">
+              <div className="absolute -inset-6 rounded-[2rem] gradient-blue-soft opacity-60 blur-2xl" />
+              <div className="relative glass-card rounded-3xl p-5 float-soft">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-xs uppercase tracking-wider text-[hsl(var(--muted-foreground))]">CCP compliance · YTD</div>
+                    <div className="mt-1 text-3xl font-semibold text-[hsl(var(--navy-950))]">96.4%</div>
+                  </div>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[hsl(var(--blue-100))]/60 px-2.5 py-1 text-xs font-medium text-[hsl(var(--blue-700))]">
+                    <TrendingUp className="h-3 w-3" /> +18.4%
+                  </span>
+                </div>
+                <div className="mt-4 h-48">
+                  <ResponsiveContainer>
+                    <AreaChart data={ccpTrend} margin={{ top: 6, right: 6, left: -20, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="g1" x1="0" x2="0" y1="0" y2="1">
+                          <stop offset="0%" stopColor={BLUE.mid} stopOpacity={0.5} />
+                          <stop offset="100%" stopColor={BLUE.mid} stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid stroke="#e6eef7" vertical={false} />
+                      <XAxis dataKey="m" tickLine={false} axisLine={false} tick={{ fill: "#6b7c93", fontSize: 11 }} />
+                      <YAxis hide />
+                      <Tooltip cursor={{ stroke: BLUE.light, strokeDasharray: 4 }}
+                        contentStyle={{ borderRadius: 12, border: "none", boxShadow: "0 10px 30px -10px rgba(20,40,80,.2)" }} />
+                      <Area type="monotone" dataKey="v" stroke={BLUE.deep} strokeWidth={2.5} fill="url(#g1)" />
+                      <Area type="monotone" dataKey="p" stroke={BLUE.light} strokeWidth={1.5} strokeDasharray="4 4" fill="none" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
 
-          <div className="mt-9 flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => scrollToId("contact")}
-              className="rounded-full bg-vera-navy px-7 py-4 text-[12px] font-black uppercase tracking-[0.18em] text-white shadow-[0_20px_50px_rgba(26,58,92,.22)] transition hover:-translate-y-1 hover:bg-vera-deep dark:bg-vera-light dark:text-[#0B1117] dark:hover:bg-white"
-            >
-              Book Consultation
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollToId("platform")}
-              className="rounded-full border border-vera-navy/15 bg-white/75 px-7 py-4 text-[12px] font-black uppercase tracking-[0.18em] text-vera-navy shadow-sm backdrop-blur-xl transition hover:-translate-y-1 hover:border-vera-mid hover:bg-white dark:border-white/[0.12] dark:bg-white/[0.06] dark:text-white dark:hover:bg-white/[0.1]"
-            >
-              Explore Platform
-            </button>
-          </div>
-
-          <div className="mt-12 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
-            {[
-              ["ISO", "22000 Ready"],
-              ["HACCP", "System Design"],
-              ["Live", "CCP Alerts"],
-              ["B2B", "Advisory"],
-            ].map(([value, label]) => (
-              <div key={label} className="rounded-[1.4rem] border border-vera-navy/10 bg-white/[0.08]0 p-4 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.055]">
-                <div className="text-xl font-black text-vera-navy dark:text-white">{value}</div>
-                <div className="mt-1 text-[9px] font-black uppercase tracking-[0.17em] text-vera-mid dark:text-vera-light/55">{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="reveal reveal-delay-2 relative mx-auto w-full max-w-2xl" data-reveal>
-          <div className="absolute -inset-5 rounded-[3rem] bg-vera-light/70 blur-3xl dark:bg-vera-mid/[0.12]" />
-          <div className="relative overflow-hidden rounded-[2.4rem] border border-vera-navy/10 bg-white/[0.85] p-4 shadow-[0_30px_90px_rgba(15,37,64,.16)] backdrop-blur-2xl dark:border-white/10 dark:bg-[#151D25]/[0.88] dark:shadow-[0_30px_90px_rgba(0,0,0,.35)]">
-            <div className="rounded-[1.9rem] border border-vera-navy/10 bg-[#F7FBFE] p-5 dark:border-white/10 dark:bg-[#0E151D]">
-              <div className="flex items-center justify-between gap-4 border-b border-vera-navy/10 pb-5 dark:border-white/10">
-                <Logo theme="light" />
-                <div className="flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-600 dark:text-emerald-300">
-                  <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" /> Live
+                <div className="mt-4 grid grid-cols-3 gap-2">
+                  {[
+                    { v: "12", l: "CCPs OK", t: "success" as const },
+                    { v: "1", l: "Watch", t: "warning" as const },
+                    { v: "0", l: "Critical", t: "danger" as const },
+                  ].map(s => (
+                    <div key={s.l} className="rounded-xl border border-[hsl(var(--border))] bg-white/70 p-3 text-center">
+                      <p className={cn("text-xl font-semibold",
+                        s.t === "success" ? "text-success" : s.t === "warning" ? "text-warning" : "text-danger")}>{s.v}</p>
+                      <p className="text-[10px] uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))]">{s.l}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="mt-5 grid gap-4 md:grid-cols-2">
-                <HeroMetric label="CCP Health" value="97%" tone="success" />
-                <HeroMetric label="Open Deviations" value="03" tone="warning" />
-                <div className="md:col-span-2">
-                  <RiskTrendCard />
-                </div>
-                <HeroGauge title="Audit Readiness" value={86} />
-                <HeroGauge title="Supplier Score" value={92} />
+              <div className="absolute -left-6 top-12 hidden md:block rounded-2xl border border-[hsl(var(--border))] bg-white/90 px-4 py-3 text-xs font-semibold shadow-md backdrop-blur float-soft">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-success">Alert resolved</p>
+                <p className="text-[hsl(var(--navy-950))]">Cold room 02 stabilized</p>
+              </div>
+              <div className="absolute -right-4 -bottom-4 hidden md:block rounded-2xl border border-[hsl(var(--border))] bg-white/90 px-4 py-3 text-xs font-semibold shadow-md backdrop-blur">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[hsl(var(--blue-700))]">Audit ready</p>
+                <p className="text-[hsl(var(--navy-950))]">ISO 22000 — 96%</p>
               </div>
             </div>
           </div>
@@ -411,78 +376,68 @@ function Hero() {
   );
 }
 
-function HeroMetric({ label, value, tone }: { label: string; value: string; tone: Tone }) {
-  return (
-    <div className="rounded-[1.5rem] border border-vera-navy/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.045]">
-      <div className="flex items-center justify-between">
-        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-vera-navy/[0.48] dark:text-vera-light/50">{label}</p>
-        <StatusDot tone={tone} />
-      </div>
-      <p className="mt-4 text-4xl font-black tracking-[-0.04em] text-vera-navy dark:text-white">{value}</p>
-    </div>
-  );
-}
+/* ---------- Clients marquee ---------- */
 
-function HeroGauge({ title, value }: { title: string; value: number }) {
+function ClientTypes() {
+  const clients = useMemo(
+    () => ["Processors", "Restaurants", "Exporters", "Manufacturers", "Hotels", "Catering firms", "Cloud kitchens", "Cold chain"],
+    []
+  );
+  const doubled = [...clients, ...clients];
   return (
-    <div className="rounded-[1.5rem] border border-vera-navy/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.045]">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-vera-navy/[0.48] dark:text-vera-light/50">{title}</p>
-          <p className="mt-3 text-3xl font-black text-vera-navy dark:text-white">{value}%</p>
+    <section className="border-y border-[hsl(var(--border))] bg-white py-16">
+      <div className="mx-auto max-w-7xl px-6">
+        <p className="text-center text-[10px] font-bold uppercase tracking-[0.28em] text-[hsl(var(--blue-700))]">
+          Trusted by food businesses across Rwanda &amp; East Africa
+        </p>
+        <div className="marquee-track mt-8 overflow-hidden">
+          <div className="marquee">
+            {doubled.map((c, i) => (
+              <div key={`${c}-${i}`} className="flex flex-none items-center gap-3 text-[hsl(var(--navy-900))]/60">
+                <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--blue-500))]" />
+                <span className="text-base font-extrabold tracking-tight">{c}</span>
+              </div>
+            ))}
+          </div>
         </div>
-        <MiniGauge value={value} />
       </div>
-    </div>
+    </section>
   );
 }
 
-function RiskTrendCard() {
-  return (
-    <div className="rounded-[1.5rem] border border-vera-navy/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.045]">
-      <div className="flex items-center justify-between">
-        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-vera-navy/[0.48] dark:text-vera-light/50">Risk Trend</p>
-        <span className="text-xs font-black text-emerald-600 dark:text-emerald-300">↓ 24%</span>
-      </div>
-      <LineChart compact />
-    </div>
-  );
-}
+/* ---------- About ---------- */
 
 function About() {
   return (
-    <section id="about" className="relative overflow-hidden py-24 sm:py-32">
-      <div className="absolute inset-0 bg-white dark:bg-[#0B1117]" />
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#F6FAFD] to-transparent dark:from-[#0B1117]" />
-      <div className="relative mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
-        <div className="reveal relative" data-reveal>
-          <div className="absolute -left-5 -top-5 h-32 w-32 rounded-full bg-vera-light/70 blur-2xl dark:bg-vera-mid/20" />
-          <div className="relative overflow-hidden rounded-[2.25rem] border border-vera-navy/10 bg-[#F3F9FE] p-3 shadow-[0_24px_70px_rgba(15,37,64,.12)] dark:border-white/10 dark:bg-white/[0.045]">
-            <img
-              src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?auto=format&fit=crop&w=1200&q=85"
-              alt="Technology and quality control workflow"
-              className="h-[32rem] w-full rounded-[1.7rem] object-cover"
-            />
+    <section id="about" className="relative overflow-hidden bg-[hsl(var(--muted))]/40 py-28">
+      <div className="absolute inset-0 dot-grid opacity-40" />
+      <div className="relative mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+        <div data-reveal>
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] shadow-vera">
+            <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=85"
+              alt="Food safety lab" className="h-full w-full object-cover transition duration-1000 hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-950))]/60 via-transparent to-transparent" />
+            <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-white/90 p-4 backdrop-blur">
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--blue-700))]">Established</p>
+              <p className="text-2xl font-semibold text-[hsl(var(--navy-950))]">Kigali · Rwanda</p>
+            </div>
           </div>
         </div>
-
-        <div className="flex flex-col justify-center" data-reveal>
+        <div>
           <SectionHeader
-            eyebrow="About Vera Systems"
-            title="Food science meets operational intelligence"
-            body="Vera Systems is a Rwanda-based B2B consultancy and technology firm at the intersection of food science and data intelligence. The brand bridges the physical reality of commercial kitchens and factory floors with high-level business data."
+            eyebrow="About Vera"
+            title="A food-safety company with engineering DNA"
+            body="We sit at the intersection of HACCP science and operational data. Our work helps food businesses shift from end-of-shift reviews to real-time control, with audit-ready evidence on demand."
           />
-
-          <div className="mt-8 rounded-[2rem] border border-vera-navy/10 bg-vera-navy p-7 text-white shadow-[0_24px_60px_rgba(26,58,92,.20)] dark:border-white/10 dark:bg-[#141D26]">
-            <p className="text-[11px] font-black uppercase tracking-[0.26em] text-vera-light/70">Mission</p>
-            <p className="mt-4 text-lg font-semibold leading-9 text-vera-light sm:text-xl">
-              “To elevate food safety across Rwanda and East Africa through scientific rigor and data-driven systems that improve compliance, efficiency, and trust.”
+          <div className="mt-10 rounded-3xl border border-[hsl(var(--border))] bg-white/70 p-6 backdrop-blur" data-reveal>
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--blue-700))]">Mission</p>
+            <p className="mt-3 text-lg italic leading-relaxed text-[hsl(var(--navy-950))] text-balance">
+              "To elevate food safety across Rwanda and East Africa through scientific rigor and data-driven systems that improve compliance, efficiency, and trust."
             </p>
           </div>
-
-          <div className="mt-5 grid gap-4 sm:grid-cols-2">
-            <MiniInfo title="Consultancy" body="HACCP, ISO 22000, audits, training, and implementation." icon="✓" />
-            <MiniInfo title="Software" body="Real-time CCP monitoring, hygiene tracking, and reporting." icon="↗" />
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <InfoPill title="Scientific rigor" body="Standards-based methods, validated controls, and verifiable records." />
+            <InfoPill title="Operational fit" body="Procedures designed for the realities of kitchens, factories, and cold chains." />
           </div>
         </div>
       </div>
@@ -490,93 +445,47 @@ function About() {
   );
 }
 
-function MiniInfo({ title, body, icon }: { title: string; body: string; icon: string }) {
+function InfoPill({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-[1.5rem] border border-vera-navy/10 bg-[#F7FBFE] p-5 dark:border-white/10 dark:bg-white/[0.045]">
-      <div className="mb-5 grid h-11 w-11 place-items-center rounded-full bg-vera-navy text-white dark:bg-vera-light dark:text-[#0B1117]">{icon}</div>
-      <h3 className="text-sm font-black uppercase tracking-[0.16em] text-vera-navy dark:text-white">{title}</h3>
-      <p className="mt-3 text-sm leading-7 text-vera-navy/[0.62] dark:text-slate-300">{body}</p>
+    <div className="glass-card hover-lift rounded-2xl p-5" data-reveal>
+      <p className="text-sm font-extrabold text-[hsl(var(--navy-950))]">{title}</p>
+      <p className="mt-2 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">{body}</p>
     </div>
   );
 }
 
-function ProcessStack() {
-  return (
-    <section className="relative bg-[#F6FAFD] py-24 sm:py-32 dark:bg-[#111820]">
-      <div className="absolute inset-0 grid-paper opacity-60 dark:opacity-20" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          eyebrow="Scroll experience"
-          title="A layered system, not a static report"
-          body="The sections below use sticky stacking, lighter surfaces, and clear hierarchy so the page feels modern while staying readable."
-          centered
-        />
-
-        <div className="mt-16 space-y-8">
-          {processCards.map((card, index) => (
-            <article
-              key={card.title}
-              data-reveal
-              className="reveal sticky overflow-hidden rounded-[2rem] border border-vera-navy/10 bg-white/[0.92] p-6 shadow-[0_24px_70px_rgba(15,37,64,.13)] backdrop-blur-xl dark:border-white/10 dark:bg-[#151E27]/95 sm:p-8 lg:p-10"
-              style={{ top: `${96 + index * 18}px`, zIndex: 10 + index }}
-            >
-              <div className="absolute right-[-4rem] top-[-4rem] h-56 w-56 rounded-full bg-vera-light/55 blur-3xl dark:bg-vera-mid/[0.12]" />
-              <div className="relative grid items-end gap-8 lg:grid-cols-[1fr_300px]">
-                <div>
-                  <p className="text-[11px] font-black uppercase tracking-[0.26em] text-vera-mid">{card.step} / {card.title}</p>
-                  <h3 className="mt-5 text-3xl font-black uppercase tracking-[0.02em] text-vera-navy sm:text-4xl dark:text-white">{card.title}</h3>
-                  <p className="mt-5 max-w-3xl text-sm leading-8 text-vera-navy/[0.66] sm:text-base dark:text-slate-300">{card.body}</p>
-                </div>
-                <div className="rounded-[1.6rem] border border-vera-navy/10 bg-[#F4FAFE] p-6 text-center dark:border-white/10 dark:bg-white/[0.045]">
-                  <div className="text-5xl font-black text-vera-navy dark:text-vera-light">{card.metric}</div>
-                  <div className="mt-3 text-[10px] font-black uppercase tracking-[0.22em] text-vera-mid dark:text-vera-light/55">{card.label}</div>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+/* ---------- Services ---------- */
 
 function Services() {
   return (
-    <section id="services" className="relative overflow-hidden bg-white py-24 sm:py-32 dark:bg-[#0B1117]">
-      <div className="absolute left-0 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-vera-light/60 blur-3xl dark:bg-vera-mid/10" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="services" className="relative bg-white py-28">
+      <div className="mx-auto max-w-7xl px-6">
         <SectionHeader
-          eyebrow="Our Service Pillars"
-          title="Clear services, stronger conversion paths"
-          body="The offer is separated into two practical paths: consultancy for food safety readiness and software for continuous monitoring."
+          eyebrow="Services"
+          title="Two disciplines. One operating system for food safety."
+          body="Choose what your operation needs today — and scale into the rest as you grow."
         />
-
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          {services.map((service, index) => (
-            <article
-              key={service.title}
-              data-reveal
+        <div className="mt-16 grid gap-8 lg:grid-cols-2">
+          {services.map((s, idx) => (
+            <article key={s.title} data-reveal
               className={cn(
-                "reveal group overflow-hidden rounded-[2.25rem] border border-vera-navy/10 bg-[#F8FCFF] shadow-[0_24px_70px_rgba(15,37,64,.10)] transition duration-500 hover:-translate-y-2 dark:border-white/10 dark:bg-[#151E27]",
-                `reveal-delay-${index + 1}`
-              )}
-            >
-              <div className="relative h-72 overflow-hidden">
-                <img src={service.image} alt="" className="h-full w-full object-cover transition duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-vera-navy/[0.86] via-vera-navy/[0.22] to-transparent dark:from-[#0B1117]" />
-                <span className="absolute left-5 top-5 rounded-full border border-white/30 bg-white/[0.85] px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-vera-navy backdrop-blur-md">
-                  {service.label}
-                </span>
+                "group relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white shadow-vera transition hover:-translate-y-1 hover:shadow-glow hover:border-[hsl(var(--blue-400))]",
+                `reveal-delay-${idx + 1}`
+              )}>
+              <div className="relative aspect-[16/8] overflow-hidden">
+                <img src={s.image} alt="" className="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-950))]/80 via-[hsl(var(--navy-950))]/10 to-transparent" />
+                <span className="absolute left-5 top-5 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[hsl(var(--navy-950))] backdrop-blur">{s.label}</span>
               </div>
-              <div className="p-7 sm:p-8">
-                <p className="text-[10px] font-black uppercase tracking-[0.24em] text-vera-mid">{service.eyebrow}</p>
-                <h3 className="mt-4 text-2xl font-black uppercase leading-tight tracking-[0.03em] text-vera-navy dark:text-white">{service.title}</h3>
-                <p className="mt-5 text-sm leading-8 text-vera-navy/[0.66] dark:text-slate-300">{service.body}</p>
-                <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {service.bullets.map((bullet) => (
-                    <li key={bullet} className="flex items-center gap-3 text-sm font-bold text-vera-navy/[0.76] dark:text-vera-light/[0.78]">
-                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-vera-navy text-xs text-white dark:bg-vera-light dark:text-[#0B1117]">✓</span>
-                      {bullet}
+              <div className="p-7">
+                <h3 className="text-2xl font-semibold text-[hsl(var(--navy-950))] text-balance">{s.title}</h3>
+                <p className="mt-3 text-sm font-semibold leading-relaxed text-[hsl(var(--blue-700))]">{s.impact}</p>
+                <p className="mt-4 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">{s.body}</p>
+                <ul className="mt-6 space-y-2">
+                  {s.bullets.map(b => (
+                    <li key={b} className="flex items-start gap-3 text-sm text-[hsl(var(--navy-900))]">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-none text-success" />
+                      {b}
                     </li>
                   ))}
                 </ul>
@@ -589,40 +498,33 @@ function Services() {
   );
 }
 
-function Insights() {
-  return (
-    <section className="relative overflow-hidden bg-[#F6FAFD] py-24 sm:py-32 dark:bg-[#111820]">
-      <div className="absolute inset-0 grid-paper opacity-60 dark:opacity-20" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[.82fr_1.18fr] lg:items-end">
-          <SectionHeader
-            eyebrow="Insights & Intelligence"
-            title="Make every risk signal easier to act on"
-            body="These cards are lighter, sharper, and easier to scan. They avoid the heavy all-blue feel while keeping Vera’s clinical brand tone."
-          />
-          <div className="reveal rounded-[2rem] border border-vera-navy/10 bg-white p-6 shadow-sm dark:border-white/10 dark:bg-white/[0.045]" data-reveal>
-            <p className="text-lg font-semibold leading-8 text-vera-navy/75 dark:text-slate-300">
-              “Compliance becomes more valuable when it is visible, measured, and connected to real operational behavior.”
-            </p>
-          </div>
-        </div>
+/* ---------- StackExperience (How it works) ---------- */
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
-          {insightCards.map((item, index) => (
-            <article
-              key={item.title}
-              data-reveal
-              className={cn(
-                "reveal rounded-[2rem] border border-vera-navy/10 bg-white p-7 shadow-[0_18px_50px_rgba(15,37,64,.08)] transition duration-500 hover:-translate-y-2 hover:border-vera-mid/40 dark:border-white/10 dark:bg-[#151E27]",
-                `reveal-delay-${index + 1}`
-              )}
-            >
-              <div className="mb-8 flex items-center justify-between">
-                <span className="rounded-full bg-vera-ice px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-vera-mid dark:bg-white/10 dark:text-vera-light">{item.tag}</span>
-                <span className="text-2xl text-vera-mid/35">0{index + 1}</span>
+function StackExperience() {
+  return (
+    <section className="relative bg-[hsl(var(--muted))]/40 py-28">
+      <div className="mx-auto max-w-7xl px-6">
+        <SectionHeader
+          eyebrow="How it works"
+          title="A four-step path to data-driven food safety"
+          body="From the first kitchen walkthrough to a live operations dashboard — designed to fit how your team already works."
+        />
+        <div className="mt-16 grid gap-6 md:grid-cols-2">
+          {stackCards.map((c, i) => (
+            <article key={c.eyebrow} data-reveal
+              className={cn("glass-card hover-lift group relative overflow-hidden rounded-3xl p-7", `reveal-delay-${(i % 4) + 1}`)}>
+              <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-[hsl(var(--blue-400))]/10 blur-3xl transition group-hover:bg-[hsl(var(--blue-400))]/25" />
+              <div className="relative flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+                <div className="max-w-md">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--blue-700))]">{c.eyebrow}</p>
+                  <h3 className="mt-3 text-xl font-semibold text-[hsl(var(--navy-950))]">{c.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">{c.body}</p>
+                </div>
+                <div className="rounded-2xl border border-[hsl(var(--border))] bg-white/70 px-5 py-4 text-center">
+                  <p className="text-2xl font-semibold text-[hsl(var(--navy-950))]">{c.metric}</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[hsl(var(--blue-700))]">{c.label}</p>
+                </div>
               </div>
-              <h3 className="text-xl font-black leading-tight text-vera-navy dark:text-white">{item.title}</h3>
-              <p className="mt-4 text-sm leading-8 text-vera-navy/[0.62] dark:text-slate-300">{item.body}</p>
             </article>
           ))}
         </div>
@@ -631,182 +533,244 @@ function Insights() {
   );
 }
 
-function PlatformDemo() {
-  const [activeTab, setActiveTab] = useState<DemoTab>("overview");
+/* ---------- Platform Demo ---------- */
 
+function PlatformDemo() {
   return (
-    <section id="platform" className="relative overflow-hidden bg-[#101820] py-24 text-white sm:py-32 dark:bg-[#080D12]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(200,220,240,.16),transparent_32%),radial-gradient(circle_at_85%_20%,rgba(74,123,175,.20),transparent_34%)]" />
-      <div className="absolute inset-0 grid-paper opacity-25" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-end">
-          <SectionHeader
-            eyebrow="Interactive Platform"
-            title="A control center, not a spreadsheet"
-            body="The dashboard uses a more balanced dark interface: charcoal surfaces, ice-blue highlights, green status signals, and enough contrast to make every chart readable."
-            light
-          />
-          <div data-reveal className="reveal rounded-[2rem] border border-white/10 bg-white/[0.06] p-6 backdrop-blur-xl">
-            <p className="text-lg font-semibold leading-8 text-slate-200">
-              Live CCP readings, supplier risk, audit artifacts, and deviation workflows in one premium operational dashboard.
+    <section id="platform" className="relative overflow-hidden bg-[hsl(var(--navy-950))] py-28 text-white">
+      <div className="absolute inset-0 grid-bg opacity-20" />
+      <div className="aurora opacity-40" />
+      <div className="relative mx-auto max-w-7xl px-6">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <SectionHeader light eyebrow="The Platform" title="One workspace. Every signal that matters." />
+          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur" data-reveal>
+            <p className="text-base italic leading-relaxed text-[hsl(var(--blue-100))]/90">
+              "Not a report, but a control center. Every deviation logged, every supplier scored, every CCP visible — in real time."
             </p>
-            <button
-              type="button"
-              onClick={() => scrollToId("contact")}
-              className="mt-5 rounded-full bg-white px-5 py-3 text-[11px] font-black uppercase tracking-[0.18em] text-[#101820] transition hover:-translate-y-1"
-            >
-              Request live demo →
+            <button onClick={() => scrollToId("contact")}
+              className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-white/10">
+              Request live demo <ArrowRight className="h-3.5 w-3.5" />
             </button>
           </div>
         </div>
 
-        <div className="mt-12 overflow-hidden rounded-[2.4rem] border border-white/10 bg-white/[0.05] p-3 shadow-[0_30px_90px_rgba(0,0,0,.28)] backdrop-blur-2xl" data-reveal>
-          <div className="flex gap-2 overflow-x-auto rounded-[1.7rem] bg-[#0A1016]/80 p-2 no-scrollbar">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={cn(
-                  "whitespace-nowrap rounded-full px-5 py-3 text-[11px] font-black uppercase tracking-[0.16em] transition",
-                  activeTab === tab.id
-                    ? "bg-vera-light text-[#101820] shadow-[0_16px_40px_rgba(200,220,240,.16)]"
-                    : "text-vera-light/60 hover:bg-white/[0.08] hover:text-white"
-                )}
-              >
-                {tab.label}
-              </button>
+        {/* Static feature row + dynamic tabs */}
+        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+          <div className="glass-card hover-lift rounded-2xl p-6 lg:col-span-2 !text-[hsl(var(--navy-950))]">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-semibold">Segment performance</h3>
+              <BarChart3 className="h-4 w-4 text-[hsl(var(--blue-500))]" />
+            </div>
+            <div className="mt-4 h-64">
+              <ResponsiveContainer>
+                <BarChart data={segmentData}>
+                  <defs>
+                    <linearGradient id="bg1" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stopColor={BLUE.mid} />
+                      <stop offset="100%" stopColor={BLUE.light} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid stroke="#e6eef7" vertical={false} />
+                  <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#6b7c93", fontSize: 12 }} />
+                  <YAxis tickLine={false} axisLine={false} tick={{ fill: "#6b7c93", fontSize: 12 }} />
+                  <Tooltip cursor={{ fill: BLUE.pale, opacity: 0.4 }} contentStyle={{ borderRadius: 12, border: "none" }} />
+                  <Bar dataKey="v" fill="url(#bg1)" radius={[8, 8, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          <div className="space-y-6">
+            {[
+              { i: Shield, t: "ISO 22000 ready", d: "Audit-grade evidence by default." },
+              { i: Zap, t: "Realtime sync", d: "Sub-second across sites." },
+              { i: Clock, t: "5-min setup", d: "From signup to first insight." },
+            ].map(({ i: Icon, t, d }) => (
+              <div key={t} className="glass-card hover-lift flex items-start gap-4 rounded-2xl p-5 !text-[hsl(var(--navy-950))]">
+                <div className="grid h-10 w-10 place-items-center rounded-xl gradient-blue text-white">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="font-semibold">{t}</div>
+                  <div className="text-sm text-[hsl(var(--muted-foreground))]">{d}</div>
+                </div>
+              </div>
             ))}
           </div>
-
-          <div className="p-3 sm:p-5 lg:p-7">
-            {activeTab === "overview" && <OverviewDashboard />}
-            {activeTab === "ccp" && <CCPDashboard />}
-            {activeTab === "suppliers" && <SupplierDashboard />}
-            {activeTab === "reports" && <ReportsDashboard />}
-          </div>
         </div>
+
+        <DemoTabs />
       </div>
     </section>
   );
 }
 
-function OverviewDashboard() {
+function DemoTabs() {
+  const [active, setActive] = useState<DemoTab>("ccp");
   return (
-    <div className="grid gap-4 lg:grid-cols-12">
-      <DashboardPanel className="lg:col-span-8">
-        <div className="flex flex-wrap items-start justify-between gap-5">
-          <div>
-            <div className="flex items-center gap-2">
-              <StatusDot tone="success" />
-              <p className="text-[11px] font-black uppercase tracking-[0.22em] text-emerald-300">System live</p>
-            </div>
-            <h3 className="mt-3 text-2xl font-black text-white">Compliance Readiness Trend</h3>
-            <p className="mt-1 text-sm text-slate-400">Food safety evidence across sites · updated 14 seconds ago</p>
-          </div>
-          <div className="rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-vera-light">March 2026</div>
-        </div>
-        <LineChart />
-      </DashboardPanel>
-
-      <div className="grid gap-4 lg:col-span-4">
-        <DataCard label="CCP Health" value="97%" trend="+5.1%" tone="success" />
-        <DataCard label="Open Deviations" value="03" trend="-24%" tone="warning" />
-        <DataCard label="Audit Readiness" value="86%" trend="+12%" tone="info" />
+    <div className="mt-14">
+      <div className="flex gap-2 overflow-x-auto no-scrollbar" data-reveal>
+        {tabs.map(t => (
+          <button key={t.id} onClick={() => setActive(t.id)}
+            className={cn(
+              "whitespace-nowrap rounded-full px-5 py-3 text-[11px] font-bold uppercase tracking-[0.16em] transition",
+              active === t.id
+                ? "bg-[hsl(var(--blue-100))] text-[hsl(var(--navy-950))] shadow-glow"
+                : "text-[hsl(var(--blue-100))]/60 hover:bg-white/10 hover:text-white"
+            )}>
+            {t.label}
+          </button>
+        ))}
       </div>
-
-      <DashboardPanel className="lg:col-span-4">
-        <h3 className="text-xl font-black text-white">Readiness score</h3>
-        <div className="mt-7 flex justify-center">
-          <DonutChart value={86} label="Ready" />
-        </div>
-      </DashboardPanel>
-      <DashboardPanel className="lg:col-span-4">
-        <h3 className="text-xl font-black text-white">Deviation pattern</h3>
-        <StackedBars />
-      </DashboardPanel>
-      <DashboardPanel className="lg:col-span-4">
-        <h3 className="text-xl font-black text-white">Receiving heatmap</h3>
-        <HeatMap />
-      </DashboardPanel>
+      <div key={active} className="mt-6 animate-fade-up">
+        {active === "ccp" && <CCPDashboard />}
+        {active === "deviations" && <DeviationDashboard />}
+        {active === "suppliers" && <SupplierDashboard />}
+        {active === "reports" && <ReportsDashboard />}
+      </div>
     </div>
   );
 }
 
 function CCPDashboard() {
-  const rows = [
-    ["Cold Room A", "3.8°C", "0–5°C", "Stable", "success"],
-    ["Cook Step", "72°C", ">70°C", "Stable", "success"],
-    ["Chill Down", "9.2°C", "≤8°C", "Watch", "warning"],
-    ["Dispatch", "6.1°C", "≤5°C", "Action", "danger"],
-  ] as const;
-
   return (
-    <div className="grid gap-4 lg:grid-cols-[1.05fr_.95fr]">
-      <DashboardPanel>
-        <h3 className="text-2xl font-black text-white">Critical control points</h3>
-        <p className="mt-2 text-sm text-slate-400">Real-time limits, readings, and escalation status.</p>
-        <div className="mt-6 grid gap-3">
-          {rows.map(([name, value, range, status, tone]) => (
-            <div key={name} className="rounded-[1.3rem] border border-white/10 bg-white/[0.04] p-4">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <p className="font-black text-white">{name}</p>
-                  <p className="mt-1 text-xs text-slate-400">Target range: {range}</p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <p className="text-2xl font-black text-vera-light">{value}</p>
-                  <span className={cn("rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em]", badgeClass(tone))}>{status}</span>
-                </div>
-              </div>
-              <Sparkline tone={tone} />
-            </div>
-          ))}
+    <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-xl">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.22em] text-success">
+            <span className="inline-block h-2 w-2 rounded-full bg-success animate-pulse-dot" /> Live system
+          </p>
+          <h3 className="mt-2 text-2xl font-semibold">Critical Control Point Dashboard</h3>
+          <p className="text-xs text-[hsl(var(--blue-100))]/60">Auto-refreshing · updated 14 seconds ago</p>
         </div>
-      </DashboardPanel>
-      <DashboardPanel>
-        <h3 className="text-2xl font-black text-white">Deviation timeline</h3>
-        <Timeline />
-      </DashboardPanel>
+        <div className="grid grid-cols-3 gap-3">
+          <HealthStat value="12" label="Within range" tone="success" />
+          <HealthStat value="1" label="Watch" tone="warning" />
+          <HealthStat value="0" label="Critical" tone="danger" />
+        </div>
+      </div>
+      <div className="mt-6 grid gap-4 lg:grid-cols-3">
+        <CCPCard name="Cold Storage 01" value="3.8" unit="°C" range="0–5°C" status="Within range" tone="success" />
+        <CCPCard name="Pasteurization Line" value="74.2" unit="°C" range="≥72°C" status="Within range" tone="success" />
+        <CCPCard name="Receiving Dock" value="9.4" unit="°C" range="0–7°C" status="Watch" tone="warning" />
+      </div>
+      <div className="mt-6"><ExecutiveChart /></div>
+    </div>
+  );
+}
+
+type Tone = "success" | "warning" | "danger";
+
+function HealthStat({ value, label, tone }: { value: string; label: string; tone: Tone }) {
+  const color = tone === "success" ? "text-success" : tone === "warning" ? "text-warning" : "text-danger";
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center">
+      <p className={cn("text-2xl font-semibold", color)}>{value}</p>
+      <p className="text-[10px] uppercase tracking-[0.2em] text-[hsl(var(--blue-100))]/60">{label}</p>
+    </div>
+  );
+}
+
+function CCPCard({ name, value, unit, range, status, tone }:
+  { name: string; value: string; unit: string; range: string; status: string; tone: Tone }) {
+  const ring = tone === "success" ? "border-success/30" : tone === "warning" ? "border-warning/40" : "border-danger/40";
+  const txt = tone === "success" ? "text-success" : tone === "warning" ? "text-warning" : "text-danger";
+  const bar = tone === "success" ? "bg-success" : tone === "warning" ? "bg-warning" : "bg-danger";
+  const w = tone === "success" ? "78%" : tone === "warning" ? "42%" : "18%";
+  return (
+    <div className={cn("rounded-2xl border bg-white/[0.04] p-5 transition hover:-translate-y-1", ring)}>
+      <div className="flex items-center justify-between">
+        <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[hsl(var(--blue-100))]/70">{name}</p>
+        <span className={cn("inline-block h-2 w-2 rounded-full animate-pulse-dot",
+          tone === "success" ? "bg-success" : tone === "warning" ? "bg-warning" : "bg-danger")} />
+      </div>
+      <p className="mt-3 text-3xl font-semibold">{value}<span className="ml-1 text-base text-[hsl(var(--blue-100))]/50">{unit}</span></p>
+      <p className="text-[11px] text-[hsl(var(--blue-100))]/60">Range {range}</p>
+      <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/10">
+        <div className={cn("h-full rounded-full", bar)} style={{ width: w }} />
+      </div>
+      <div className="mt-3 flex items-center justify-between text-[10px] uppercase tracking-[0.2em]">
+        <span className={txt}>{status}</span>
+        <span className="text-[hsl(var(--blue-100))]/50">2 min ago</span>
+      </div>
+    </div>
+  );
+}
+
+function DeviationDashboard() {
+  const items: Array<[Tone, string, string, string, string]> = [
+    ["danger", "Receiving Dock temperature breach", "Raw milk delivery registered above accepted receiving limit. Corrective action required.", "Now", "Critical"],
+    ["warning", "Sanitation verification pending", "Line 2 supervisor sign-off is 18 minutes overdue.", "18m", "Watch"],
+    ["success", "Cold room fluctuation resolved", "Automated alert closed after two stable readings within safe range.", "1h", "Resolved"],
+  ];
+  const tone = (t: Tone) => t === "danger" ? "border-danger/40 text-danger"
+    : t === "warning" ? "border-warning/40 text-warning"
+      : "border-success/40 text-success";
+  return (
+    <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
+      <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+        <p className="text-sm font-extrabold uppercase tracking-[0.16em]">Deviation response trend</p>
+        <p className="text-xs text-[hsl(var(--blue-100))]/60">Open issues by severity and response speed.</p>
+        <div className="mt-6"><ExecutiveChart /></div>
+        <div className="mt-6 grid grid-cols-3 gap-3">
+          <HealthStat value="68%" label="Faster response" tone="success" />
+          <HealthStat value="03" label="Open" tone="warning" />
+          <HealthStat value="01" label="Critical" tone="danger" />
+        </div>
+      </div>
+      <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+        <p className="text-sm font-extrabold uppercase tracking-[0.16em]">Alert timeline</p>
+        <ul className="mt-5 space-y-4">
+          {items.map(([t, title, body, time, badge]) => (
+            <li key={title} className={cn("flex gap-4 rounded-2xl border bg-white/[0.03] p-4", tone(t))}>
+              <span className={cn("mt-1.5 inline-block h-2 w-2 rounded-full",
+                t === "danger" ? "bg-danger" : t === "warning" ? "bg-warning" : "bg-success")} />
+              <div className="flex-1">
+                <p className="text-sm font-extrabold text-white">{title}</p>
+                <p className="mt-1 text-xs leading-relaxed text-[hsl(var(--blue-100))]/70">{body}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-[hsl(var(--blue-100))]/60">{time}</p>
+                <p className={cn("text-[10px] font-bold uppercase tracking-[0.2em]", tone(t))}>{badge}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
 
 function SupplierDashboard() {
-  const suppliers = [
+  const suppliers: Array<[string, string, number, string]> = [
     ["Kivu Dairy Co.", "Dairy", 94, "Preferred"],
     ["Akagera Produce", "Fresh produce", 88, "Approved"],
     ["Virunga Cold Chain", "Logistics", 76, "Review"],
     ["Nyungwe Grains", "Dry goods", 91, "Preferred"],
-  ] as const;
-
+  ];
   return (
-    <div className="grid gap-4 lg:grid-cols-[360px_1fr]">
-      <DashboardPanel>
-        <h3 className="text-2xl font-black text-white">Supplier risk index</h3>
-        <p className="mt-2 text-sm leading-7 text-slate-400">Weighted by receiving temperature, document completeness, rejection rate, and corrective-action closure.</p>
-        <div className="mt-8 flex justify-center">
-          <DonutChart value={89} label="Overall" />
-        </div>
-        <HeatMap />
-      </DashboardPanel>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {suppliers.map(([name, category, score, tier]) => (
-          <DashboardPanel key={name} className="transition hover:-translate-y-1 hover:border-vera-light/25">
-            <div className="flex items-start justify-between gap-4">
+    <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
+      <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+        <p className="text-sm font-extrabold uppercase tracking-[0.16em]">Supplier risk index</p>
+        <p className="text-xs text-[hsl(var(--blue-100))]/60">Weighted score: receiving temperature, document completeness, rejection rate, corrective-action closure.</p>
+        <div className="mt-6"><ExecutiveChart /></div>
+      </div>
+      <div className="grid gap-3">
+        {suppliers.map(([name, cat, score, tier]) => (
+          <div key={name} className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 transition hover:-translate-y-0.5 hover:border-white/30">
+            <div className="flex items-center justify-between">
               <div>
-                <h4 className="text-lg font-black text-white">{name}</h4>
-                <p className="mt-1 text-[10px] font-black uppercase tracking-[0.18em] text-vera-light/55">{category}</p>
+                <p className="text-base font-extrabold text-white">{name}</p>
+                <p className="text-[11px] uppercase tracking-[0.2em] text-[hsl(var(--blue-100))]/60">{cat}</p>
               </div>
-              <div className="grid h-16 w-16 place-items-center rounded-full border-4 border-vera-light/25 text-xl font-black text-vera-light">{score}</div>
+              <p className={cn("text-3xl font-semibold",
+                score >= 90 ? "text-success" : score >= 80 ? "text-[hsl(var(--blue-300))]" : "text-warning")}>{score}</p>
             </div>
-            <div className="mt-6 space-y-3">
-              <Progress label="Docs" value={score - 4} />
-              <Progress label="Receiving" value={score - 8} />
-              <Progress label="Traceability" value={score - 2} />
+            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+              <div className={cn("h-full rounded-full",
+                score >= 90 ? "bg-success" : score >= 80 ? "bg-[hsl(var(--blue-300))]" : "bg-warning")} style={{ width: `${score}%` }} />
             </div>
-            <div className="mt-5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-2 text-center text-[10px] font-black uppercase tracking-[0.18em] text-vera-light/75">{tier}</div>
-          </DashboardPanel>
+            <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[hsl(var(--blue-100))]/60">{tier}</p>
+          </div>
         ))}
       </div>
     </div>
@@ -814,55 +778,144 @@ function SupplierDashboard() {
 }
 
 function ReportsDashboard() {
-  const reports = [
+  const reports: Array<[string, string, string]> = [
     ["PDF", "HACCP Audit Report", "Full CCP audit log with corrective actions, sign-offs, and compliance ratings."],
     ["DASH", "Monthly CCP Summary", "Trend analysis across control points, deviation frequency, and response times."],
-    ["LOG", "Real-Time Hygiene Log", "Timestamped sanitation records replacing paper logs and manual sign-off books."],
+    ["LOG", "Real-Time Hygiene Log", "Timestamped sanitation records replacing paper logs and manual sign-offs."],
     ["ISO", "ISO 22000 Gap Analysis", "Clause-by-clause readiness report with remediation priorities."],
     ["REP", "Supplier Scorecard", "Quarterly supplier performance and corrective-action status."],
     ["API", "Custom Dashboard Export", "Structured data export for management reporting or ERP connection."],
   ];
-
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {reports.map(([badge, title, body]) => (
-        <DashboardPanel key={title} className="group transition hover:-translate-y-1 hover:border-vera-light/25">
-          <span className="rounded-full bg-vera-light/[0.12] px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-vera-light">{badge}</span>
-          <h3 className="mt-5 text-lg font-black text-white">{title}</h3>
-          <p className="mt-3 text-sm leading-7 text-slate-400">{body}</p>
-          <button type="button" className="mt-6 text-[10px] font-black uppercase tracking-[0.18em] text-vera-light/65 transition group-hover:text-white">
-            View artifact →
+        <article key={title} className="group rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition hover:-translate-y-1 hover:border-white/30">
+          <span className="inline-flex rounded-full border border-[hsl(var(--blue-100))]/30 px-3 py-1 text-[10px] font-bold tracking-[0.2em] text-[hsl(var(--blue-100))]">{badge}</span>
+          <p className="mt-4 text-base font-extrabold text-white text-balance">{title}</p>
+          <p className="mt-2 text-sm leading-relaxed text-[hsl(var(--blue-100))]/70">{body}</p>
+          <button onClick={() => scrollToId("contact")}
+            className="story-link mt-5 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[hsl(var(--blue-100))]/80">
+            View artifact <ArrowRight className="h-3 w-3" />
           </button>
-        </DashboardPanel>
+        </article>
       ))}
     </div>
   );
 }
 
+function ExecutiveChart() {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+      <div className="flex items-center justify-between">
+        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--blue-100))]/60">Last 30 days</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-success">+18% in-range</p>
+      </div>
+      <div className="mt-3 h-36">
+        <ResponsiveContainer>
+          <AreaChart data={ccpTrend} margin={{ top: 4, right: 6, left: -20, bottom: 0 }}>
+            <defs>
+              <linearGradient id="execG" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor={GREEN} stopOpacity={0.4} />
+                <stop offset="100%" stopColor={GREEN} stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid stroke="rgba(200,220,240,.1)" strokeDasharray="3 6" vertical={false} />
+            <XAxis dataKey="m" tickLine={false} axisLine={false} tick={{ fill: "#9bb1cf", fontSize: 11 }} />
+            <YAxis hide />
+            <Tooltip contentStyle={{ borderRadius: 12, border: "none", background: "#0b1a2e", color: "white" }} />
+            <Area type="monotone" dataKey="v" stroke={GREEN} strokeWidth={2.4} fill="url(#execG)" />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Insights (magazine layout) ---------- */
+
+function Insights() {
+  const [feature, ...rows] = insights;
+  return (
+    <section id="insights" className="bg-white py-28">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex items-end justify-between">
+          <SectionHeader eyebrow="Insights" title="Thinking from the field." body="Operational intelligence from real food businesses navigating compliance and growth." />
+          <a href="#" className="hidden text-sm font-medium text-[hsl(var(--blue-700))] hover:underline md:inline">All articles →</a>
+        </div>
+        <div className="mt-14 grid gap-8 lg:grid-cols-12">
+          <InsightFeatured item={feature} />
+          <div className="space-y-5 lg:col-span-5">
+            {rows.map(it => <InsightRow key={it.title} item={it} />)}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function InsightFeatured({ item }: { item: typeof insights[number] }) {
+  return (
+    <a href="#" data-reveal className="group relative col-span-12 overflow-hidden rounded-3xl lg:col-span-7">
+      <div className="relative h-[520px] w-full overflow-hidden rounded-3xl">
+        <img src={item.image} alt="" className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-950))]/90 via-[hsl(var(--navy-950))]/30 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 translate-y-2 p-8 transition-transform duration-500 group-hover:translate-y-0">
+          <span className="inline-flex items-center rounded-full bg-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur">{item.tag}</span>
+          <h3 className="mt-4 text-balance text-3xl font-semibold leading-tight text-white md:text-4xl">{item.title}</h3>
+          <div className="mt-4 flex items-center gap-3 text-sm text-white/80">
+            <span>{item.read}</span>
+            <span className="h-1 w-1 rounded-full bg-white/50" />
+            <span className="inline-flex items-center gap-1 text-[hsl(var(--blue-300))]">
+              Read story <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+            </span>
+          </div>
+        </div>
+        <div className="absolute left-0 top-0 h-full w-1 bg-[hsl(var(--blue-400))] origin-top scale-y-0 transition-transform duration-500 group-hover:scale-y-100" />
+      </div>
+    </a>
+  );
+}
+
+function InsightRow({ item }: { item: typeof insights[number] }) {
+  return (
+    <a href="#" data-reveal className="group relative flex items-stretch gap-5 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-white p-3 transition-all duration-500 hover:-translate-y-1 hover:border-[hsl(var(--blue-400))] hover:shadow-[0_25px_50px_-20px_rgba(30,58,95,0.35)]">
+      <div className="relative h-28 w-32 shrink-0 overflow-hidden rounded-xl">
+        <img src={item.image} alt="" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+        <div className="absolute inset-0 bg-[hsl(var(--navy-950))]/0 transition-colors duration-500 group-hover:bg-[hsl(var(--navy-950))]/30" />
+      </div>
+      <div className="flex flex-1 flex-col justify-center pr-4">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--blue-700))]">{item.tag}</span>
+        <h4 className="mt-1 text-balance text-base font-semibold leading-snug text-[hsl(var(--navy-950))] transition-colors group-hover:text-[hsl(var(--blue-700))]">
+          {item.title}
+        </h4>
+        <span className="mt-1 text-xs text-[hsl(var(--muted-foreground))]">{item.read}</span>
+      </div>
+      <ArrowRight className="absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 translate-x-2 text-[hsl(var(--blue-500))] opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100" />
+    </a>
+  );
+}
+
+/* ---------- Why Vera ---------- */
+
 function WhyVera() {
   return (
-    <section id="why" className="relative overflow-hidden bg-white py-24 sm:py-32 dark:bg-[#0B1117]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_10%,rgba(200,220,240,.58),transparent_30%)] dark:bg-[radial-gradient(circle_at_80%_10%,rgba(74,123,175,.12),transparent_30%)]" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="why" className="relative bg-[hsl(var(--muted))]/40 py-28">
+      <div className="absolute inset-0 dot-grid opacity-40" />
+      <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
-          eyebrow="Why Vera Systems"
-          title="Precision, control, and trust in one system"
-          body="The revised design uses more white space, clearer contrast, softer backgrounds, and modern card motion so the brand feels premium without becoming too dark."
+          eyebrow="Why Vera"
+          title="Built around how food businesses actually run"
+          body="Four principles that shape every engagement, every dashboard, and every recommendation we deliver."
         />
-        <div className="mt-12 grid gap-5 md:grid-cols-2">
-          {whyCards.map((card, index) => (
-            <div
-              key={card.title}
-              data-reveal
-              className={cn(
-                "reveal rounded-[2rem] border border-vera-navy/10 bg-[#F8FCFF] p-7 shadow-sm transition duration-500 hover:-translate-y-2 hover:shadow-[0_24px_70px_rgba(15,37,64,.10)] dark:border-white/10 dark:bg-[#151E27]",
-                `reveal-delay-${index + 1}`
-              )}
-            >
-              <p className="text-[11px] font-black uppercase tracking-[0.22em] text-vera-mid">0{index + 1}</p>
-              <h3 className="mt-5 text-xl font-black uppercase tracking-[0.04em] text-vera-navy dark:text-white">{card.title}</h3>
-              <p className="mt-4 text-sm leading-8 text-vera-navy/[0.62] dark:text-slate-300">{card.body}</p>
-            </div>
+        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {whyCards.map((c, i) => (
+            <article key={c.title} data-reveal
+              className={cn("glass-card hover-lift group relative overflow-hidden rounded-3xl p-6", `reveal-delay-${(i % 4) + 1}`)}>
+              <p className="text-[11px] font-bold tracking-[0.22em] text-[hsl(var(--blue-700))]">0{i + 1}</p>
+              <h3 className="mt-3 text-base font-extrabold text-[hsl(var(--navy-950))] text-balance">{c.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">{c.body}</p>
+              <div className="mt-6 h-1 w-10 rounded-full bg-[hsl(var(--blue-400))]/40 transition-all group-hover:w-16 group-hover:bg-[hsl(var(--blue-500))]" />
+            </article>
           ))}
         </div>
       </div>
@@ -870,45 +923,36 @@ function WhyVera() {
   );
 }
 
-function ClientTypes() {
-  const clients = ["Processors", "Restaurants", "Exporters", "Manufacturers", "Hotels", "Catering firms", "Cloud kitchens", "Cold chain"];
-  return (
-    <section className="border-y border-vera-navy/10 bg-[#F6FAFD] py-12 dark:border-white/10 dark:bg-[#111820]">
-      <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-        <p className="text-[11px] font-black uppercase tracking-[0.24em] text-vera-mid">Built for food businesses across Rwanda & East Africa</p>
-        <div className="mt-7 flex flex-wrap justify-center gap-3">
-          {clients.map((client) => (
-            <span key={client} className="rounded-full border border-vera-navy/10 bg-white px-5 py-3 text-[11px] font-black uppercase tracking-[0.15em] text-vera-navy shadow-sm dark:border-white/10 dark:bg-white/[0.055] dark:text-vera-light">
-              {client}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+/* ---------- Contact ---------- */
 
 function Contact() {
   return (
-    <section id="contact" className="relative overflow-hidden bg-vera-navy py-24 text-white sm:py-32 dark:bg-[#080D12]">
-      <div className="absolute inset-0 grid-paper opacity-25" />
-      <div className="absolute -right-24 top-10 h-96 w-96 rounded-full bg-vera-mid/[0.22] blur-3xl" />
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-14 border-b border-white/10 pb-10 text-center" data-reveal>
-          <p className="text-2xl font-semibold text-vera-light sm:text-3xl">Start with clarity. <span className="font-black text-white">Move to control.</span></p>
+    <section id="contact" className="relative overflow-hidden bg-[hsl(var(--navy-950))] py-28 text-white">
+      <div className="aurora opacity-50" />
+      <div className="absolute inset-0 grid-bg opacity-15" />
+      <div className="relative mx-auto max-w-7xl px-6">
+        <div className="text-center" data-reveal>
+          <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[hsl(var(--blue-100))]/70">Get in touch</p>
+          <h2 className="mt-4 text-4xl font-semibold tracking-tight text-balance md:text-6xl">
+            Start with clarity. Move to control.
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[hsl(var(--blue-100))]/80">
+            Book a consultation and find out how Vera Systems can transform your compliance operations with real-time intelligence.
+          </p>
         </div>
-        <div className="grid gap-10 lg:grid-cols-[.9fr_1.1fr]">
-          <div data-reveal>
-            <p className="text-[11px] font-black uppercase tracking-[0.26em] text-vera-light/65">Get in touch</p>
-            <h2 className="mt-5 text-3xl font-black uppercase leading-tight tracking-[0.04em] sm:text-5xl">Ready to elevate your food safety?</h2>
-            <p className="mt-6 max-w-xl text-base leading-8 text-vera-light/[0.72]">
-              Book a consultation and find out how Vera Systems can transform compliance operations with real-time intelligence.
+
+        <div className="mt-14 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur" data-reveal>
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--blue-100))]/60">Talk to us</p>
+            <h3 className="mt-3 text-2xl font-semibold">Ready to elevate your food safety?</h3>
+            <p className="mt-3 text-sm leading-relaxed text-[hsl(var(--blue-100))]/70">
+              Tell us about your operation and we'll come back with a tailored plan within two business days.
             </p>
-            <div className="mt-9 space-y-4">
-              <ContactLine icon="✉" text="info@verasystems.rw" />
-              <ContactLine icon="☎" text="+250 788 000 000" />
-              <ContactLine icon="⌖" text="Kigali Innovation City, Rwanda" />
-              <ContactLine icon="◎" text="verasystems.rw" />
+            <div className="mt-8 space-y-3">
+              <ContactLine icon={<Mail className="h-4 w-4" />} text="hello@verasystems.rw" />
+              <ContactLine icon={<Phone className="h-4 w-4" />} text="+250 788 000 000" />
+              <ContactLine icon={<MapPin className="h-4 w-4" />} text="Kigali, Rwanda" />
+              <ContactLine icon={<Clock className="h-4 w-4" />} text="Mon–Fri · 08:00–18:00 CAT" />
             </div>
           </div>
           <ContactForm />
@@ -918,11 +962,11 @@ function Contact() {
   );
 }
 
-function ContactLine({ icon, text }: { icon: string; text: string }) {
+function ContactLine({ icon, text }: { icon: React.ReactNode; text: string }) {
   return (
-    <div className="flex items-center gap-4 text-vera-light/[0.82]">
-      <span className="grid h-11 w-11 place-items-center rounded-full border border-vera-light/15 bg-white/[0.08] text-lg">{icon}</span>
-      <span className="text-sm font-semibold">{text}</span>
+    <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 transition hover:-translate-y-0.5 hover:border-white/30">
+      <span className="grid h-9 w-9 place-items-center rounded-full bg-[hsl(var(--blue-100))]/10 text-[hsl(var(--blue-100))]">{icon}</span>
+      <span className="text-sm font-semibold text-[hsl(var(--blue-100))]/90">{text}</span>
     </div>
   );
 }
@@ -931,299 +975,117 @@ function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setStatus("loading");
-    setMessage("");
-
-    const formData = new FormData(event.currentTarget);
-    const payload = Object.fromEntries(formData.entries());
-
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading"); setMessage("");
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries());
     try {
-      const response = await fetch("/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(data),
       });
-      const result = await response.json();
-      if (!response.ok || !result.ok) throw new Error(result.message || "Could not send message.");
+      const result = await res.json().catch(() => ({ ok: res.ok }));
+      if (!res.ok || result.ok === false) throw new Error(result.message || "Could not send message.");
       setStatus("success");
-      setMessage(result.mock ? "Message captured locally. Add CONTACT_BACKEND_URL to forward it to your backend." : "Message sent. Vera Systems will get back to you shortly.");
-      event.currentTarget.reset();
-    } catch (error) {
+      setMessage("Message sent. Vera Systems will get back to you shortly.");
+      form.reset();
+    } catch (err) {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "Could not send message. Please try again.");
+      setMessage(err instanceof Error ? err.message : "Could not send message. Please try again.");
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-[2rem] border border-white/[0.12] bg-white/[0.07] p-5 shadow-2xl backdrop-blur-2xl sm:p-8" data-reveal>
+    <form onSubmit={handleSubmit} data-reveal className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 backdrop-blur">
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Full name" name="name" placeholder="Your name" required />
-        <Field label="Company" name="company" placeholder="Your food business" />
-        <Field label="Email" name="email" type="email" placeholder="you@company.rw" required />
-        <Field label="Phone" name="phone" placeholder="+250 ..." />
+        <Field label="Company" name="company" placeholder="Company name" required />
+        <Field label="Work email" name="email" placeholder="you@company.rw" type="email" required />
+        <Field label="Phone" name="phone" placeholder="+250 …" type="tel" />
         <div className="sm:col-span-2">
-          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-vera-light/65">Service interest</label>
-          <select
-            name="service"
-            className="w-full rounded-2xl border border-white/[0.12] bg-white/10 px-4 py-4 text-sm text-white outline-none transition focus:border-vera-light/60"
-            defaultValue="Both Services"
-          >
-            <option className="bg-vera-deep">Food Safety Consultancy</option>
-            <option className="bg-vera-deep">Digital Intelligence Platform</option>
-            <option className="bg-vera-deep">Platform Demo Request</option>
-            <option className="bg-vera-deep">Both Services</option>
+          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--blue-100))]/60">Service interest</label>
+          <select name="interest" className="w-full rounded-2xl border border-white/[0.12] bg-white/[0.06] px-4 py-4 text-sm text-white outline-none transition focus:border-[hsl(var(--blue-300))]">
+            <option value="consultancy">Food Safety Consultancy</option>
+            <option value="platform">Digital Intelligence Platform</option>
+            <option value="demo">Platform Demo Request</option>
+            <option value="both">Both Services</option>
           </select>
         </div>
         <div className="sm:col-span-2">
-          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-vera-light/65">Message</label>
-          <textarea
-            name="message"
-            required
-            placeholder="Tell us about your operation and compliance goals..."
-            className="min-h-36 w-full resize-none rounded-2xl border border-white/[0.12] bg-white/10 px-4 py-4 text-sm text-white outline-none transition placeholder:text-vera-light/35 focus:border-vera-light/60"
-          />
+          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--blue-100))]/60">Message</label>
+          <textarea name="message" rows={4} placeholder="Tell us about your operation, scale, and current pain points."
+            className="w-full resize-none rounded-2xl border border-white/[0.12] bg-white/[0.06] px-4 py-4 text-sm text-white outline-none transition placeholder:text-[hsl(var(--blue-100))]/30 focus:border-[hsl(var(--blue-300))]" />
         </div>
       </div>
-      <button
-        type="submit"
-        disabled={status === "loading"}
-        className="mt-6 w-full rounded-full bg-vera-light px-6 py-4 text-[12px] font-black uppercase tracking-[0.18em] text-vera-navy transition hover:-translate-y-1 hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {status === "loading" ? "Sending..." : "Send Message"}
+      <button type="submit" disabled={status === "loading"}
+        className="mt-6 w-full rounded-full bg-[hsl(var(--blue-100))] px-6 py-3.5 text-sm font-semibold text-[hsl(var(--navy-950))] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60">
+        {status === "loading" ? "Sending…" : "Send Message"}
       </button>
-      {message ? (
-        <p className={cn("mt-4 rounded-2xl border px-4 py-3 text-sm", status === "success" ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-200" : "border-red-400/30 bg-red-400/10 text-red-200")}>{message}</p>
-      ) : null}
+      {message && (
+        <p className={cn("mt-4 rounded-2xl border px-4 py-3 text-sm",
+          status === "success" ? "border-success/30 bg-success/10 text-success" : "border-danger/30 bg-danger/10 text-danger")}>
+          {message}
+        </p>
+      )}
     </form>
   );
 }
 
-function Field({ label, name, placeholder, type = "text", required = false }: { label: string; name: string; placeholder: string; type?: string; required?: boolean }) {
+function Field({ label, name, placeholder, type = "text", required = false }:
+  { label: string; name: string; placeholder: string; type?: string; required?: boolean }) {
   return (
     <div>
-      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-vera-light/65">{label}</label>
-      <input
-        name={name}
-        type={type}
-        required={required}
-        placeholder={placeholder}
-        className="w-full rounded-2xl border border-white/[0.12] bg-white/10 px-4 py-4 text-sm text-white outline-none transition placeholder:text-vera-light/35 focus:border-vera-light/60"
-      />
+      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--blue-100))]/60">{label}</label>
+      <input name={name} type={type} required={required} placeholder={placeholder}
+        className="w-full rounded-2xl border border-white/[0.12] bg-white/[0.06] px-4 py-4 text-sm text-white outline-none transition placeholder:text-[hsl(var(--blue-100))]/30 focus:border-[hsl(var(--blue-300))] focus:bg-white/[0.10]" />
     </div>
   );
 }
 
+/* ---------- Footer ---------- */
+
 function Footer() {
   return (
-    <footer className="bg-[#080D12] py-8 text-vera-light">
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center sm:px-6 lg:flex-row lg:px-8 lg:text-left">
-        <Logo theme="dark" compact />
-        <p className="text-xs text-vera-light/45">Precision Food Safety. Powered by Data. — Kigali, Rwanda © 2026</p>
+    <footer className="bg-[hsl(var(--navy-950))] py-10 text-[hsl(var(--blue-100))]">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 text-center lg:flex-row lg:text-left">
+        <Logo compact />
+        <p className="text-xs text-[hsl(var(--blue-100))]/50">Precision food safety. Powered by data. — Kigali, Rwanda © 2026</p>
+        <div className="flex gap-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--blue-100))]/60">
+          <a href="#" className="story-link">Privacy</a>
+          <a href="#" className="story-link">Terms</a>
+          <a href="#" className="story-link">LinkedIn</a>
+        </div>
       </div>
     </footer>
   );
 }
 
-function DashboardPanel({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cn("rounded-[1.6rem] border border-white/10 bg-[#121A22]/[0.88] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,.04)]", className)}>{children}</div>;
-}
+/* ---------- Page ---------- */
 
-function DataCard({ label, value, trend, tone }: { label: string; value: string; trend: string; tone: Tone }) {
+export default function Page() {
+  const progress = useScrollProgress();
+  useRevealOnScroll();
+
   return (
-    <DashboardPanel>
-      <div className="flex items-center justify-between">
-        <p className="text-[10px] font-black uppercase tracking-[0.22em] text-slate-400">{label}</p>
-        <StatusDot tone={tone} />
+    <main className="relative bg-white text-[hsl(var(--foreground))]">
+      <div className="fixed inset-x-0 top-0 z-[60] h-0.5 bg-transparent">
+        <div className="h-full bg-gradient-to-r from-[hsl(var(--blue-400))] via-[hsl(var(--blue-300))] to-success transition-[width] duration-150"
+          style={{ width: `${progress}%` }} />
       </div>
-      <div className="mt-5 flex items-end justify-between gap-4">
-        <p className="text-4xl font-black tracking-[-0.04em] text-white">{value}</p>
-        <p className={cn("text-sm font-black", toneText(tone))}>{trend}</p>
-      </div>
-    </DashboardPanel>
-  );
-}
 
-function StatusDot({ tone }: { tone: Tone }) {
-  return <span className={cn("h-2.5 w-2.5 rounded-full animate-pulseSoft", toneBg(tone))} />;
-}
-
-function toneBg(tone: Tone) {
-  if (tone === "success") return "bg-emerald-500";
-  if (tone === "warning") return "bg-amber-400";
-  if (tone === "danger") return "bg-red-500";
-  return "bg-vera-light";
-}
-
-function toneText(tone: Tone) {
-  if (tone === "success") return "text-emerald-300";
-  if (tone === "warning") return "text-amber-300";
-  if (tone === "danger") return "text-red-300";
-  return "text-vera-light";
-}
-
-function badgeClass(tone: Tone) {
-  if (tone === "success") return "bg-emerald-400/10 text-emerald-300 border border-emerald-300/20";
-  if (tone === "warning") return "bg-amber-400/10 text-amber-300 border border-amber-300/20";
-  if (tone === "danger") return "bg-red-400/10 text-red-300 border border-red-300/20";
-  return "bg-vera-light/10 text-vera-light border border-vera-light/20";
-}
-
-function LineChart({ compact = false }: { compact?: boolean }) {
-  return (
-    <svg viewBox="0 0 760 300" className={cn("w-full overflow-visible", compact ? "mt-4 h-48" : "mt-8 h-72 rounded-[1.4rem] bg-white/[0.03] p-4")}>
-      <defs>
-        <linearGradient id="lineMain" x1="0" x2="1" y1="0" y2="0">
-          <stop offset="0%" stopColor="#C8DCF0" />
-          <stop offset="55%" stopColor="#4A7BAF" />
-          <stop offset="100%" stopColor="#2ECC71" />
-        </linearGradient>
-        <linearGradient id="areaMain" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="#C8DCF0" stopOpacity=".22" />
-          <stop offset="100%" stopColor="#C8DCF0" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      {[0, 1, 2, 3, 4].map((i) => (
-        <line key={i} x1="30" x2="730" y1={50 + i * 46} y2={50 + i * 46} stroke="rgba(200,220,240,.12)" />
-      ))}
-      <path d="M30 228 C82 210 108 144 156 162 C210 184 232 78 286 92 C344 108 366 190 420 142 C470 98 500 58 552 74 C615 94 642 42 702 58 C722 62 732 55 740 50 L740 280 L30 280 Z" fill="url(#areaMain)" />
-      <path d="M30 228 C82 210 108 144 156 162 C210 184 232 78 286 92 C344 108 366 190 420 142 C470 98 500 58 552 74 C615 94 642 42 702 58 C722 62 732 55 740 50" fill="none" stroke="url(#lineMain)" strokeWidth="5" strokeLinecap="round" className="chart-line" />
-      {[
-        [156, 162],
-        [286, 92],
-        [420, 142],
-        [552, 74],
-        [702, 58],
-      ].map(([cx, cy]) => (
-        <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="6" fill="#C8DCF0" stroke="#101820" strokeWidth="3" />
-      ))}
-    </svg>
-  );
-}
-
-function MiniGauge({ value }: { value: number }) {
-  const radius = 32;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (value / 100) * circumference;
-  return (
-    <svg viewBox="0 0 80 80" className="h-20 w-20 -rotate-90">
-      <circle cx="40" cy="40" r={radius} fill="none" stroke="rgba(74,123,175,.16)" strokeWidth="8" />
-      <circle cx="40" cy="40" r={radius} fill="none" stroke="#4A7BAF" strokeWidth="8" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={offset} />
-    </svg>
-  );
-}
-
-function DonutChart({ value, label }: { value: number; label: string }) {
-  const radius = 70;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (value / 100) * circumference;
-  return (
-    <div className="relative h-44 w-44">
-      <svg viewBox="0 0 180 180" className="h-full w-full -rotate-90">
-        <circle cx="90" cy="90" r={radius} fill="none" stroke="rgba(200,220,240,.12)" strokeWidth="18" />
-        <circle cx="90" cy="90" r={radius} fill="none" stroke="#C8DCF0" strokeWidth="18" strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={offset} />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <div className="text-4xl font-black text-white">{value}%</div>
-        <div className="text-[10px] font-black uppercase tracking-[0.18em] text-vera-light/55">{label}</div>
-      </div>
-    </div>
-  );
-}
-
-function Sparkline({ tone }: { tone: Tone }) {
-  const stroke = tone === "success" ? "#34D399" : tone === "warning" ? "#FBBF24" : tone === "danger" ? "#F87171" : "#C8DCF0";
-  return (
-    <svg viewBox="0 0 220 62" className="mt-4 h-14 w-full overflow-visible">
-      <path d="M0 40 C20 32 26 45 42 38 C66 28 74 20 98 30 C118 39 130 53 150 42 C176 28 190 21 220 16" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth="12" strokeLinecap="round" />
-      <path d="M0 40 C20 32 26 45 42 38 C66 28 74 20 98 30 C118 39 130 53 150 42 C176 28 190 21 220 16" fill="none" stroke={stroke} strokeWidth="3" strokeLinecap="round" className="chart-line" />
-    </svg>
-  );
-}
-
-function StackedBars() {
-  const bars = [58, 72, 44, 88, 63, 96, 70, 52, 82, 66, 90, 74];
-  return (
-    <div className="mt-6 flex h-60 items-end gap-3 rounded-[1.4rem] bg-white/[0.03] p-5">
-      {bars.map((height, index) => (
-        <div key={index} className="flex flex-1 flex-col items-center gap-2">
-          <div className="relative w-full overflow-hidden rounded-t-full bg-white/[0.07]" style={{ height: `${height}%` }}>
-            <div className="absolute bottom-0 left-0 right-0 rounded-t-full bg-gradient-to-t from-vera-mid to-vera-light" style={{ height: `${Math.max(32, height - 18)}%` }} />
-            {height > 84 ? <div className="absolute left-0 right-0 top-0 h-2 bg-amber-300" /> : null}
-          </div>
-          <span className="text-[9px] text-vera-light/25">{index + 1}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function HeatMap() {
-  const values = [1, 2, 3, 2, 1, 1, 3, 4, 2, 1, 2, 2, 1, 4, 3, 2, 1, 1, 2, 3, 1, 2, 4, 3, 2, 1, 1, 2];
-  const colors = ["bg-emerald-400/45", "bg-vera-mid/55", "bg-amber-300/70", "bg-red-400/75"];
-  return (
-    <div className="mt-7">
-      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-vera-light/45">Receiving risk heatmap</p>
-      <div className="mt-3 grid grid-cols-7 gap-1.5">
-        {values.map((value, index) => (
-          <span key={index} className={cn("h-6 rounded-md", colors[value - 1])} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function Progress({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="grid grid-cols-[86px_1fr_42px] items-center gap-3">
-      <span className="text-xs text-slate-400">{label}</span>
-      <span className="h-2 overflow-hidden rounded-full bg-white/[0.08]">
-        <span className="block h-full rounded-full bg-vera-light" style={{ width: `${value}%` }} />
-      </span>
-      <span className="text-right text-xs font-black text-vera-light">{value}%</span>
-    </div>
-  );
-}
-
-function Timeline() {
-  const items = [
-    ["danger", "Dispatch temperature breach", "Batch VS-248 exceeded dispatch cold limit. Corrective action assigned.", "8 min ago"],
-    ["warning", "Chill-down delay", "Cooling curve slower than expected for cooked item group B.", "24 min ago"],
-    ["success", "Sanitation check closed", "Supervisor verified hygiene checklist and uploaded photo evidence.", "1 hr ago"],
-  ] as const;
-
-  return (
-    <div className="mt-6 space-y-4 border-l border-white/10 pl-5">
-      {items.map(([tone, title, body, time]) => (
-        <div key={title} className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-          <span className={cn("absolute -left-[26px] top-5 h-3 w-3 rounded-full ring-4 ring-[#121A22]", toneBg(tone))} />
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h4 className="font-bold text-white">{title}</h4>
-              <p className="mt-2 text-sm leading-7 text-slate-400">{body}</p>
-            </div>
-            <span className="shrink-0 text-xs text-slate-500">{time}</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function SunIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="relative h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-    </svg>
-  );
-}
-
-function MoonIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="relative h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.7 6.7 0 0 0 21 12.8Z" />
-    </svg>
+      <Navbar />
+      <Hero />
+      <ClientTypes />
+      <About />
+      <Services />
+      <StackExperience />
+      <PlatformDemo />
+      <Insights />
+      <WhyVera />
+      <Contact />
+      <Footer />
+    </main>
   );
 }
