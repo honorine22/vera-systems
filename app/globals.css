@@ -12,7 +12,6 @@
   --border: 214 28% 88%;
   --card: 0 0% 100%;
 
-  /* Vera blue palette */
   --navy-950: 218 65% 9%;
   --navy-900: 218 55% 14%;
   --navy-800: 218 50% 20%;
@@ -22,7 +21,6 @@
   --blue-300: 208 78% 68%;
   --blue-100: 210 65% 88%;
 
-  /* Accent colors */
   --teal: 172 60% 40%;
   --teal-light: 172 65% 80%;
   --amber: 38 92% 55%;
@@ -37,7 +35,6 @@
   --danger: 6 78% 54%;
   --danger-light: 6 80% 90%;
 
-  /* Chart accent palette */
   --chart-1: 212 66% 46%;
   --chart-2: 172 60% 40%;
   --chart-3: 258 60% 56%;
@@ -109,8 +106,6 @@
 }
 
 @layer utilities {
-
-  /* ── Glass ── */
   .glass-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, .88), rgba(255, 255, 255, .65));
     backdrop-filter: blur(18px) saturate(150%);
@@ -124,7 +119,6 @@
     box-shadow: 0 1px 0 rgba(255, 255, 255, .04) inset, 0 30px 60px -24px rgba(0, 0, 0, .7);
   }
 
-  /* ── Gradients ── */
   .gradient-blue {
     background: linear-gradient(135deg, #2d6cb5 0%, #1a4a8a 100%);
   }
@@ -159,7 +153,6 @@
     color: transparent;
   }
 
-  /* ── Atmosphere ── */
   .aurora {
     position: absolute;
     inset: -20%;
@@ -202,7 +195,6 @@
     background-image: radial-gradient(rgba(100, 160, 240, .12) 1.2px, transparent 1.2px);
   }
 
-  /* ── Interactions ── */
   .hover-lift {
     transition: transform .5s cubic-bezier(.2, .8, .2, 1), box-shadow .5s, border-color .5s;
   }
@@ -234,7 +226,6 @@
     transform-origin: bottom left;
   }
 
-  /* ── Marquee ── */
   .marquee-track {
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
@@ -255,7 +246,6 @@
     scrollbar-width: none;
   }
 
-  /* ── Reveal on scroll ── */
   [data-reveal] {
     opacity: 0;
     transform: translateY(28px);
@@ -283,7 +273,6 @@
     transition-delay: .30s;
   }
 
-  /* ── Shadow tokens ── */
   .shadow-vera {
     box-shadow: 0 24px 80px rgba(7, 24, 42, .14);
   }
@@ -300,7 +289,6 @@
     box-shadow: 0 0 70px rgba(74, 123, 175, .18);
   }
 
-  /* Teal accent glow */
   .shadow-teal {
     box-shadow: 0 0 50px rgba(13, 148, 136, .20);
   }
@@ -309,7 +297,6 @@
     box-shadow: 0 0 50px rgba(124, 58, 237, .18);
   }
 
-  /* ── Navbar glass ── */
   .nav-scrolled {
     background: rgba(255, 255, 255, .88);
     backdrop-filter: blur(24px) saturate(160%);
@@ -324,7 +311,6 @@
     border-color: rgba(30, 60, 120, .5);
   }
 
-  /* ── Step number accent ── */
   .step-number {
     font-family: var(--font-display);
     font-size: clamp(4rem, 8vw, 6rem);
@@ -336,7 +322,6 @@
     color: transparent;
   }
 
-  /* ── Chart accent colors (CSS vars for Recharts) ── */
   .recharts-default-tooltip {
     border-radius: 12px !important;
     border: none !important;
@@ -344,7 +329,6 @@
   }
 }
 
-/* ── Keyframes ── */
 @keyframes floatSoft {
   0% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -469,7 +453,6 @@
   }
 }
 
-/* ── Animation classes ── */
 .animate-fade-up {
   animation: fadeUp .75s cubic-bezier(.2, .8, .2, 1) both;
 }
@@ -503,7 +486,6 @@
   animation: navReveal .4s cubic-bezier(.2, .8, .2, 1) both;
 }
 
-/* ── Dark theme toggle transition ── */
 html.transitioning * {
   transition: background-color .35s ease, color .35s ease, border-color .35s ease !important;
 }

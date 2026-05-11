@@ -37,22 +37,150 @@ const C = {
 };
 
 /* ── Data ── */
-const navItems = [
-  { label: "About", href: "about" },
-  { label: "Services", href: "services" },
-  { label: "Platform", href: "platform" },
-  { label: "Why Vera", href: "why" },
-  { label: "Insights", href: "insights" },
-  { label: "Contact", href: "contact" },
+type Language = "en" | "fr" | "rw";
+type NavKey = "about" | "services" | "platform" | "why" | "insights" | "contact";
+
+const navItems: Array<{ key: NavKey; href: string }> = [
+  { key: "about", href: "about" },
+  { key: "services", href: "services" },
+  { key: "platform", href: "platform" },
+  { key: "why", href: "why" },
+  { key: "insights", href: "insights" },
+  { key: "contact", href: "contact" },
 ];
+
+const languageOptions: Array<{ code: Language; short: string; label: string }> = [
+  { code: "en", short: "EN", label: "English" },
+  { code: "fr", short: "FR", label: "Français" },
+  { code: "rw", short: "RW", label: "Kinyarwanda" },
+];
+
+const siteCopy = {
+  en: {
+    languageLabel: "Language",
+    logoSubtitle: "Precision food safety",
+    nav: { about: "About", services: "Services", platform: "Platform", why: "Why Vera", insights: "Insights", contact: "Contact" },
+    actions: { bookDemo: "Book demo", bookConsultation: "Book consultation", explorePlatform: "Explore platform", learnMore: "Learn more", requestDemo: "Request live demo", nextStep: "Next step", sendMessage: "Send message", sending: "Sending…", lightMode: "Light mode", darkMode: "Dark mode" },
+    hero: {
+      titleStart: "From inspection records to",
+      highlight: "daily control",
+      titleEnd: ".",
+      body: "Vera brings HACCP, ISO 22000, supplier checks, temperature logs, and corrective actions into one workspace built for food teams in East Africa.",
+      stats: [
+        { k: "98.7%", l: "records complete" },
+        { k: "3.4×", l: "faster follow-up" },
+        { k: "240+", l: "controls tracked" },
+      ],
+    },
+    clients: { eyebrow: "Trusted by food businesses across Rwanda & East Africa", items: ["Processors", "Restaurants", "Exporters", "Manufacturers", "Hotels", "Catering firms", "Cloud kitchens", "Cold chain"] },
+    about: {
+      eyebrow: "About Vera",
+      title: "Food safety systems built for daily operations",
+      body: "We combine food-safety practice with clear digital records. The result is a working system your team can use every day, not only when an audit is close.",
+      established: "Based in", location: "Kigali · Rwanda", missionLabel: "Mission",
+      mission: "To help food businesses in Rwanda and East Africa keep safer operations through practical standards, better records, and faster corrective action.",
+      pills: [
+        { title: "Standards-led", body: "HACCP and ISO 22000 methods connected to records your team can verify." },
+        { title: "Operational fit", body: "Workflows shaped around kitchens, factories, warehouses, and cold-chain routines." },
+      ],
+      stats: [{ k: "5+", l: "Years experience" }, { k: "140+", l: "Checks completed" }, { k: "60+", l: "Operations supported" }],
+    },
+    services: {
+      eyebrow: "Services", title: "Consultancy and software working as one system.", body: "Start with the support your operation needs now, then add more structure as the business grows.",
+      items: [
+        { label: "Food Safety Consultancy", title: "Compliance systems that can be used on site", impact: "Close the gaps that create audit pressure, product risk, and avoidable rework.", body: "HACCP design, ISO 22000 gap analysis, facility checks, verification schedules, staff training, and corrective action planning.", bullets: ["HACCP system design and implementation", "ISO 22000 readiness checks", "Kitchen and facility inspections", "Food-handler training and verification tools"], statLabel: "audit readiness" },
+        { label: "Digital Records & Software", title: "Live records for daily food-safety control", impact: "Replace scattered paper logs with dashboards, alerts, audit trails, and supplier scorecards.", body: "A practical records layer for CCP monitoring, hygiene checks, deviation follow-up, supplier performance, and compliance reporting.", bullets: ["CCP monitoring dashboards", "Deviation notifications", "Digital hygiene logs and sign-offs", "Supplier performance tracking"], statLabel: "faster follow-up" },
+      ],
+    },
+    stack: {
+      eyebrow: "How it works", title: "A practical route to stronger food safety", body: "From the first site walkthrough to working records and routine reporting, each step is clear and usable.", nextStep: "Next step", cards: [
+        { title: "Map the real operating risk", body: "We review CCPs, hygiene behavior, supplier risk, documentation gaps, staff routines, and audit pressure points.", label: "first risk snapshot" },
+        { title: "Turn compliance into workflow", body: "Procedures become checklists, controls, escalation paths, and evidence trails that fit day-to-day work.", label: "faster evidence retrieval" },
+        { title: "Track performance in real time", body: "Dashboards show CCP status, deviations, supplier scores, hygiene logs, and readiness indicators.", label: "CCP tracking" },
+        { title: "Use data to reduce repeat failures", body: "Management sees trends, corrective-action loops, supplier patterns, and practical recommendations.", label: "audit-ready reporting" },
+      ]
+    },
+    platform: { eyebrow: "The Platform", title: "One workspace for the records that matter.", quote: "A control desk for food-safety work: deviations logged, suppliers scored, CCPs visible, and reports ready when needed." },
+    outcomes: {
+      eyebrow: "Client priorities", title: "What better records make easier.", body: "The focus is simple: less chasing, fewer missing logs, clearer accountability, and stronger audit preparation.", items: [
+        { quote: "Audit preparation becomes faster because documents, checks, and sign-offs are already organized.", name: "Audit readiness", role: "Evidence in one place", initials: "AR" },
+        { quote: "Supervisors can see which deviations still need action instead of waiting for end-of-day reviews.", name: "Team follow-up", role: "Clear ownership", initials: "TF" },
+        { quote: "Supplier reviews become easier when receiving checks, documents, and corrective actions are tracked together.", name: "Supplier control", role: "Better purchasing decisions", initials: "SC" },
+      ]
+    },
+    insights: {
+      eyebrow: "Insights", title: "Notes from food operations.", body: "Practical observations from compliance work, supplier checks, CCP monitoring, and daily food-safety routines.", items: [
+        { tag: "Case note", title: "How a processor reduced deviation follow-up delays", body: "Live alerts helped the team act before end-of-shift paper reviews.", read: "6 min read" },
+        { tag: "Data note", title: "Supplier records that often create audit gaps", body: "Certificate lapses, receiving temperatures, and traceability records need steady review.", read: "5 min read" },
+        { tag: "Operations", title: "Why paper HACCP logs slow down response", body: "Manual logging creates a gap between the issue, the review, and the corrective action.", read: "7 min read" },
+        { tag: "Field note", title: "How to read CCP stability before problems grow", body: "A practical look at the signals that show whether controls are holding during the week.", read: "6 min read" },
+      ]
+    },
+    why: {
+      eyebrow: "Why Vera", title: "Built around how food businesses actually work.", body: "Vera keeps the focus on usable controls, clear records, and evidence that helps managers act quickly.", cards: [
+        { title: "Standards-based work", body: "Recommendations connect to HACCP control points, ISO clauses, audit evidence, or operating data." },
+        { title: "Live risk visibility", body: "Teams can see CCP status, deviation alerts, and corrective action progress from one workspace." },
+        { title: "Compliance mapped to data", body: "Findings become measurable outputs that are easier to verify and report." },
+        { title: "Made for East Africa", body: "Designed around local supply-chain realities, team capacity, and the pace of food operations." },
+      ]
+    },
+    cta: { eyebrow: "Get started", title: "Ready to replace paper logs with live records?", body: "Move from late reviews to clearer daily control across CCPs, hygiene checks, suppliers, and reports." },
+    contact: { eyebrow: "Get in touch", title: "Start with clarity. Move to control.", body: "Book a consultation and see how Vera can improve compliance work, records, and follow-up.", talk: "Talk to us", cardTitle: "Ready to improve your food-safety system?", cardBody: "Tell us about your operation and we will come back with a practical plan within two business days.", response: "Typically responds within 4 hours", trusted: "Trusted by teams in", formEyebrow: "Send a message", formTitle: "Tell us about your operation", fields: { name: "Full name", company: "Company", email: "Work email", phone: "Phone", interest: "Service interest", message: "Message" }, placeholders: { name: "Your name", company: "Company name", email: "you@company.rw", phone: "+250 …", message: "Tell us about your operation, scale, and current pain points." }, interests: ["Food Safety Consultancy", "Digital Records Platform", "Platform Demo Request", "Both Services"], success: "Message sent. Vera Systems will get back to you shortly.", error: "Could not send message. Please try again." },
+    footer: { summary: "Precision food safety for East Africa. Practical standards, clean records, and stronger daily control.", columns: [{ heading: "Company", links: ["About", "Services", "Platform", "Why Vera"] }, { heading: "Resources", links: ["Insights", "Case studies", "Documentation", "Pricing"] }, { heading: "Legal", links: ["Privacy policy", "Terms of service", "Cookie policy"] }], copyright: "© 2026 Vera Systems Ltd. · Kigali, Rwanda · All rights reserved." },
+  },
+  fr: {
+    languageLabel: "Langue", logoSubtitle: "Sécurité alimentaire précise",
+    nav: { about: "À propos", services: "Services", platform: "Plateforme", why: "Pourquoi Vera", insights: "Articles", contact: "Contact" },
+    actions: { bookDemo: "Réserver une démo", bookConsultation: "Réserver une consultation", explorePlatform: "Voir la plateforme", learnMore: "En savoir plus", requestDemo: "Demander une démo", nextStep: "Étape suivante", sendMessage: "Envoyer", sending: "Envoi…", lightMode: "Mode clair", darkMode: "Mode sombre" },
+    hero: { titleStart: "Des registres de contrôle au", highlight: "pilotage quotidien", titleEnd: ".", body: "Vera rassemble HACCP, ISO 22000, contrôles fournisseurs, relevés de température et actions correctives dans un espace conçu pour les équipes alimentaires en Afrique de l’Est.", stats: [{ k: "98.7%", l: "registres complets" }, { k: "3.4×", l: "suivi plus rapide" }, { k: "240+", l: "contrôles suivis" }] },
+    clients: { eyebrow: "Utilisé par des entreprises alimentaires au Rwanda et en Afrique de l’Est", items: ["Transformateurs", "Restaurants", "Exportateurs", "Fabricants", "Hôtels", "Traiteurs", "Cuisines cloud", "Chaîne du froid"] },
+    about: { eyebrow: "À propos de Vera", title: "Des systèmes de sécurité alimentaire pensés pour le terrain", body: "Nous associons pratique de la sécurité alimentaire et registres numériques clairs. Le système sert tous les jours, pas seulement avant un audit.", established: "Basé à", location: "Kigali · Rwanda", missionLabel: "Mission", mission: "Aider les entreprises alimentaires du Rwanda et d’Afrique de l’Est à sécuriser leurs opérations grâce à des standards pratiques, de meilleurs registres et des actions correctives rapides.", pills: [{ title: "Guidé par les standards", body: "Méthodes HACCP et ISO 22000 reliées à des preuves vérifiables." }, { title: "Adapté aux opérations", body: "Flux de travail adaptés aux cuisines, usines, entrepôts et chaînes du froid." }], stats: [{ k: "5+", l: "Années d’expérience" }, { k: "140+", l: "Contrôles réalisés" }, { k: "60+", l: "Opérations accompagnées" }] },
+    services: { eyebrow: "Services", title: "Conseil et logiciel dans un même système.", body: "Commencez par le besoin le plus urgent, puis ajoutez plus de structure à mesure que l’activité grandit.", items: [{ label: "Conseil en sécurité alimentaire", title: "Systèmes de conformité utilisables sur site", impact: "Réduire les écarts qui créent une pression d’audit, des risques produit et du travail repris.", body: "Conception HACCP, analyse ISO 22000, contrôles des installations, calendriers de vérification, formation et plans d’actions correctives.", bullets: ["Conception et mise en œuvre HACCP", "Préparation ISO 22000", "Inspections de cuisines et sites", "Formation et outils de vérification"], statLabel: "préparation audit" }, { label: "Registres numériques & logiciel", title: "Registres en direct pour le contrôle quotidien", impact: "Remplacer les journaux dispersés par tableaux de bord, alertes, traces d’audit et scorecards fournisseurs.", body: "Une couche pratique pour les CCP, l’hygiène, les écarts, les fournisseurs et les rapports de conformité.", bullets: ["Tableaux de bord CCP", "Notifications d’écarts", "Registres d’hygiène numériques", "Suivi performance fournisseurs"], statLabel: "suivi plus rapide" }] },
+    stack: { eyebrow: "Méthode", title: "Un parcours pratique vers une sécurité alimentaire plus solide", body: "De la première visite de site aux registres et rapports, chaque étape reste claire et utilisable.", nextStep: "Étape suivante", cards: [{ title: "Cartographier les vrais risques", body: "Nous examinons CCP, hygiène, fournisseurs, documents, routines et points de pression liés aux audits.", label: "premier aperçu risque" }, { title: "Transformer la conformité en routine", body: "Les procédures deviennent checklists, contrôles, escalades et traces de preuve.", label: "preuves retrouvées plus vite" }, { title: "Suivre la performance en direct", body: "Les tableaux de bord montrent les CCP, écarts, fournisseurs, hygiène et indicateurs de préparation.", label: "suivi CCP" }, { title: "Réduire les répétitions d’écarts", body: "La direction voit tendances, actions correctives, fournisseurs et recommandations pratiques.", label: "rapports prêts pour audit" }] },
+    platform: { eyebrow: "Plateforme", title: "Un espace pour les registres essentiels.", quote: "Un poste de contrôle pour la sécurité alimentaire : écarts enregistrés, fournisseurs notés, CCP visibles et rapports prêts." },
+    outcomes: { eyebrow: "Priorités clients", title: "Ce que de meilleurs registres facilitent.", body: "Moins de relances, moins de journaux manquants, plus de responsabilité et une meilleure préparation audit.", items: [{ quote: "La préparation audit devient plus rapide car documents, contrôles et validations sont déjà organisés.", name: "Préparation audit", role: "Preuves au même endroit", initials: "PA" }, { quote: "Les superviseurs voient les écarts à traiter sans attendre la fin de journée.", name: "Suivi équipe", role: "Responsabilité claire", initials: "SE" }, { quote: "Les fournisseurs sont plus faciles à revoir quand réception, documents et actions sont suivis ensemble.", name: "Contrôle fournisseurs", role: "Meilleures décisions", initials: "CF" }] },
+    insights: { eyebrow: "Articles", title: "Notes du terrain.", body: "Observations pratiques sur la conformité, les fournisseurs, les CCP et les routines de sécurité alimentaire.", items: [{ tag: "Cas pratique", title: "Réduire les retards de suivi des écarts", body: "Les alertes en direct aident l’équipe à agir avant la revue papier de fin de poste.", read: "6 min" }, { tag: "Données", title: "Registres fournisseurs qui créent souvent des écarts", body: "Certificats, températures de réception et traçabilité nécessitent un suivi régulier.", read: "5 min" }, { tag: "Opérations", title: "Pourquoi les journaux HACCP papier ralentissent la réponse", body: "La saisie manuelle crée un délai entre l’incident, la revue et l’action corrective.", read: "7 min" }, { tag: "Terrain", title: "Lire la stabilité CCP avant que les problèmes grandissent", body: "Signaux utiles pour savoir si les contrôles tiennent pendant la semaine.", read: "6 min" }] },
+    why: { eyebrow: "Pourquoi Vera", title: "Pensé pour le fonctionnement réel des entreprises alimentaires.", body: "Vera privilégie des contrôles utilisables, des registres clairs et des preuves qui aident les managers à agir vite.", cards: [{ title: "Travail basé sur les standards", body: "Les recommandations sont reliées aux CCP, clauses ISO, preuves d’audit ou données d’opération." }, { title: "Visibilité du risque", body: "Les équipes voient le statut CCP, les alertes et les actions correctives dans un même espace." }, { title: "Conformité reliée aux données", body: "Les constats deviennent des résultats mesurables, plus simples à vérifier et rapporter." }, { title: "Conçu pour l’Afrique de l’Est", body: "Adapté aux chaînes d’approvisionnement locales, aux équipes et au rythme des opérations." }] },
+    cta: { eyebrow: "Démarrer", title: "Prêt à remplacer les journaux papier par des registres en direct ?", body: "Passez des revues tardives à un contrôle quotidien plus clair des CCP, de l’hygiène, des fournisseurs et des rapports." },
+    contact: { eyebrow: "Contact", title: "Commencer avec clarté. Avancer avec contrôle.", body: "Réservez une consultation et voyez comment Vera peut améliorer la conformité, les registres et le suivi.", talk: "Parlez-nous", cardTitle: "Prêt à améliorer votre système ?", cardBody: "Décrivez votre opération et nous proposerons un plan pratique sous deux jours ouvrables.", response: "Réponse habituelle sous 4 heures", trusted: "Utilisé par des équipes au", formEyebrow: "Envoyer un message", formTitle: "Parlez-nous de votre opération", fields: { name: "Nom complet", company: "Entreprise", email: "Email professionnel", phone: "Téléphone", interest: "Service recherché", message: "Message" }, placeholders: { name: "Votre nom", company: "Nom de l’entreprise", email: "vous@entreprise.rw", phone: "+250 …", message: "Décrivez votre opération, sa taille et vos besoins." }, interests: ["Conseil sécurité alimentaire", "Plateforme de registres", "Demande de démo", "Les deux services"], success: "Message envoyé. Vera Systems vous répondra bientôt.", error: "Impossible d’envoyer le message. Veuillez réessayer." },
+    footer: { summary: "Sécurité alimentaire précise pour l’Afrique de l’Est. Standards pratiques, registres propres et meilleur contrôle quotidien.", columns: [{ heading: "Entreprise", links: ["À propos", "Services", "Plateforme", "Pourquoi Vera"] }, { heading: "Ressources", links: ["Articles", "Études de cas", "Documentation", "Tarifs"] }, { heading: "Légal", links: ["Confidentialité", "Conditions", "Cookies"] }], copyright: "© 2026 Vera Systems Ltd. · Kigali, Rwanda · Tous droits réservés." },
+  },
+  rw: {
+    languageLabel: "Ururimi", logoSubtitle: "Umutekano w’ibiribwa",
+    nav: { about: "Ibyacu", services: "Serivisi", platform: "Urubuga", why: "Impamvu Vera", insights: "Inyandiko", contact: "Twandikire" },
+    actions: { bookDemo: "Saba demo", bookConsultation: "Saba inama", explorePlatform: "Reba urubuga", learnMore: "Menya byinshi", requestDemo: "Saba demo", nextStep: "Intambwe ikurikira", sendMessage: "Ohereza", sending: "Biri koherezwa…", lightMode: "Uburyo bw’urumuri", darkMode: "Uburyo bw’umwijima" },
+    hero: { titleStart: "Kuva ku nyandiko z’igenzura kugera ku", highlight: "micungire ya buri munsi", titleEnd: ".", body: "Vera ihuza HACCP, ISO 22000, igenzura ry’abatanga ibikoresho, ubushyuhe n’ibikorwa byo gukosora mu rubuga rumwe rworohereza amakipe akora mu biribwa.", stats: [{ k: "98.7%", l: "inyandiko zuzuye" }, { k: "3.4×", l: "gukurikirana vuba" }, { k: "240+", l: "igenzura rikurikiranywa" }] },
+    clients: { eyebrow: "Yizewe n’abakora ubucuruzi bw’ibiribwa mu Rwanda no muri Afurika y’Iburasirazuba", items: ["Abatunganya ibiribwa", "Restaurants", "Abajyana hanze", "Inganda", "Hotels", "Catering", "Cloud kitchens", "Cold chain"] },
+    about: { eyebrow: "Ibyerekeye Vera", title: "Sisitemu z’umutekano w’ibiribwa zikora mu kazi ka buri munsi", body: "Duhuza ubumenyi bw’umutekano w’ibiribwa n’inyandiko zicungwa neza. Sisitemu ikoreshwa buri munsi, si mbere y’audit gusa.", established: "Dukorera", location: "Kigali · Rwanda", missionLabel: "Intego", mission: "Gufasha ubucuruzi bw’ibiribwa mu Rwanda no muri Afurika y’Iburasirazuba kubaka imikorere itekanye, inyandiko zisobanutse n’ibikorwa byo gukosora ku gihe.", pills: [{ title: "Bishingiye ku bipimo", body: "HACCP na ISO 22000 bihuzwa n’ibimenyetso bishobora kugenzurwa." }, { title: "Bihuye n’imikorere", body: "Inzira z’akazi zubakwa hashingiwe kuri kitchens, factories, warehouses na cold chain." }], stats: [{ k: "5+", l: "Imyaka y’ubunararibonye" }, { k: "140+", l: "Igenzura ryakozwe" }, { k: "60+", l: "Ibikorwa byafashijwe" }] },
+    services: { eyebrow: "Serivisi", title: "Ubujyanama na software bikorera hamwe.", body: "Tangira ku cyo ukeneye ubu, wongere urwego uko ibikorwa bikura.", items: [{ label: "Ubujyanama mu mutekano w’ibiribwa", title: "Sisitemu zubahiriza ibisabwa zikoreshwa ku kazi", impact: "Gufunga icyuho giteza ibibazo bya audit, ibyago ku bicuruzwa n’akazi gasubirwamo.", body: "Gutegura HACCP, gusesengura ISO 22000, kugenzura inyubako, gahunda zo gusuzuma, amahugurwa n’ibikorwa byo gukosora.", bullets: ["Gutegura no gushyira mu bikorwa HACCP", "Kwitegura ISO 22000", "Igenzura rya kitchen n’inyubako", "Amahugurwa n’ibikoresho byo kugenzura"], statLabel: "kwitegura audit" }, { label: "Inyandiko za digital & software", title: "Inyandiko z’ako kanya mu micungire ya buri munsi", impact: "Gusimbuza impapuro zitandukanye dashboards, alerts, audit trails na supplier scorecards.", body: "Uburyo bwo gukurikirana CCP, isuku, ibitagenda neza, abatanga ibikoresho na raporo.", bullets: ["Dashboards za CCP", "Alerts z’ibitagenda neza", "Inyandiko z’isuku za digital", "Gukurikirana suppliers"], statLabel: "gukurikirana vuba" }] },
+    stack: { eyebrow: "Uko bikorwa", title: "Inzira ifatika yo gukomeza umutekano w’ibiribwa", body: "Kuva ku gusura site bwa mbere kugeza ku nyandiko n’amaraporo, buri ntambwe iba isobanutse.", nextStep: "Intambwe ikurikira", cards: [{ title: "Gusobanukirwa ibyago nyabyo", body: "Tureba CCPs, isuku, suppliers, inyandiko, routine z’abakozi n’ibibazo bya audit.", label: "ishusho ya mbere y’ibyago" }, { title: "Guhindura compliance routine", body: "Procedures zihinduka checklists, controls, escalation paths n’ibimenyetso.", label: "kubona ibimenyetso vuba" }, { title: "Gukurikirana performance ako kanya", body: "Dashboards zerekana CCP, deviations, suppliers, hygiene logs n’ibipimo byo kwitegura.", label: "gukurikirana CCP" }, { title: "Kugabanya amakosa agaruka", body: "Management ibona trends, corrective actions, suppliers n’inama zifatika.", label: "raporo ziteguye audit" }] },
+    platform: { eyebrow: "Urubuga", title: "Ahantu hamwe h’inyandiko z’ingenzi.", quote: "Igikoresho cyo gucunga umutekano w’ibiribwa: deviations zandikwa, suppliers bagahabwa amanota, CCP zikagaragara, raporo zikaboneka." },
+    outcomes: { eyebrow: "Ibyo abakiriya bakeneye", title: "Icyo inyandiko nziza zoroshya.", body: "Gukurikirana bike, inyandiko nke zibura, inshingano zisobanutse no kwitegura audit neza.", items: [{ quote: "Kwitegura audit birihuta kuko inyandiko, igenzura n’amashyirwaho umukono biba biteguye.", name: "Kwitegura audit", role: "Ibimenyetso hamwe", initials: "KA" }, { quote: "Abayobozi babona ibikeneye gukosorwa batategereje umusozo w’umunsi.", name: "Gukurikirana ikipe", role: "Inshingano zisobanutse", initials: "GI" }, { quote: "Suppliers basuzumwa neza iyo reception checks, documents na corrective actions biri hamwe.", name: "Gucunga suppliers", role: "Ibyemezo byiza", initials: "GS" }] },
+    insights: { eyebrow: "Inyandiko", title: "Inyandiko zivuye mu kazi ka buri munsi.", body: "Ibitekerezo bifatika kuri compliance, suppliers, CCP monitoring na routines z’umutekano w’ibiribwa.", items: [{ tag: "Urugero", title: "Kugabanya gutinda gukurikirana ibitagenda neza", body: "Alerts z’ako kanya zifasha ikipe gukora mbere y’isuzuma ry’impapuro rya nyuma y’akazi.", read: "imin 6" }, { tag: "Data", title: "Inyandiko za suppliers zikunze gutera icyuho", body: "Certificates, temperatures na traceability bisaba gukurikiranwa buri gihe.", read: "imin 5" }, { tag: "Operations", title: "Impamvu impapuro za HACCP zitinza reaction", body: "Kwandika ku mpapuro bitera icyuho hagati y’ikibazo, review n’igikorwa cyo gukosora.", read: "imin 7" }, { tag: "Field note", title: "Kumenya uko CCP zihagaze mbere y’uko ibibazo bikura", body: "Ibimenyetso byerekana niba controls zikora neza mu cyumweru.", read: "imin 6" }] },
+    why: { eyebrow: "Impamvu Vera", title: "Yubakiye ku mikorere nyayo y’ubucuruzi bw’ibiribwa.", body: "Vera ishyira imbere controls zikoreshwa, inyandiko zisobanutse n’ibimenyetso bifasha managers gukora vuba.", cards: [{ title: "Bishingiye ku bipimo", body: "Inama zihuzwa na HACCP control points, ISO clauses, audit evidence cyangwa operating data." }, { title: "Kureba ibyago ako kanya", body: "Amakipe abona status ya CCP, alerts na corrective actions ahantu hamwe." }, { title: "Compliance ihuzwa na data", body: "Ibyabonetse bihinduka outputs zipimika kandi zoroshye gutanga raporo." }, { title: "Yagenewe Afurika y’Iburasirazuba", body: "Yubakiye ku miterere ya supply chain, ubushobozi bw’amakipe n’umuvuduko w’ibikorwa." }] },
+    cta: { eyebrow: "Tangira", title: "Witeguye gusimbuza impapuro inyandiko z’ako kanya?", body: "Va ku isuzuma ritinze ujye ku micungire isobanutse ya CCP, isuku, suppliers na raporo." },
+    contact: { eyebrow: "Twandikire", title: "Tangira usobanukiwe. Komereza ku micungire.", body: "Saba inama urebe uko Vera yafasha compliance, inyandiko no gukurikirana.", talk: "Tuvugishe", cardTitle: "Witeguye kunoza sisitemu yawe?", cardBody: "Tubwire ibikorwa byawe, tuzagaruka dufite plan ifatika mu minsi ibiri y’akazi.", response: "Dukunze gusubiza mu masaha 4", trusted: "Yizewe n’amakipe muri", formEyebrow: "Ohereza ubutumwa", formTitle: "Tubwire ibikorwa byawe", fields: { name: "Amazina", company: "Ikigo", email: "Email y’akazi", phone: "Telefone", interest: "Serivisi ushaka", message: "Ubutumwa" }, placeholders: { name: "Amazina yawe", company: "Izina ry’ikigo", email: "wowe@company.rw", phone: "+250 …", message: "Tubwire ibikorwa byawe, ingano yabyo n’ibyo ukeneye." }, interests: ["Ubujyanama mu mutekano w’ibiribwa", "Urubuga rw’inyandiko", "Gusaba demo", "Serivisi zombi"], success: "Ubutumwa bwoherejwe. Vera Systems izagusubiza vuba.", error: "Ubutumwa ntibwoherejwe. Ongera ugerageze." },
+    footer: { summary: "Umutekano w’ibiribwa muri Afurika y’Iburasirazuba. Ibipimo bifatika, inyandiko zisobanutse n’imicungire myiza ya buri munsi.", columns: [{ heading: "Ikigo", links: ["Ibyacu", "Serivisi", "Urubuga", "Impamvu Vera"] }, { heading: "Ibikoresho", links: ["Inyandiko", "Case studies", "Documentation", "Ibiciro"] }, { heading: "Amategeko", links: ["Privacy policy", "Terms of service", "Cookie policy"] }], copyright: "© 2026 Vera Systems Ltd. · Kigali, Rwanda · Uburenganzira bwose burubahirizwa." },
+  },
+} as const;
+
+type Widen<T> =
+  T extends string ? string :
+  T extends number ? number :
+  T extends boolean ? boolean :
+  T extends readonly (infer U)[] ? ReadonlyArray<Widen<U>> :
+  T extends object ? { readonly [K in keyof T]: Widen<T[K]> } :
+  T;
+
+type SiteCopy = Widen<(typeof siteCopy)[Language]>;
 
 const services = [
   {
     label: "Food Safety Consultancy",
     title: "Certification-grade compliance systems",
     image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1200&q=85",
-    impact: "Eliminate compliance gaps that expose your operation to audit failure, regulatory risk, and preventable downtime.",
-    body: "HACCP design, ISO 22000 gap analysis, facility audits, verification schedules, staff training, and corrective action planning built to hold under external scrutiny.",
+    impact: "Close compliance gaps that create audit pressure, product risk, and unnecessary rework.",
+    body: "HACCP design, ISO 22000 checks, facility reviews, verification schedules, staff training, and corrective action planning.",
     bullets: [
       "HACCP system design and implementation",
       "ISO 22000 certification readiness",
@@ -64,10 +192,10 @@ const services = [
     icon: Shield,
   },
   {
-    label: "Digital Intelligence & Software",
+    label: "Digital Records & Software",
     title: "Real-time HACCP visibility",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=85",
-    impact: "Replace paper logs with live dashboards, automated alerts, audit trails, and supplier scorecards your team can act on immediately.",
+    impact: "Replace paper logs with dashboards, alerts, audit trails, and supplier scorecards your team can use every day.",
     body: "A practical data layer for CCP monitoring, hygiene tracking, deviation alerts, supplier performance, and compliance reporting across food operations.",
     bullets: [
       "Live CCP monitoring dashboards",
@@ -113,7 +241,7 @@ const insights = [
 ];
 
 const whyCards = [
-  { title: "Precision food safety", body: "Recommendations are tied to HACCP control points, ISO clauses, audit evidence, or operating data — not generic consulting frameworks.", icon: Award, accent: C.blue },
+  { title: "Precision food safety", body: "Recommendations are tied to HACCP control points, ISO clauses, audit evidence, or operating data — not generic templates.", icon: Award, accent: C.blue },
   { title: "Real-time risk visibility", body: "Dashboards replace scattered paper logs so the team can see CCP status, deviation alerts, and corrective action progress from any device.", icon: Activity, accent: C.teal },
   { title: "Compliance-to-data mapping", body: "Every audit finding becomes a measurable system output, making compliance easier to verify and management decisions easier to defend.", icon: BarChart3, accent: C.violet },
   { title: "Built for East Africa", body: "Designed around local supply-chain realities, food-business constraints, and the pace of kitchens, factories, hotels, and processors.", icon: Globe, accent: C.amber },
@@ -133,7 +261,7 @@ const stackCards = [
     color: C.blue, colorLight: C.blueLt,
   },
   {
-    eyebrow: "03", metric: "Live", label: "CCP intelligence",
+    eyebrow: "03", metric: "Live", label: "CCP tracking",
     title: "Visualize performance in real time",
     body: "Dashboards show CCP status, deviations, supplier scores, hygiene logs, and readiness indicators before issues turn into incidents.",
     color: C.violet, colorLight: C.violetLt,
@@ -242,8 +370,30 @@ function useDarkMode() {
   return { dark, toggle };
 }
 
+function useLanguage(): { language: Language; setLanguage: (next: Language) => void; copy: SiteCopy } {
+  const [language, setLanguageState] = useState<Language>("en");
+
+  useEffect(() => {
+    const stored = localStorage.getItem("vera-language") as Language | null;
+    if (stored && stored in siteCopy) {
+      setLanguageState(stored);
+      document.documentElement.lang = stored === "rw" ? "rw" : stored;
+    }
+  }, []);
+
+  const setLanguage = useCallback((next: Language) => {
+    setLanguageState(next);
+    localStorage.setItem("vera-language", next);
+    document.documentElement.lang = next === "rw" ? "rw" : next;
+  }, []);
+
+  const copy = siteCopy[language] as SiteCopy;
+
+  return { language, setLanguage, copy };
+}
+
 /* ── Atoms ── */
-function Logo({ compact = false }: { compact?: boolean }) {
+function Logo({ compact = false, subtitle = "Precision food safety" }: { compact?: boolean; subtitle?: string }) {
   return (
     <div className="flex items-center gap-3">
       <div className="relative grid h-9 w-9 place-items-center rounded-xl bg-[hsl(var(--navy-950))] dark:bg-white/10 text-white shadow-lg">
@@ -253,7 +403,7 @@ function Logo({ compact = false }: { compact?: boolean }) {
       {!compact && (
         <div className="leading-tight">
           <p className="font-display text-sm font-extrabold tracking-tight text-[hsl(var(--navy-950))] dark:text-white">Vera Systems</p>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">Precision food safety</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">{subtitle}</p>
         </div>
       )}
     </div>
@@ -286,7 +436,7 @@ function SectionHeader({ eyebrow, title, body, light = false, centered = false }
 }
 
 /* ── Navbar ── */
-function Navbar({ dark, toggleDark }: { dark: boolean; toggleDark: () => void }) {
+function Navbar({ dark, toggleDark, language, onLanguageChange, copy }: { dark: boolean; toggleDark: () => void; language: Language; onLanguageChange: (language: Language) => void; copy: SiteCopy }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
@@ -311,16 +461,16 @@ function Navbar({ dark, toggleDark }: { dark: boolean; toggleDark: () => void })
   }, []);
 
   return (
-    <header className={cn("fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav")}>
-      <div className={cn(
-        "flex items-center mx-auto max-w-7xl px-6 justify-between gap-4 rounded-2xl border py-3 transition-all duration-500",
-        scrolled
-          ? "nav-scrolled border-[hsl(var(--border))]"
-          : "border-transparent bg-transparent"
-      )}>
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav",
+        scrolled ? "shadow-[0_18px_45px_-30px_rgba(15,23,42,.45)] border-b border-[hsl(var(--border))] bg-white/95 backdrop-blur-xl dark:bg-[hsl(var(--background))]/95 dark:border-white/8" : "shadow-none"
+      )}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3 transition-all duration-500">
         {/* Logo */}
         <button onClick={() => scrollToId("hero")} className="-ml-1 group" aria-label="Vera Systems home">
-          <Logo />
+          <Logo subtitle={copy.logoSubtitle} />
         </button>
 
         {/* Desktop nav */}
@@ -333,7 +483,7 @@ function Navbar({ dark, toggleDark }: { dark: boolean; toggleDark: () => void })
                   ? "text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))] bg-[hsl(var(--blue-100))]/60 dark:bg-[hsl(var(--blue-100))]/10"
                   : "text-[hsl(var(--navy-900))]/60 dark:text-white/60 hover:text-[hsl(var(--navy-950))] dark:hover:text-white hover:bg-[hsl(var(--muted))]/60 dark:hover:bg-white/5"
               )}>
-              {i.label}
+              {copy.nav[i.key]}
               {activeSection === i.href && (
                 <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 h-0.5 w-4 rounded-full bg-[hsl(var(--blue-500))]" />
               )}
@@ -343,19 +493,33 @@ function Navbar({ dark, toggleDark }: { dark: boolean; toggleDark: () => void })
 
         {/* Right actions */}
         <div className="flex items-center gap-2">
+          <label className="relative hidden sm:block" aria-label={copy.languageLabel}>
+            <span className="sr-only">{copy.languageLabel}</span>
+            <select
+              value={language}
+              onChange={(event) => onLanguageChange(event.target.value as Language)}
+              className="h-9 appearance-none rounded-xl border border-[hsl(var(--border))] bg-white/80 px-3 pr-8 text-[11px] font-black uppercase tracking-[0.18em] text-[hsl(var(--navy-950))] outline-none transition hover:bg-[hsl(var(--muted))] focus:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-white/5 dark:text-white"
+            >
+              {languageOptions.map(option => (
+                <option key={option.code} value={option.code}>{option.short}</option>
+              ))}
+            </select>
+            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[hsl(var(--muted-foreground))]">▾</span>
+          </label>
+
           {/* Dark mode toggle */}
           <button onClick={toggleDark} aria-label="Toggle theme"
-            className="grid h-9 w-9 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/70 dark:bg-white/5 text-[hsl(var(--muted-foreground))] dark:text-white/60 transition hover:bg-[hsl(var(--muted))] dark:hover:bg-white/10 hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
+            className="grid h-9 w-9 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/80 dark:bg-white/5 text-[hsl(var(--muted-foreground))] dark:text-white/60 transition hover:bg-[hsl(var(--muted))] dark:hover:bg-white/10 hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
             {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
           <button onClick={() => scrollToId("contact")}
             className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] dark:bg-white/10 dark:border dark:border-white/15 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white shadow-lg transition hover:bg-[hsl(var(--blue-700))] dark:hover:bg-white/15 active:scale-95">
-            Book Demo <ArrowRight className="h-3.5 w-3.5" />
+            {copy.actions.bookDemo} <ArrowRight className="h-3.5 w-3.5" />
           </button>
 
           <button onClick={() => setOpen(v => !v)} aria-label="Menu"
-            className="grid h-9 w-9 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/70 dark:bg-white/5 lg:hidden transition hover:bg-[hsl(var(--muted))] dark:hover:bg-white/10">
+            className="grid h-9 w-9 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/80 dark:bg-white/5 lg:hidden transition hover:bg-[hsl(var(--muted))] dark:hover:bg-white/10">
             {open ? <X className="h-4 w-4 dark:text-white" /> : <Menu className="h-4 w-4 dark:text-white" />}
           </button>
         </div>
@@ -375,14 +539,31 @@ function Navbar({ dark, toggleDark }: { dark: boolean; toggleDark: () => void })
                   ? "bg-[hsl(var(--blue-100))]/60 dark:bg-[hsl(var(--blue-100))]/10 text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]"
                   : "text-[hsl(var(--navy-950))] dark:text-white hover:bg-[hsl(var(--muted))]/60 dark:hover:bg-white/5"
               )}>
-              {i.label}
+              {copy.nav[i.key]}
             </button>
           ))}
-          <div className="mt-1 border-t border-[hsl(var(--border))] pt-2">
+          <div className="mt-1 border-t border-[hsl(var(--border))] pt-3">
+            <p className="px-4 pb-2 text-[10px] font-black uppercase tracking-[0.22em] text-[hsl(var(--muted-foreground))]">{copy.languageLabel}</p>
+            <div className="grid grid-cols-3 gap-2 px-3 pb-3">
+              {languageOptions.map(option => (
+                <button
+                  key={option.code}
+                  onClick={() => onLanguageChange(option.code)}
+                  className={cn(
+                    "rounded-xl border px-3 py-2 text-[11px] font-black uppercase tracking-[0.16em] transition",
+                    language === option.code
+                      ? "border-[hsl(var(--blue-400))] bg-[hsl(var(--blue-100))]/65 text-[hsl(var(--blue-700))] dark:bg-[hsl(var(--blue-100))]/12 dark:text-[hsl(var(--blue-300))]"
+                      : "border-[hsl(var(--border))] text-[hsl(var(--navy-950))]/70 hover:bg-[hsl(var(--muted))]/60 dark:border-white/10 dark:text-white/70 dark:hover:bg-white/5"
+                  )}
+                >
+                  {option.short}
+                </button>
+              ))}
+            </div>
             <button onClick={toggleDark}
-              className="w-full rounded-xl px-4 py-3 text-left text-sm font-semibold text-[hsl(var(--navy-950))] dark:text-white hover:bg-[hsl(var(--muted))]/60 flex items-center gap-3">
+              className="w-full rounded-xl px-4 py-3 text-left text-sm font-semibold text-[hsl(var(--navy-950))] dark:text-white hover:bg-[hsl(var(--muted))]/60 dark:hover:bg-white/5 flex items-center gap-3">
               {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              {dark ? "Light mode" : "Dark mode"}
+              {dark ? copy.actions.lightMode : copy.actions.darkMode}
             </button>
           </div>
         </nav>
@@ -392,7 +573,7 @@ function Navbar({ dark, toggleDark }: { dark: boolean; toggleDark: () => void })
 }
 
 /* ── HERO ── */
-function Hero() {
+function Hero({ copy }: { copy: SiteCopy }) {
   return (
     <section id="hero" className="relative overflow-hidden pt-32 pb-28">
       <div className="aurora" />
@@ -401,34 +582,31 @@ function Hero() {
         <div className="grid items-center gap-16 lg:grid-cols-12">
           <div className="lg:col-span-7 animate-fade-up">
             <h1 className="mt-6 text-balance font-display text-5xl font-semibold leading-[1.05] tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl lg:text-7xl">
-              From compliance to{" "}
-              <span className="text-gradient-blue">real-time</span> intelligence.
+              {copy.hero.titleStart}{" "}
+              <span className="text-gradient-blue">{copy.hero.highlight}</span>{copy.hero.titleEnd}
             </h1>
 
             <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-[hsl(var(--muted-foreground))]">
-              Vera unifies HACCP, ISO 22000 and live CCP monitoring into one calm interface — so food
-              operations act on truth, not noise. Built for teams that move with conviction.
+              {copy.hero.body}
             </p>
 
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <button onClick={() => scrollToId("contact")}
                 className="group inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] dark:bg-[hsl(var(--blue-500))] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/20 transition hover:bg-[hsl(var(--blue-700))] active:scale-95">
-                Book consultation
+                {copy.actions.bookConsultation}
                 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </button>
               <button onClick={() => scrollToId("platform")}
                 className="inline-flex items-center gap-2 rounded-xl border border-[hsl(var(--border))] dark:border-white/15 bg-white/80 dark:bg-white/5 px-6 py-3.5 text-sm font-semibold text-[hsl(var(--navy-900))] dark:text-white backdrop-blur transition hover:border-[hsl(var(--blue-400))] hover:text-[hsl(var(--blue-700))] dark:hover:border-white/30 active:scale-95">
                 <PlayCircle className="h-4 w-4" />
-                Explore the platform
+                {copy.actions.explorePlatform}
               </button>
             </div>
 
             <div className="mt-10 grid max-w-lg grid-cols-3 gap-3">
-              {[
-                { k: "98.7%", l: "audit readiness", color: C.blue },
-                { k: "3.4×", l: "faster response", color: C.teal },
-                { k: "240+", l: "controls monitored", color: C.violet },
-              ].map((s) => (
+              {copy.hero.stats.map((s, idx) => (
+                { ...s, color: [C.blue, C.teal, C.violet][idx] } as { k: string; l: string; color: string }
+              )).map((s) => (
                 <div key={s.l} className="group rounded-2xl border border-[hsl(var(--border))] dark:border-white/10 bg-white/70 dark:bg-white/5 px-4 py-3 backdrop-blur transition hover:-translate-y-1 hover:border-[hsl(var(--blue-400))] dark:hover:border-white/25 hover:shadow-md">
                   <div className="font-display text-xl font-semibold text-[hsl(var(--navy-950))] dark:text-white"
                     style={{ color: s.color }}>{s.k}</div>
@@ -502,14 +680,14 @@ function Hero() {
 }
 
 /* ── Clients marquee ── */
-function ClientTypes() {
-  const clients = useMemo(() => ["Processors", "Restaurants", "Exporters", "Manufacturers", "Hotels", "Catering firms", "Cloud kitchens", "Cold chain"], []);
+function ClientTypes({ copy }: { copy: SiteCopy }) {
+  const clients = useMemo(() => [...copy.clients.items], [copy.clients.items]);
   const doubled = [...clients, ...clients];
   return (
     <section className="relative border-y border-[hsl(var(--border))] bg-white dark:bg-[hsl(var(--muted))]/30 py-14 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6">
         <p className="text-center text-[10px] font-bold uppercase tracking-[0.28em] text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
-          Trusted by food businesses across Rwanda &amp; East Africa
+          {copy.clients.eyebrow}
         </p>
         <div className="marquee-track mt-8 overflow-hidden">
           <div className="marquee">
@@ -527,7 +705,7 @@ function ClientTypes() {
 }
 
 /* ── About ── */
-function About() {
+function About({ copy }: { copy: SiteCopy }) {
   return (
     <section id="about" className="relative overflow-hidden bg-[hsl(var(--muted))]/40 dark:bg-[hsl(var(--background))] py-28">
       <div className="absolute inset-0 dot-grid opacity-35 dark:opacity-25" />
@@ -536,36 +714,54 @@ function About() {
         <div data-reveal className="reveal-delay-1">
           <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] shadow-vera">
             <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=85"
-              alt="Food safety lab" className="h-full w-full object-cover transition duration-1000 hover:scale-105" />
+              alt={copy.about.title} className="h-full w-full object-cover transition duration-1000 hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-950))]/65 via-transparent to-transparent" />
             <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-white/92 dark:bg-[hsl(var(--card))]/92 p-4 backdrop-blur">
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--teal))]">Established</p>
-              <p className="font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">Kigali · Rwanda</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--teal))]">{copy.about.established}</p>
+              <p className="font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">{copy.about.location}</p>
             </div>
           </div>
         </div>
         <div>
           <SectionHeader
-            eyebrow="About Vera"
-            title="A food-safety company with engineering DNA"
-            body="We sit at the intersection of HACCP science and operational data. Our work helps food businesses shift from end-of-shift reviews to real-time control, with audit-ready evidence on demand."
+            eyebrow={copy.about.eyebrow}
+            title={copy.about.title}
+            body={copy.about.body}
           />
           <div className="mt-10 relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/70 dark:bg-white/5 p-6 backdrop-blur shadow-vera" data-reveal>
             <div className="absolute left-0 inset-y-0 w-1 bg-gradient-to-b from-[hsl(var(--teal))] via-[hsl(var(--blue-400))] to-transparent rounded-l-3xl" />
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--teal))]">Mission</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--teal))]">{copy.about.missionLabel}</p>
             <p className="mt-3 text-lg italic leading-relaxed text-[hsl(var(--navy-950))] dark:text-white text-balance">
-              "To elevate food safety across Rwanda and East Africa through scientific rigor and data-driven systems that improve compliance, efficiency, and trust."
+              {copy.about.mission}
             </p>
           </div>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            <InfoPill title="Scientific rigor" body="Standards-based methods, validated controls, and verifiable records." accent={C.blue} />
-            <InfoPill title="Operational fit" body="Procedures designed for the realities of kitchens, factories, and cold chains." accent={C.teal} />
+            {copy.about.pills.map((pill, index) => (
+              <InfoPill key={pill.title} title={pill.title} body={pill.body} accent={[C.blue, C.teal][index]} />
+            ))}
           </div>
-          <div className="mt-6 flex items-center gap-8 rounded-2xl border border-[hsl(var(--border))] dark:border-white/8 bg-white/50 dark:bg-white/4 px-6 py-4 backdrop-blur" data-reveal>
-            {[{ k: "5+", l: "Years experience" }, { k: "140+", l: "Audits completed" }, { k: "60+", l: "Client operations" }].map((s, i) => (
-              <div key={s.l} className="text-center flex-1">
-                <p className="font-display text-2xl font-semibold" style={{ color: [C.blue, C.teal, C.violet][i] }}>{s.k}</p>
-                <p className="mt-0.5 text-[10px] uppercase tracking-wider text-[hsl(var(--muted-foreground))]">{s.l}</p>
+          <div
+            className="mt-6 grid gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/60 px-6 py-5 backdrop-blur dark:border-white/[0.10] dark:bg-white/[0.045] sm:grid-cols-3"
+            data-reveal
+          >
+            {copy.about.stats.map((s, i) => (
+              <div
+                key={s.l}
+                className={cn(
+                  "text-center",
+                  i !== 0 && "sm:border-l sm:border-[hsl(var(--border))] sm:dark:border-white/[0.08]"
+                )}
+              >
+                <p
+                  className="font-display text-3xl font-semibold tracking-tight"
+                  style={{ color: [C.blue, C.teal, C.violet][i] }}
+                >
+                  {s.k}
+                </p>
+
+                <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))] dark:text-white/60">
+                  {s.l}
+                </p>
               </div>
             ))}
           </div>
@@ -586,19 +782,24 @@ function InfoPill({ title, body, accent }: { title: string; body: string; accent
 }
 
 /* ── Services — redesigned card layout ── */
-function Services() {
+function Services({ copy }: { copy: SiteCopy }) {
+  const serviceItems = copy.services.items.map((item, index) => ({
+    ...services[index],
+    ...item,
+    stat: { ...services[index].stat, label: item.statLabel },
+  }));
   return (
     <section id="services" className="relative bg-white dark:bg-[hsl(var(--muted))]/20 py-28 overflow-hidden">
       <div className="absolute left-0 bottom-0 h-[400px] w-[400px] -translate-x-1/2 translate-y-1/4 rounded-full bg-[hsl(var(--blue-100))]/50 dark:bg-[hsl(var(--teal))]/6 blur-3xl" />
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
           centered
-          eyebrow="Services"
-          title="Two disciplines. One operating system for food safety."
-          body="Choose what your operation needs today — and scale into the rest as you grow."
+          eyebrow={copy.services.eyebrow}
+          title={copy.services.title}
+          body={copy.services.body}
         />
         <div className="mt-16 grid gap-6 lg:grid-cols-2">
-          {services.map((s, idx) => {
+          {serviceItems.map((s, idx) => {
             const Icon = s.icon;
             return (
               <article key={s.title} data-reveal
@@ -642,7 +843,7 @@ function Services() {
                     <button onClick={() => scrollToId("contact")}
                       className="group/btn inline-flex items-center gap-2 rounded-xl px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-white transition active:scale-95"
                       style={{ background: s.accent }}>
-                      Learn more <ArrowRight className="h-3.5 w-3.5 transition group-hover/btn:translate-x-0.5" />
+                      {copy.actions.learnMore} <ArrowRight className="h-3.5 w-3.5 transition group-hover/btn:translate-x-0.5" />
                     </button>
                     <div className="relative h-8 w-8 overflow-hidden rounded-full opacity-15 group-hover:opacity-30 transition-opacity">
                       <div className="absolute inset-0 rounded-full" style={{ background: s.accent }} />
@@ -659,30 +860,34 @@ function Services() {
 }
 
 /* ── Stack Experience ── */
-function StackExperience() {
+function StackExperience({ copy }: { copy: SiteCopy }) {
   const [activeStep, setActiveStep] = useState(0);
-  const step = stackCards[activeStep];
+  const stepItems = copy.stack.cards.map((item, index) => ({
+    ...stackCards[index],
+    ...item,
+  }));
+  const step = stepItems[activeStep];
 
   return (
-    <section className="relative bg-[hsl(var(--navy-950))] py-28 overflow-hidden text-white">
-      <div className="absolute inset-0 grid-bg opacity-15" />
-      <div className="aurora opacity-25" />
+    <section className="relative overflow-hidden bg-[hsl(var(--navy-950))] py-28 text-white dark:bg-[#061225]">
+      <div className="absolute inset-0 grid-bg opacity-15 dark:opacity-10" />
+      <div className="aurora opacity-25 dark:opacity-15" />
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
           light
-          eyebrow="How it works"
-          title="A four-step path to data-driven food safety"
-          body="From the first kitchen walkthrough to a live operations dashboard — designed to fit how your team already works."
+          eyebrow={copy.stack.eyebrow}
+          title={copy.stack.title}
+          body={copy.stack.body}
         />
 
         {/* Step selector */}
         <div className="mt-14 flex flex-wrap gap-3" data-reveal>
-          {stackCards.map((c, i) => (
+          {stepItems.map((c, i) => (
             <button key={c.eyebrow} onClick={() => setActiveStep(i)}
               className={cn(
                 "rounded-xl px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.16em] transition-all duration-300 border",
                 activeStep === i
-                  ? "bg-white text-[hsl(var(--navy-950))] border-white shadow-lg"
+                  ? "bg-white text-[#0d1f3c] dark:text-[#0d1f3c] border-white shadow-lg"
                   : "border-white/15 text-white/55 hover:border-white/35 hover:text-white"
               )}>
               <span className="font-mono">{c.eyebrow}</span> / {c.title.split(" ").slice(0, 3).join(" ")}…
@@ -712,7 +917,7 @@ function StackExperience() {
             </div>
             {/* Progress dots */}
             <div className="mt-8 flex gap-2">
-              {stackCards.map((_, i) => (
+              {stepItems.map((_, i) => (
                 <button key={i} onClick={() => setActiveStep(i)}
                   className="h-1.5 rounded-full transition-all duration-300"
                   style={{
@@ -728,16 +933,16 @@ function StackExperience() {
               <p className="font-display text-5xl font-black" style={{ color: step.color }}>{step.metric}</p>
               <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: step.colorLight }}>{step.label}</p>
             </div>
-            <button onClick={() => setActiveStep((activeStep + 1) % stackCards.length)}
+            <button onClick={() => setActiveStep((activeStep + 1) % stepItems.length)}
               className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-sm font-semibold text-white/70 transition hover:border-white/30 hover:text-white flex items-center justify-between backdrop-blur-xl">
-              Next step <ChevronRight className="h-4 w-4" />
+              {copy.stack.nextStep} <ChevronRight className="h-4 w-4" />
             </button>
           </div>
         </div>
 
         {/* All steps grid */}
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stackCards.map((c, i) => (
+          {stepItems.map((c, i) => (
             <button key={c.eyebrow} onClick={() => setActiveStep(i)} data-reveal
               className={cn(
                 "group relative overflow-hidden rounded-2xl border p-5 text-left transition-all duration-300",
@@ -766,21 +971,21 @@ function StackExperience() {
 }
 
 /* ── Platform Demo ── */
-function PlatformDemo() {
+function PlatformDemo({ copy }: { copy: SiteCopy }) {
   return (
     <section id="platform" className="relative overflow-hidden bg-[hsl(var(--muted))]/30 dark:bg-[hsl(var(--background))] py-28">
       <div className="absolute inset-0 dot-grid opacity-30" />
       <div className="absolute right-0 top-0 h-[500px] w-[500px] translate-x-1/3 -translate-y-1/4 rounded-full bg-[hsl(var(--blue-100))]/55 dark:bg-[hsl(var(--blue-700))]/8 blur-3xl" />
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
-          <SectionHeader eyebrow="The Platform" title="One workspace. Every signal that matters." />
+          <SectionHeader eyebrow={copy.platform.eyebrow} title={copy.platform.title} />
           <div className="rounded-3xl border border-[hsl(var(--border))] dark:border-white/8 bg-white/70 dark:bg-white/5 p-6 backdrop-blur max-w-sm" data-reveal>
             <p className="text-base italic leading-relaxed text-[hsl(var(--navy-950))]/80 dark:text-white/80">
-              "Not a report, but a control center. Every deviation logged, every supplier scored, every CCP visible — in real time."
+              {copy.platform.quote}
             </p>
             <button onClick={() => scrollToId("contact")}
               className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] dark:bg-[hsl(var(--blue-500))] px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white transition hover:bg-[hsl(var(--blue-700))] active:scale-95">
-              Request live demo <ArrowRight className="h-3.5 w-3.5" />
+              {copy.actions.requestDemo} <ArrowRight className="h-3.5 w-3.5" />
             </button>
           </div>
         </div>
@@ -843,8 +1048,8 @@ function PlatformDemo() {
           <div className="space-y-4">
             {[
               { i: Shield, t: "ISO 22000 ready", d: "Audit-grade evidence by default.", color: C.blue },
-              { i: Zap, t: "Realtime sync", d: "Sub-second across sites.", color: C.teal },
-              { i: Clock, t: "5-min setup", d: "From signup to first insight.", color: C.violet },
+              { i: Zap, t: "Record sync", d: "Updates across active sites.", color: C.teal },
+              { i: Clock, t: "Guided setup", d: "Start with your first records.", color: C.violet },
             ].map(({ i: Icon, t, d, color }) => (
               <div key={t} className="glass-card hover-lift flex items-start gap-4 rounded-2xl p-5 dark:border-white/8">
                 <div className="grid h-10 w-10 flex-none place-items-center rounded-xl text-white shadow-md"
@@ -871,7 +1076,7 @@ function DemoTabs() {
   return (
     <div className="mt-14">
       <div className="flex gap-1 overflow-x-auto no-scrollbar border-b border-[hsl(var(--border))] dark:border-white/10 pb-0" data-reveal>
-        {tabs.map(t => (
+        {tabs.map((t, index) => (
           <button key={t.id} onClick={() => setActive(t.id)}
             className={cn(
               "relative whitespace-nowrap pb-4 px-5 text-[11px] font-bold uppercase tracking-[0.16em] transition-all duration-200 rounded-t-lg",
@@ -1159,19 +1364,23 @@ function ReportsDashboard() {
 }
 
 /* ── Testimonials ── */
-function Testimonials() {
+function Testimonials({ copy }: { copy: SiteCopy }) {
+  const outcomeItems = copy.outcomes.items.map((item, index) => ({
+    ...testimonials[index],
+    ...item,
+  }));
   return (
     <section className="relative bg-white dark:bg-[hsl(var(--background))] py-28 overflow-hidden">
       <div className="absolute inset-0 dot-grid opacity-25" />
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
           centered
-          eyebrow="Results in the field"
-          title="What happens when food teams run on data"
-          body="From Kigali processors to regional hotel chains — the same pattern emerges: visibility drives action."
+          eyebrow={copy.outcomes.eyebrow}
+          title={copy.outcomes.title}
+          body={copy.outcomes.body}
         />
         <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {testimonials.map((t, i) => (
+          {outcomeItems.map((t, i) => (
             <div key={t.name} data-reveal className={cn("relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] dark:border-white/8 bg-white dark:bg-[hsl(var(--card))] p-7 shadow-vera transition hover:-translate-y-1 hover:shadow-glow", `reveal-delay-${i + 1}`)}>
               <div className="absolute -right-3 -top-3 font-display text-9xl font-black text-[hsl(var(--blue-100))] dark:text-white/5 leading-none select-none">"</div>
               <div className="relative">
@@ -1180,7 +1389,7 @@ function Testimonials() {
                     <Star key={j} className="h-3.5 w-3.5" style={{ fill: t.accent, color: t.accent }} />
                   ))}
                 </div>
-                <p className="text-base leading-relaxed text-[hsl(var(--navy-900))] dark:text-white/85 italic">"{t.quote}"</p>
+                <p className="text-base leading-relaxed text-[hsl(var(--navy-900))] dark:text-white/85 italic">{t.quote}</p>
                 <div className="mt-6 flex items-center gap-3">
                   <div className="grid h-10 w-10 place-items-center rounded-full text-white text-xs font-bold"
                     style={{ background: `linear-gradient(135deg, ${t.accent}, ${t.accent}aa)` }}>
@@ -1201,13 +1410,17 @@ function Testimonials() {
 }
 
 /* ── Insights ── */
-function Insights() {
-  const [feature, ...rows] = insights;
+function Insights({ copy }: { copy: SiteCopy }) {
+  const insightItems = copy.insights.items.map((item, index) => ({
+    ...insights[index],
+    ...item,
+  }));
+  const [feature, ...rows] = insightItems;
   return (
     <section id="insights" className="bg-[hsl(var(--muted))]/30 dark:bg-[hsl(var(--muted))]/15 py-28">
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex items-end justify-between">
-          <SectionHeader eyebrow="Insights" title="Thinking from the field." body="Operational intelligence from real food businesses navigating compliance and growth." />
+          <SectionHeader eyebrow={copy.insights.eyebrow} title={copy.insights.title} body={copy.insights.body} />
           <a href="#" className="hidden text-sm font-semibold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))] hover:underline md:inline story-link">All articles →</a>
         </div>
         <div className="mt-14 grid gap-8 lg:grid-cols-12">
@@ -1260,19 +1473,23 @@ function InsightRow({ item }: { item: typeof insights[number] }) {
 }
 
 /* ── Why Vera ── */
-function WhyVera() {
+function WhyVera({ copy }: { copy: SiteCopy }) {
+  const whyItems = copy.why.cards.map((item, index) => ({
+    ...whyCards[index],
+    ...item,
+  }));
   return (
     <section id="why" className="relative bg-white dark:bg-[hsl(var(--background))] py-28">
       <div className="absolute inset-0 dot-grid opacity-25" />
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
           centered
-          eyebrow="Why Vera"
-          title="Built around how food businesses actually run"
-          body="Four principles that shape every engagement, every dashboard, and every recommendation we deliver."
+          eyebrow={copy.why.eyebrow}
+          title={copy.why.title}
+          body={copy.why.body}
         />
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {whyCards.map((c, i) => {
+          {whyItems.map((c, i) => {
             const Icon = c.icon;
             return (
               <article key={c.title} data-reveal
@@ -1300,29 +1517,29 @@ function WhyVera() {
 }
 
 /* ── CTA Banner ── */
-function CTABanner() {
+function CTABanner({ copy }: { copy: SiteCopy }) {
   return (
-    <section className="relative overflow-hidden bg-[hsl(var(--navy-950))] py-20">
-      <div className="aurora opacity-35" />
-      <div className="absolute inset-0 grid-bg opacity-10" />
+    <section className="relative overflow-hidden bg-[hsl(var(--navy-950))] py-20 text-white dark:bg-[#061225]">
+      <div className="aurora opacity-35 dark:opacity-15" />
+      <div className="absolute inset-0 grid-bg opacity-10 dark:opacity-8" />
       <div className="relative mx-auto max-w-5xl px-6 text-center" data-reveal>
-        <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-white/50">Get started</p>
+        <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-white/50">{copy.cta.eyebrow}</p>
         <h2 className="mt-5 font-display text-4xl font-semibold text-white text-balance md:text-5xl">
-          Ready to move from paper logs to live intelligence?
+          {copy.cta.title}
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/65">
-          Join food operations across East Africa that have replaced end-of-shift reviews with real-time control.
+          {copy.cta.body}
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
           <button onClick={() => scrollToId("contact")}
-            className="group inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-[hsl(var(--navy-950))] transition hover:bg-[hsl(var(--blue-100))] active:scale-95">
-            Book a consultation
+            className="group inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-semibold text-[#0d1f3c] dark:text-[#0d1f3c] transition hover:bg-[hsl(var(--blue-100))] dark:hover:bg-[hsl(var(--blue-100))] active:scale-95">
+            {copy.actions.bookConsultation}
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
           </button>
           <button onClick={() => scrollToId("platform")}
             className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-white/10 active:scale-95">
             <PlayCircle className="h-4 w-4" />
-            See the platform
+            {copy.actions.explorePlatform}
           </button>
         </div>
       </div>
@@ -1331,7 +1548,7 @@ function CTABanner() {
 }
 
 /* ── Contact ── */
-function Contact() {
+function Contact({ copy }: { copy: SiteCopy }) {
   return (
     <section id="contact" className="relative overflow-hidden bg-[hsl(var(--muted))]/30 dark:bg-[hsl(var(--background))] py-28">
       <div className="absolute inset-0 dot-grid opacity-30" />
@@ -1340,22 +1557,22 @@ function Contact() {
         <div className="text-center" data-reveal>
           <SectionHeader
             centered
-            eyebrow="Get in touch"
-            title="Start with clarity. Move to control."
-            body="Book a consultation and find out how Vera Systems can transform your compliance operations with real-time intelligence."
+            eyebrow={copy.contact.eyebrow}
+            title={copy.contact.title}
+            body={copy.contact.body}
           />
         </div>
         <div className="mt-14 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-3xl border border-[hsl(var(--border))] dark:border-white/8 bg-white dark:bg-[hsl(var(--card))] p-8 shadow-vera" data-reveal>
-            <p className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: C.teal }}>Talk to us</p>
-            <h3 className="mt-3 font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">Ready to elevate your food safety?</h3>
+            <p className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: C.teal }}>{copy.contact.talk}</p>
+            <h3 className="mt-3 font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">{copy.contact.cardTitle}</h3>
             <p className="mt-3 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
-              Tell us about your operation and we'll come back with a tailored plan within two business days.
+              {copy.contact.cardBody}
             </p>
             <div className="mt-6 mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2"
               style={{ background: `${C.green}18`, border: `1px solid ${C.green}30` }}>
               <span className="h-2 w-2 rounded-full animate-pulse-dot" style={{ background: C.green }} />
-              <span className="text-xs font-semibold" style={{ color: C.green }}>Typically responds within 4 hours</span>
+              <span className="text-xs font-semibold" style={{ color: C.green }}>{copy.contact.response}</span>
             </div>
             <div className="space-y-3">
               {[
@@ -1374,7 +1591,7 @@ function Contact() {
               ))}
             </div>
             <div className="mt-6 pt-6 border-t border-[hsl(var(--border))] dark:border-white/8">
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))] mb-3">Trusted by teams in</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))] mb-3">{copy.contact.trusted}</p>
               <div className="flex flex-wrap gap-2">
                 {["Rwanda", "Uganda", "Kenya", "Tanzania"].map(c => (
                   <span key={c} className="rounded-full border border-[hsl(var(--border))] dark:border-white/10 bg-[hsl(var(--muted))]/50 dark:bg-white/5 px-3 py-1 text-[11px] font-semibold text-[hsl(var(--navy-900))] dark:text-white/80">{c}</span>
@@ -1382,14 +1599,14 @@ function Contact() {
               </div>
             </div>
           </div>
-          <ContactForm />
+          <ContactForm copy={copy} />
         </div>
       </div>
     </section>
   );
 }
 
-function ContactForm() {
+function ContactForm({ copy }: { copy: SiteCopy }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -1407,41 +1624,40 @@ function ContactForm() {
       const result = await res.json().catch(() => ({ ok: res.ok }));
       if (!res.ok || result.ok === false) throw new Error(result.message || "Could not send message.");
       setStatus("success");
-      setMessage("Message sent. Vera Systems will get back to you shortly.");
+      setMessage(copy.contact.success);
       form.reset();
     } catch (err) {
       setStatus("error");
-      setMessage(err instanceof Error ? err.message : "Could not send message. Please try again.");
+      setMessage(err instanceof Error ? err.message : copy.contact.error);
     }
   }
 
   return (
     <form onSubmit={handleSubmit} data-reveal className="rounded-3xl border border-[hsl(var(--border))] dark:border-white/8 bg-white dark:bg-[hsl(var(--card))] p-8 shadow-vera">
-      <p className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: C.blue }}>Send a message</p>
-      <h3 className="mt-2 font-display text-xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">Tell us about your operation</h3>
+      <p className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: C.blue }}>{copy.contact.formEyebrow}</p>
+      <h3 className="mt-2 font-display text-xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">{copy.contact.formTitle}</h3>
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
-        <FormField label="Full name" name="name" placeholder="Your name" required />
-        <FormField label="Company" name="company" placeholder="Company name" required />
-        <FormField label="Work email" name="email" placeholder="you@company.rw" type="email" required />
-        <FormField label="Phone" name="phone" placeholder="+250 …" type="tel" />
+        <FormField label={copy.contact.fields.name} name="name" placeholder={copy.contact.placeholders.name} required />
+        <FormField label={copy.contact.fields.company} name="company" placeholder={copy.contact.placeholders.company} required />
+        <FormField label={copy.contact.fields.email} name="email" placeholder={copy.contact.placeholders.email} type="email" required />
+        <FormField label={copy.contact.fields.phone} name="phone" placeholder={copy.contact.placeholders.phone} type="tel" />
         <div className="sm:col-span-2">
-          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">Service interest</label>
+          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">{copy.contact.fields.interest}</label>
           <select name="interest" className="w-full rounded-2xl border border-[hsl(var(--border))] dark:border-white/10 bg-[hsl(var(--muted))]/30 dark:bg-white/5 px-4 py-4 text-sm text-[hsl(var(--foreground))] outline-none transition focus:border-[hsl(var(--blue-400))] focus:bg-white dark:focus:bg-white/8">
-            <option value="consultancy">Food Safety Consultancy</option>
-            <option value="platform">Digital Intelligence Platform</option>
-            <option value="demo">Platform Demo Request</option>
-            <option value="both">Both Services</option>
+            {["consultancy", "platform", "demo", "both"].map((value, index) => (
+              <option key={value} value={value}>{copy.contact.interests[index]}</option>
+            ))}
           </select>
         </div>
         <div className="sm:col-span-2">
-          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">Message</label>
-          <textarea name="message" rows={4} placeholder="Tell us about your operation, scale, and current pain points."
+          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">{copy.contact.fields.message}</label>
+          <textarea name="message" rows={4} placeholder={copy.contact.placeholders.message}
             className="w-full resize-none rounded-2xl border border-[hsl(var(--border))] dark:border-white/10 bg-[hsl(var(--muted))]/30 dark:bg-white/5 px-4 py-4 text-sm text-[hsl(var(--foreground))] outline-none transition placeholder:text-[hsl(var(--muted-foreground))]/50 focus:border-[hsl(var(--blue-400))] focus:bg-white dark:focus:bg-white/8" />
         </div>
       </div>
       <button type="submit" disabled={status === "loading"}
         className="mt-6 w-full rounded-xl bg-[hsl(var(--navy-950))] dark:bg-[hsl(var(--blue-500))] px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-[hsl(var(--blue-700))] disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.99]">
-        {status === "loading" ? "Sending…" : "Send Message"}
+        {status === "loading" ? copy.actions.sending : copy.actions.sendMessage}
       </button>
       {message && (
         <p className={cn("mt-4 rounded-2xl border px-4 py-3 text-sm",
@@ -1465,23 +1681,19 @@ function FormField({ label, name, placeholder, type = "text", required = false }
 }
 
 /* ── Footer ── */
-function Footer() {
+function Footer({ copy }: { copy: SiteCopy }) {
   return (
     <footer className="border-t border-[hsl(var(--border))] dark:border-white/8 bg-white dark:bg-[hsl(var(--muted))]/20 py-12">
       <div className="mx-auto max-w-7xl px-6">
         <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
           <div className="max-w-xs">
-            <Logo />
+            <Logo subtitle={copy.logoSubtitle} />
             <p className="mt-4 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
-              Precision food safety for East Africa. HACCP science meets real-time operational intelligence.
+              {copy.footer.summary}
             </p>
           </div>
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
-            {[
-              { heading: "Company", links: ["About", "Services", "Platform", "Why Vera"] },
-              { heading: "Resources", links: ["Insights", "Case studies", "Documentation", "Pricing"] },
-              { heading: "Legal", links: ["Privacy policy", "Terms of service", "Cookie policy"] },
-            ].map(col => (
+            {copy.footer.columns.map(col => (
               <div key={col.heading}>
                 <p className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: C.teal }}>{col.heading}</p>
                 <ul className="mt-4 space-y-3">
@@ -1496,7 +1708,7 @@ function Footer() {
           </div>
         </div>
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-[hsl(var(--border))] dark:border-white/8 pt-6 sm:flex-row">
-          <p className="text-xs text-[hsl(var(--muted-foreground))]">© 2026 Vera Systems Ltd. · Kigali, Rwanda · All rights reserved.</p>
+          <p className="text-xs text-[hsl(var(--muted-foreground))]">{copy.footer.copyright}</p>
           <div className="flex gap-4 text-[11px] font-bold uppercase tracking-[0.22em] text-[hsl(var(--muted-foreground))]">
             <a href="#" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">LinkedIn</a>
             <a href="#" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">Twitter</a>
@@ -1511,6 +1723,7 @@ function Footer() {
 export default function Page() {
   const progress = useScrollProgress();
   const { dark, toggle } = useDarkMode();
+  const { language, setLanguage, copy } = useLanguage();
   useRevealOnScroll();
 
   return (
@@ -1524,19 +1737,19 @@ export default function Page() {
           }} />
       </div>
 
-      <Navbar dark={dark} toggleDark={toggle} />
-      <Hero />
-      <ClientTypes />
-      <About />
-      <Services />
-      <StackExperience />
-      <PlatformDemo />
-      <Testimonials />
-      <Insights />
-      <WhyVera />
-      <CTABanner />
-      <Contact />
-      <Footer />
+      <Navbar dark={dark} toggleDark={toggle} language={language} onLanguageChange={setLanguage} copy={copy} />
+      <Hero copy={copy} />
+      <ClientTypes copy={copy} />
+      <About copy={copy} />
+      <Services copy={copy} />
+      <StackExperience copy={copy} />
+      <PlatformDemo copy={copy} />
+      <Testimonials copy={copy} />
+      <Insights copy={copy} />
+      <WhyVera copy={copy} />
+      <CTABanner copy={copy} />
+      <Contact copy={copy} />
+      <Footer copy={copy} />
     </main>
   );
 }
