@@ -1291,40 +1291,6 @@ function StackExperience({ copy }: { copy: SiteCopy }) {
             </button>
           </div>
         </div>
-
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stepItems.map((card, index) => (
-            <button
-              key={card.eyebrow}
-              onClick={() => setActiveStep(index)}
-              data-reveal
-              className={cn(
-                "hover-card group relative overflow-hidden rounded-2xl border p-5 text-left transition-all duration-300",
-                `reveal-delay-${(index % 4) + 1}`,
-                activeStep === index
-                  ? "border-white/25 bg-white/[0.08]"
-                  : "border-white/10 bg-white/[0.03] hover:border-white/20 hover:bg-white/[0.05]"
-              )}
-            >
-              <div
-                className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl transition-all duration-300"
-                style={{ background: activeStep === index ? card.color : "transparent" }}
-              />
-              <span
-                className="font-display text-3xl font-black"
-                style={{
-                  background: `linear-gradient(135deg, ${card.color}, ${card.colorLight})`,
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent",
-                }}
-              >
-                {card.eyebrow}
-              </span>
-              <p className="mt-1 text-sm font-semibold text-white/80">{card.title}</p>
-            </button>
-          ))}
-        </div>
       </div>
     </section>
   );
