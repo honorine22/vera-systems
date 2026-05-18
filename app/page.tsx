@@ -2178,9 +2178,9 @@ function Insights({ copy }: { copy: SiteCopy }) {
           </a>
         </div>
 
-        <div className="relative mt-14 grid gap-8 lg:grid-cols-12 lg:items-stretch">
+        <div className="relative mt-14 grid gap-6 lg:grid-cols-12 lg:auto-rows-fr">
           <InsightFeatured item={feature} />
-          <div className="grid gap-5 lg:col-span-5">
+          <div className="grid gap-6 lg:col-span-6">
             {rows.map((item) => (
               <InsightRow key={item.title} item={item} />
             ))}
@@ -2200,39 +2200,40 @@ function InsightFeatured({
     <a
       href="#"
       data-reveal="left"
-      className="hover-card group relative col-span-12 overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] bg-white p-3 shadow-vera dark:border-white/10 dark:bg-white/[0.04] lg:col-span-7"
+      className="hover-card group relative col-span-12 flex flex-col overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] bg-white p-3 shadow-vera dark:border-white/10 dark:bg-white/[0.04] lg:col-span-6"
     >
-      <div className="relative h-[560px] w-full overflow-hidden rounded-[1.55rem]">
+      <div className="relative h-72 w-full overflow-hidden rounded-[1.55rem] md:h-80">
         <img
           src={item.image}
           alt=""
           className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#07182A]/95 via-[#07182A]/45 to-[#07182A]/5" />
-        <div className="absolute inset-x-4 bottom-4 rounded-[1.35rem] border border-white/18 bg-[#07182A]/82 p-6 shadow-[0_24px_70px_-36px_rgba(0,0,0,.9)] backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1 sm:p-7">
-          <span
-            className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-white"
-            style={{ background: C.teal }}
-          >
+        <div className="absolute inset-0 bg-gradient-to-t from-[#07182A]/48 via-transparent to-transparent" />
+      </div>
+
+      <div className="flex flex-1 flex-col p-5 sm:p-7">
+        <div className="mb-5 flex items-center justify-between gap-3">
+          <span className="inline-flex items-center rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.16em]" style={{ color: C.teal }}>
             {item.tag}
           </span>
+          <ArrowRight className="h-5 w-5 shrink-0 text-[hsl(var(--blue-700))] transition group-hover:translate-x-1 dark:text-[hsl(var(--blue-300))]" />
+        </div>
 
-          <h3 className="mt-4 text-balance font-display text-3xl font-semibold leading-tight text-white md:text-[2.6rem]">
-            {item.title}
-          </h3>
+        <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-[hsl(var(--navy-950))] dark:text-white md:text-[2.55rem]">
+          {item.title}
+        </h3>
 
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-white/82">
-            {item.body}
-          </p>
+        <p className="mt-4 max-w-2xl text-base leading-8 text-[hsl(var(--muted-foreground))]">
+          {item.body}
+        </p>
 
-          <div className="mt-5 flex flex-wrap items-center gap-3 text-sm font-semibold text-white/85">
-            <span>{item.read}</span>
-            <span className="h-1 w-1 rounded-full bg-white/50" />
-            <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1.5" style={{ color: C.mint }}>
-              Read story
-              <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
-            </span>
-          </div>
+        <div className="mt-auto flex flex-wrap items-center gap-3 pt-6 text-sm font-bold text-[hsl(var(--muted-foreground))]">
+          <span>{item.read}</span>
+          <span className="h-1 w-1 rounded-full bg-[hsl(var(--muted-foreground))]/40" />
+          <span className="inline-flex items-center gap-1 rounded-full bg-[hsl(var(--blue-100))] px-3 py-1.5 text-[hsl(var(--blue-700))] dark:bg-white/10 dark:text-[hsl(var(--blue-300))]">
+            Read story
+            <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
+          </span>
         </div>
       </div>
     </a>
@@ -2248,9 +2249,9 @@ function InsightRow({
     <a
       href="#"
       data-reveal="right"
-      className="hover-card group relative grid gap-4 overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-white p-4 shadow-soft transition dark:border-white/10 dark:bg-white/[0.045] sm:grid-cols-[164px_1fr]"
+      className="hover-card group relative grid gap-4 overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-white p-4 shadow-soft transition dark:border-white/10 dark:bg-white/[0.045] md:grid-cols-[180px_1fr]"
     >
-      <div className="relative h-40 overflow-hidden rounded-[1.15rem] sm:h-full">
+      <div className="relative h-44 overflow-hidden rounded-[1.15rem] md:h-full">
         <img
           src={item.image}
           alt=""

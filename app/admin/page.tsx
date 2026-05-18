@@ -20,7 +20,7 @@ import {
   Users,
 } from "lucide-react";
 import Image from "next/image";
-import { leadsToCsv, type Lead } from "../../lib/leads";
+import type { Lead } from "../../lib/leads";
 
 type LoadState = "checking" | "auth" | "loading" | "ready" | "error";
 type AuthMode = "login" | "signup";
@@ -45,6 +45,15 @@ function formatDate(value: string) {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(new Date(value));
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function sameDay(a: Date, b: Date) {
@@ -75,6 +84,7 @@ export default function AdminPage() {
   const [activeView, setActiveView] = useState<AdminView>("overview");
   const [message, setMessage] = useState("");
   const [query, setQuery] = useState("");
+  const [profileOpen, setProfileOpen] = useState(false);
 
   async function refreshLeads() {
     setState("loading");
@@ -220,16 +230,144 @@ export default function AdminPage() {
     setMessage("You have been logged out.");
   }
 
-  function exportCsv() {
-    const csv = leadsToCsv(filteredLeads);
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
+  function exportPdf() {
+    const rows = filteredLeads
+      .map(
+        (lead) => `
+          <tr>
+            <td>${escapeHtml(formatDate(lead.submittedAt))}</td>
+            <td>
+              <strong>${escapeHtml(lead.name || "Unnamed")}</strong>
+              <span>Website lead</span>
+            </td>
+            <td>
+              ${escapeHtml(lead.email || "-")}
+              <br />
+              ${escapeHtml(lead.phone || "-")}
+            </td>
+            <td>${escapeHtml(lead.message || "-")}</td>
+          </tr>
+        `
+      )
+      .join("");
 
-    link.href = url;
-    link.download = `vera-contact-leads-${new Date().toISOString().slice(0, 10)}.csv`;
-    link.click();
-    URL.revokeObjectURL(url);
+    const printWindow = window.open("", "_blank");
+
+    if (!printWindow) {
+      setMessage("Allow pop-ups to export the PDF report.");
+      return;
+    }
+
+    printWindow.document.write(`
+      <!doctype html>
+      <html>
+        <head>
+          <title>Vera contact submissions</title>
+          <style>
+            @page { margin: 18mm; }
+            * { box-sizing: border-box; }
+            body {
+              margin: 0;
+              color: #123F66;
+              background: #F4F8FB;
+              font-family: Arial, sans-serif;
+            }
+            .sheet {
+              background: #fff;
+              border: 1px solid #DDECF7;
+              border-radius: 22px;
+              overflow: hidden;
+            }
+            header {
+              padding: 28px;
+              border-bottom: 1px solid #DDECF7;
+            }
+            .eyebrow {
+              margin: 0 0 8px;
+              color: #18A89D;
+              font-size: 11px;
+              font-weight: 800;
+              letter-spacing: 0.22em;
+              text-transform: uppercase;
+            }
+            h1 {
+              margin: 0;
+              font-size: 30px;
+              line-height: 1.15;
+            }
+            .meta {
+              margin-top: 8px;
+              color: #65758A;
+              font-size: 13px;
+            }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              table-layout: fixed;
+            }
+            th {
+              background: #F8FBFD;
+              border-bottom: 1px solid #DDECF7;
+              color: #65758A;
+              font-size: 10px;
+              font-weight: 800;
+              letter-spacing: 0.18em;
+              padding: 14px 16px;
+              text-align: left;
+              text-transform: uppercase;
+            }
+            td {
+              border-bottom: 1px solid #DDECF7;
+              color: #65758A;
+              font-size: 12px;
+              line-height: 1.55;
+              padding: 16px;
+              vertical-align: top;
+              word-break: break-word;
+            }
+            td:first-child,
+            td strong {
+              color: #123F66;
+            }
+            td span {
+              color: #18A89D;
+              display: block;
+              font-size: 10px;
+              font-weight: 800;
+              letter-spacing: 0.08em;
+              margin-top: 4px;
+              text-transform: uppercase;
+            }
+          </style>
+        </head>
+        <body>
+          <main class="sheet">
+            <header>
+              <p class="eyebrow">Contact data</p>
+              <h1>People who contacted Vera</h1>
+              <p class="meta">Generated ${escapeHtml(formatDate(new Date().toISOString()))} · ${filteredLeads.length} submission${filteredLeads.length === 1 ? "" : "s"}</p>
+            </header>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 20%">Submitted</th>
+                  <th style="width: 20%">Name</th>
+                  <th style="width: 25%">Contact</th>
+                  <th style="width: 35%">Message</th>
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </main>
+          <script>
+            window.addEventListener("load", () => {
+              window.print();
+            });
+          </script>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
   }
 
   async function handleClear() {
@@ -370,35 +508,20 @@ export default function AdminPage() {
 
   return (
     <main className="min-h-screen bg-[#F4F8FB] text-[#123F66]">
-      <div className="grid min-h-screen lg:grid-cols-[292px_1fr]">
-        <aside className="border-r border-[#DDECF7] bg-white px-5 py-6 shadow-[18px_0_60px_-52px_rgba(18,63,102,.5)] lg:sticky lg:top-0 lg:h-screen">
-          <a href="/" className="inline-flex items-center gap-2 text-sm font-bold text-[#65758A] transition hover:text-[#123F66]">
-            <ArrowLeft className="h-4 w-4" />
-            Back to website
+      <div className="min-h-screen">
+        <aside className="flex flex-col border-r border-[#DDECF7] bg-white px-5 py-6 shadow-[18px_0_60px_-52px_rgba(18,63,102,.5)] lg:fixed lg:inset-y-0 lg:left-0 lg:w-[292px]">
+          <a href="/" aria-label="Back to Vera Systems website" className="inline-flex w-fit rounded-3xl transition hover:opacity-85">
+            <Image
+              src="/logos/vera-logo-blue-transparent.png"
+              alt="Vera Systems"
+              width={180}
+              height={100}
+              className="h-auto w-40"
+              priority
+            />
           </a>
 
-          <Image
-            src="/logos/vera-logo-blue-transparent.png"
-            alt="Vera Systems"
-            width={180}
-            height={100}
-            className="mt-8 h-auto w-40"
-            priority
-          />
-
-          <div className="mt-8 rounded-3xl border border-[#DDECF7] bg-[#F8FBFD] p-4">
-            <span className="grid h-11 w-11 place-items-center rounded-2xl bg-[#123F66] text-sm font-black text-white">
-              {user?.email?.slice(0, 1).toUpperCase() || "A"}
-            </span>
-            <p className="mt-4 text-[10px] font-black uppercase tracking-[0.2em] text-[#18A89D]">
-              Logged in admin
-            </p>
-            <p className="mt-1 break-words text-sm font-bold text-[#123F66]">
-              {user?.email}
-            </p>
-          </div>
-
-          <nav className="mt-6 grid gap-2">
+          <nav className="mt-10 grid gap-2">
             <SidebarButton
               active={activeView === "overview"}
               icon={LayoutDashboard}
@@ -414,7 +537,7 @@ export default function AdminPage() {
             />
           </nav>
 
-          <div className="mt-6 border-t border-[#DDECF7] pt-5">
+          <div className="mt-auto border-t border-[#DDECF7] pt-5">
             <button
               onClick={handleLogout}
               className="flex w-full items-center gap-3 rounded-2xl border border-[#DDECF7] bg-white px-4 py-3 text-sm font-bold text-[#65758A] transition hover:-translate-y-0.5 hover:text-[#123F66]"
@@ -426,7 +549,7 @@ export default function AdminPage() {
           </div>
         </aside>
 
-        <section className="min-w-0 px-5 py-6 md:px-8 lg:px-10">
+        <section className="min-w-0 px-5 py-6 md:px-8 lg:ml-[292px] lg:px-10">
           <header className="flex flex-col gap-5 border-b border-[#DDECF7] pb-6 xl:flex-row xl:items-center xl:justify-between">
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#18A89D]">
@@ -442,37 +565,50 @@ export default function AdminPage() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={refreshLeads}
-                className="inline-flex items-center gap-2 rounded-xl border border-[#DDECF7] bg-white px-4 py-3 text-sm font-bold text-[#123F66] transition hover:-translate-y-0.5 hover:border-[#8FC2E8]"
-                type="button"
-              >
-                <RefreshCw className="h-4 w-4" />
-                Refresh
-              </button>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               {activeView === "contacts" && (
-                <>
-                  <button
-                    onClick={exportCsv}
-                    disabled={filteredLeads.length === 0}
-                    className="primary-action inline-flex items-center gap-2 px-4 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
-                    type="button"
-                  >
-                    <Download className="h-4 w-4" />
-                    Export CSV
-                  </button>
-                  <button
-                    onClick={handleClear}
-                    disabled={leads.length === 0}
-                    className="inline-flex items-center gap-2 rounded-xl border border-[#D95C59]/30 bg-[#FFF1F1] px-4 py-3 text-sm font-bold text-[#B83F3B] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
-                    type="button"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    Clear
-                  </button>
-                </>
+                <label className="relative w-full sm:w-[360px]">
+                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#65758A]" />
+                  <input
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    className="w-full rounded-2xl border border-[#DDECF7] bg-white py-3.5 pl-11 pr-4 text-sm shadow-sm outline-none transition focus:border-[#4A7BAF] focus:bg-white"
+                    placeholder="Search contacts"
+                  />
+                </label>
               )}
+
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setProfileOpen((value) => !value)}
+                  className="grid h-12 w-12 place-items-center rounded-2xl bg-[#123F66] text-sm font-black text-white shadow-[0_18px_40px_-28px_rgba(18,63,102,.9)] transition hover:-translate-y-0.5 hover:bg-[#1D527D]"
+                  aria-label="Open admin profile menu"
+                >
+                  {user?.email?.slice(0, 1).toUpperCase() || "A"}
+                </button>
+
+                {profileOpen && (
+                  <div className="absolute right-0 top-14 z-20 w-72 rounded-3xl border border-[#DDECF7] bg-white p-3 shadow-[0_28px_80px_-42px_rgba(18,63,102,.45)]">
+                    <div className="rounded-2xl bg-[#F8FBFD] p-4">
+                      <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#18A89D]">
+                        Logged in admin
+                      </p>
+                      <p className="mt-1 truncate text-sm font-bold text-[#123F66]">
+                        {user?.email}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="mt-3 flex w-full items-center gap-3 rounded-2xl border border-[#DDECF7] bg-white px-4 py-3 text-sm font-bold text-[#65758A] transition hover:bg-[#F8FBFD] hover:text-[#123F66]"
+                      type="button"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </header>
 
@@ -494,9 +630,12 @@ export default function AdminPage() {
           ) : (
             <ContactsPanel
               filteredLeads={filteredLeads}
-              query={query}
-              setQuery={setQuery}
               state={state}
+              refreshLeads={refreshLeads}
+              exportPdf={exportPdf}
+              clearLeads={handleClear}
+              canExport={filteredLeads.length > 0}
+              canClear={leads.length > 0}
             />
           )}
         </section>
@@ -594,16 +733,29 @@ function OverviewPanel({
             <BarChart3 className="h-5 w-5 text-[#4A7BAF]" />
           </div>
           <div className="mt-8 flex h-56 items-end gap-3">
-            {chartData.map((item, index) => {
+            {chartData.map((item) => {
               const height = Math.max((item.count / maxChartValue) * 100, item.count ? 14 : 4);
-              const color = [C.navy, C.blue, C.teal, C.green, C.sky, C.amber, C.navySoft][index % 7];
 
               return (
                 <div key={item.label} className="flex flex-1 flex-col items-center gap-3">
-                  <div className="flex h-40 w-full items-end rounded-2xl bg-[#F0F6FB] p-1.5">
+                  <div
+                    className="flex h-40 w-full items-end rounded-2xl p-1.5"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(138,223,212,.46) 0%, rgba(234,244,250,.82) 100%)",
+                    }}
+                  >
                     <div
                       className="w-full rounded-xl transition-all duration-500"
-                      style={{ height: `${height}%`, background: color }}
+                      style={{
+                        height: `${height}%`,
+                        background: item.count
+                          ? "linear-gradient(180deg, #1A3A5C 0%, #4A7BAF 100%)"
+                          : "#18A89D",
+                        boxShadow: item.count
+                          ? "0 16px 30px -22px rgba(26,58,92,.9)"
+                          : "none",
+                      }}
                     />
                   </div>
                   <p className="text-xs font-bold text-[#65758A]">{item.label}</p>
@@ -671,14 +823,20 @@ function OverviewPanel({
 
 function ContactsPanel({
   filteredLeads,
-  query,
-  setQuery,
   state,
+  refreshLeads,
+  exportPdf,
+  clearLeads,
+  canExport,
+  canClear,
 }: {
   filteredLeads: Lead[];
-  query: string;
-  setQuery: (value: string) => void;
   state: LoadState;
+  refreshLeads: () => void;
+  exportPdf: () => void;
+  clearLeads: () => void;
+  canExport: boolean;
+  canClear: boolean;
 }) {
   return (
     <div className="pt-6">
@@ -693,15 +851,34 @@ function ContactsPanel({
             </h2>
           </div>
 
-          <label className="relative w-full md:max-w-sm">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#65758A]" />
-            <input
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              className="w-full rounded-2xl border border-[#DDECF7] bg-[#F8FBFD] py-3 pl-11 pr-4 text-sm outline-none transition focus:border-[#4A7BAF] focus:bg-white"
-              placeholder="Search name, email, phone, message"
-            />
-          </label>
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={refreshLeads}
+              className="inline-flex items-center gap-2 rounded-xl border border-[#DDECF7] bg-white px-4 py-3 text-sm font-bold text-[#123F66] transition hover:-translate-y-0.5 hover:border-[#8FC2E8]"
+              type="button"
+            >
+              <RefreshCw className="h-4 w-4" />
+              Refresh
+            </button>
+            <button
+              onClick={exportPdf}
+              disabled={!canExport}
+              className="primary-action inline-flex items-center gap-2 px-4 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+              type="button"
+            >
+              <Download className="h-4 w-4" />
+              Export PDF
+            </button>
+            <button
+              onClick={clearLeads}
+              disabled={!canClear}
+              className="inline-flex items-center gap-2 rounded-xl border border-[#D95C59]/30 bg-[#FFF1F1] px-4 py-3 text-sm font-bold text-[#B83F3B] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
+              type="button"
+            >
+              <Trash2 className="h-4 w-4" />
+              Clear
+            </button>
+          </div>
         </div>
 
         {state === "loading" ? (
