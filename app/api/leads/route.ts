@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { requireAdminSession } from "../../../lib/adminAuth";
 import type { Lead } from "../../../lib/leads";
 
 type SupabaseContact = {
@@ -9,15 +10,6 @@ type SupabaseContact = {
   message: string | null;
   created_at: string | null;
 };
-
-function isAuthorized(request: Request) {
-  const passcode = process.env.ADMIN_PASSCODE;
-
-  if (!passcode) return true;
-
-  const provided = request.headers.get("x-admin-passcode");
-  return provided === passcode;
-}
 
 function getSupabaseConfig() {
   const supabaseUrl = process.env.SUPABASE_URL?.replace(/\/$/, "");
@@ -52,10 +44,12 @@ function toLead(row: SupabaseContact): Lead {
 }
 
 export async function GET(request: Request) {
-  if (!isAuthorized(request)) {
+  const session = await requireAdminSession(request);
+
+  if (!session.ok) {
     return NextResponse.json(
-      { ok: false, message: "Invalid admin passcode." },
-      { status: 401 }
+      { ok: false, message: session.message },
+      { status: session.status }
     );
   }
 
@@ -91,14 +85,20 @@ export async function GET(request: Request) {
   }
 
   const rows = (await response.json()) as SupabaseContact[];
-  return NextResponse.json({ ok: true, leads: rows.map(toLead) });
+  return NextResponse.json({
+    ok: true,
+    admin: { email: session.email },
+    leads: rows.map(toLead),
+  });
 }
 
 export async function DELETE(request: Request) {
-  if (!isAuthorized(request)) {
+  const session = await requireAdminSession(request);
+
+  if (!session.ok) {
     return NextResponse.json(
-      { ok: false, message: "Invalid admin passcode." },
-      { status: 401 }
+      { ok: false, message: session.message },
+      { status: session.status }
     );
   }
 

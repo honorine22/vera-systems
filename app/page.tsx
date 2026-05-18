@@ -12,6 +12,7 @@ import {
   Cpu,
   Eye,
   Globe,
+  LogIn,
   Mail,
   MapPin,
   Menu,
@@ -52,6 +53,12 @@ import Image from "next/image";
 
 type DemoTab = "ccp" | "deviations" | "suppliers" | "reports";
 type Tone = "success" | "warning" | "danger";
+type ConfirmationState =
+  | { status: "idle"; message: "" }
+  | { status: "loading"; message: string }
+  | { status: "success"; message: string }
+  | { status: "warning"; message: string }
+  | { status: "error"; message: string };
 
 const C = {
   navy: "#123F66",
@@ -709,7 +716,22 @@ function Navbar({
           aria-label="Vera Systems home"
         >
           {/* <Logo subtitle={copy.logoSubtitle} /> */}
-            <Image src={"/logos/vera-logo-blue-transparent.png"} alt="Vera System Logo" width={75} height={75} />
+          <Image
+            src="/logos/vera-logo-blue-transparent.png"
+            alt="Vera Systems"
+            width={92}
+            height={58}
+            className="h-auto w-20 dark:hidden"
+            priority
+          />
+          <Image
+            src="/logos/vera-logo-light-transparent.png"
+            alt="Vera Systems"
+            width={92}
+            height={58}
+            className="hidden h-auto w-20 dark:block"
+            priority
+          />
         </button>
 
         <nav className="hidden items-center gap-1 lg:flex">
@@ -767,6 +789,14 @@ function Navbar({
             <ArrowRight className="h-3.5 w-3.5" />
           </button>
 
+          <a
+            href="/admin"
+            className="hidden items-center gap-2 rounded-xl border border-[hsl(var(--border))] bg-white/80 px-4 py-3 text-xs font-black uppercase tracking-wider text-[hsl(var(--navy-950))] transition hover:-translate-y-0.5 hover:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 md:inline-flex"
+          >
+            <LogIn className="h-3.5 w-3.5" />
+            Dashboard
+          </a>
+
           <button
             onClick={() => setOpen((value) => !value)}
             aria-label="Menu"
@@ -805,6 +835,13 @@ function Navbar({
               {copy.nav[item.key]}
             </button>
           ))}
+          <a
+            href="/admin"
+            className="mt-2 flex items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] px-4 py-3 text-sm font-bold text-white dark:bg-white dark:text-[hsl(var(--navy-950))]"
+          >
+            <LogIn className="h-4 w-4" />
+            Dashboard login
+          </a>
         </nav>
       </div>
     </header>
@@ -1309,21 +1346,6 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
         <div className="mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeader eyebrow={copy.platform.eyebrow} title={copy.platform.title} />
 
-          <div
-            className="hover-card max-w-sm rounded-3xl border border-[hsl(var(--border))] bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5"
-            data-reveal="right"
-          >
-            <p className="text-base italic leading-relaxed text-[hsl(var(--navy-950))]/80 dark:text-white/80">
-              {copy.platform.quote}
-            </p>
-            <button
-              onClick={() => scrollToId("contact")}
-              className="primary-action mt-5 inline-flex items-center gap-2 px-5 py-2.5 text-xs uppercase tracking-wider"
-            >
-              {copy.actions.requestDemo}
-              <ArrowRight className="h-3.5 w-3.5" />
-            </button>
-          </div>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
@@ -1389,13 +1411,20 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                   <Eye className="h-4 w-4" style={{ color: C.teal }} />
                 </div>
 
-                <div className="h-52">
+                <div className="h-72">
                   <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart data={radarData}>
+                    <RadarChart
+                      data={radarData}
+                      cx="50%"
+                      cy="46%"
+                      outerRadius="62%"
+                      margin={{ top: 24, right: 56, bottom: 38, left: 56 }}
+                    >
                       <PolarGrid stroke="rgba(26,58,92,.10)" />
                       <PolarAngleAxis
                         dataKey="subject"
-                        tick={{ fill: "#64748b", fontSize: 10 }}
+                        tick={{ fill: "#65758A", fontSize: 11, fontWeight: 600 }}
+                        tickLine={false}
                       />
                       <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
                       <Radar
@@ -1418,22 +1447,45 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                       <Tooltip
                         contentStyle={{
                           borderRadius: 14,
-                          border: "none",
+                          border: "1px solid rgba(200,220,240,.75)",
+                          boxShadow: "0 18px 46px -26px rgba(26,58,92,.35)",
                           fontFamily: "DM Sans, sans-serif",
                         }}
-                      />
-                      <Legend
-                        iconSize={8}
-                        wrapperStyle={{ fontSize: 11, fontFamily: "DM Sans, sans-serif" }}
                       />
                     </RadarChart>
                   </ResponsiveContainer>
                 </div>
+                <div className="mt-1 flex justify-center gap-5 text-xs font-bold text-[hsl(var(--navy-900))] dark:text-white/80">
+                  <span className="inline-flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-sm" style={{ background: C.teal }} />
+                    Industry
+                  </span>
+                  <span className="inline-flex items-center gap-2">
+                    <span className="h-2.5 w-2.5 rounded-sm" style={{ background: C.blueDeep }} />
+                    Vera
+                  </span>
+                </div>
               </div>
             </div>
           </div>
+<div>
+          <div
+            className="hover-card max-w-sm mb-2 rounded-3xl border border-[hsl(var(--border))] bg-white/70 p-4 backdrop-blur dark:border-white/10 dark:bg-white/5"
+            data-reveal="right"
+          >
+            <p className="text-base italic leading-relaxed text-[hsl(var(--navy-950))]/80 dark:text-white/80">
+              {copy.platform.quote}
+            </p>
+            <button
+              onClick={() => scrollToId("contact")}
+              className="primary-action mt-3 inline-flex items-center gap-2 px-5 py-2.5 text-xs uppercase tracking-wider"
+            >
+              {copy.actions.requestDemo}
+              <ArrowRight className="h-3.5 w-3.5" />
+            </button>
+          </div>
 
-          <div className="space-y-4">
+          <div className="space-y-2">
             {[
               {
                 icon: Shield,
@@ -1475,6 +1527,7 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                 </div>
               </div>
             ))}
+          </div>
           </div>
         </div>
 
@@ -2106,10 +2159,11 @@ function Insights({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="insights"
-      className="bg-[hsl(var(--muted))]/30 py-28 dark:bg-[hsl(var(--muted))]/15"
+      className="relative overflow-hidden bg-[#F4F8FB] py-28 dark:bg-[#07131F]"
     >
+      <div className="absolute inset-0 dot-grid opacity-25 dark:opacity-10" />
       <div className="mx-auto max-w-7xl px-6">
-        <div className="flex items-end justify-between gap-8">
+        <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
             eyebrow={copy.insights.eyebrow}
             title={copy.insights.title}
@@ -2117,15 +2171,16 @@ function Insights({ copy }: { copy: SiteCopy }) {
           />
           <a
             href="#"
-            className="story-link hidden text-sm font-semibold text-[hsl(var(--blue-700))] hover:underline dark:text-[hsl(var(--blue-300))] md:inline"
+            className="primary-action inline-flex w-fit items-center gap-2 px-5 py-3 text-xs uppercase tracking-wider"
           >
-            All articles →
+            All articles
+            <ArrowRight className="h-3.5 w-3.5" />
           </a>
         </div>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-12">
+        <div className="relative mt-14 grid gap-8 lg:grid-cols-12 lg:items-stretch">
           <InsightFeatured item={feature} />
-          <div className="space-y-5 lg:col-span-5">
+          <div className="grid gap-5 lg:col-span-5">
             {rows.map((item) => (
               <InsightRow key={item.title} item={item} />
             ))}
@@ -2145,36 +2200,35 @@ function InsightFeatured({
     <a
       href="#"
       data-reveal="left"
-      className="group relative col-span-12 overflow-hidden rounded-3xl lg:col-span-7"
+      className="hover-card group relative col-span-12 overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] bg-white p-3 shadow-vera dark:border-white/10 dark:bg-white/[0.04] lg:col-span-7"
     >
-      <div className="relative h-[520px] w-full overflow-hidden rounded-3xl">
+      <div className="relative h-[560px] w-full overflow-hidden rounded-[1.55rem]">
         <img
           src={item.image}
           alt=""
           className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-950))]/92 via-[hsl(var(--navy-950))]/28 to-transparent" />
-
-        <div className="absolute inset-x-0 bottom-0 translate-y-2 p-8 transition-transform duration-500 group-hover:translate-y-0">
+        <div className="absolute inset-0 bg-gradient-to-t from-[#07182A]/95 via-[#07182A]/45 to-[#07182A]/5" />
+        <div className="absolute inset-x-4 bottom-4 rounded-[1.35rem] border border-white/18 bg-[#07182A]/82 p-6 shadow-[0_24px_70px_-36px_rgba(0,0,0,.9)] backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1 sm:p-7">
           <span
-            className="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold text-white backdrop-blur"
-            style={{ background: `${C.teal}88`, border: `1px solid ${C.teal}66` }}
+            className="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-black uppercase tracking-[0.14em] text-white"
+            style={{ background: C.teal }}
           >
             {item.tag}
           </span>
 
-          <h3 className="mt-4 text-balance font-display text-3xl font-semibold leading-tight text-white md:text-4xl">
+          <h3 className="mt-4 text-balance font-display text-3xl font-semibold leading-tight text-white md:text-[2.6rem]">
             {item.title}
           </h3>
 
-          <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/72">
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-white/82">
             {item.body}
           </p>
 
-          <div className="mt-4 flex items-center gap-3 text-sm text-white/80">
+          <div className="mt-5 flex flex-wrap items-center gap-3 text-sm font-semibold text-white/85">
             <span>{item.read}</span>
             <span className="h-1 w-1 rounded-full bg-white/50" />
-            <span className="inline-flex items-center gap-1" style={{ color: C.mint }}>
+            <span className="inline-flex items-center gap-1 rounded-full bg-white/10 px-3 py-1.5" style={{ color: C.mint }}>
               Read story
               <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
             </span>
@@ -2194,9 +2248,9 @@ function InsightRow({
     <a
       href="#"
       data-reveal="right"
-      className="hover-card group relative flex items-stretch gap-5 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-white p-3 shadow-sm dark:border-white/10 dark:bg-[hsl(var(--card))]"
+      className="hover-card group relative grid gap-4 overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-white p-4 shadow-soft transition dark:border-white/10 dark:bg-white/[0.045] sm:grid-cols-[164px_1fr]"
     >
-      <div className="relative h-28 w-32 shrink-0 overflow-hidden rounded-xl">
+      <div className="relative h-40 overflow-hidden rounded-[1.15rem] sm:h-full">
         <img
           src={item.image}
           alt=""
@@ -2204,17 +2258,23 @@ function InsightRow({
         />
       </div>
 
-      <div className="flex flex-1 flex-col justify-center pr-4">
-        <span
-          className="text-[11px] font-bold uppercase tracking-wider"
-          style={{ color: C.teal }}
-        >
-          {item.tag}
-        </span>
-        <h4 className="mt-1 text-balance text-base font-semibold leading-snug text-[hsl(var(--navy-950))] transition-colors group-hover:text-[hsl(var(--blue-700))] dark:text-white dark:group-hover:text-[hsl(var(--blue-300))]">
+      <div className="flex min-w-0 flex-1 flex-col justify-center py-2 pr-1">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <span
+            className="rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em]"
+            style={{ color: C.teal }}
+          >
+            {item.tag}
+          </span>
+          <ArrowRight className="h-4 w-4 shrink-0 text-[hsl(var(--blue-700))] transition group-hover:translate-x-1 dark:text-[hsl(var(--blue-300))]" />
+        </div>
+        <h4 className="text-balance text-xl font-semibold leading-tight text-[hsl(var(--navy-950))] transition-colors group-hover:text-[hsl(var(--blue-700))] dark:text-white dark:group-hover:text-[hsl(var(--blue-300))]">
           {item.title}
         </h4>
-        <span className="mt-1 text-xs text-[hsl(var(--muted-foreground))]">
+        <p className="mt-3 text-sm leading-6 text-[hsl(var(--muted-foreground))]">
+          {item.body}
+        </p>
+        <span className="mt-4 text-xs font-bold text-[hsl(var(--muted-foreground))]">
           {item.read}
         </span>
       </div>
@@ -2613,7 +2673,20 @@ function Footer({ copy }: { copy: SiteCopy }) {
         <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
           <div className="max-w-xs">
             {/* <Logo subtitle={copy.logoSubtitle} /> */}
-            <Image src={"/logos/vera-logo-blue-transparent.png"} alt="Vera System Logo" width={75} height={75} />
+            <Image
+              src="/logos/vera-logo-blue-transparent.png"
+              alt="Vera Systems"
+              width={150}
+              height={90}
+              className="h-auto w-32 dark:hidden"
+            />
+            <Image
+              src="/logos/vera-logo-light-transparent.png"
+              alt="Vera Systems"
+              width={150}
+              height={90}
+              className="hidden h-auto w-32 dark:block"
+            />
             <p className="mt-4 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
               {copy.footer.summary}
             </p>
@@ -2668,6 +2741,113 @@ function Footer({ copy }: { copy: SiteCopy }) {
   );
 }
 
+function EmailConfirmationNotice() {
+  const [confirmation, setConfirmation] = useState<ConfirmationState>({
+    status: "idle",
+    message: "",
+  });
+
+  useEffect(() => {
+    const hash = window.location.hash.startsWith("#")
+      ? window.location.hash.slice(1)
+      : window.location.hash;
+    const params = new URLSearchParams(hash);
+    const accessToken = params.get("access_token");
+    const type = params.get("type");
+
+    if (!accessToken || type !== "signup") {
+      return;
+    }
+
+    const expiresIn = Number(params.get("expires_in") || "3600");
+    window.history.replaceState(null, document.title, window.location.pathname);
+    setConfirmation({
+      status: "loading",
+      message: "Confirming your email and preparing dashboard access...",
+    });
+
+    void fetch("/api/admin/confirm", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ accessToken, expiresIn }),
+    })
+      .then(async (response) => {
+        const result = (await response.json().catch(() => ({}))) as {
+          ok?: boolean;
+          confirmed?: boolean;
+          message?: string;
+        };
+
+        if (response.ok && result.ok) {
+          setConfirmation({
+            status: "success",
+            message: result.message || "Email confirmed. Your dashboard access is ready.",
+          });
+          return;
+        }
+
+        setConfirmation({
+          status: result.confirmed ? "warning" : "error",
+          message:
+            result.message ||
+            "Email confirmation could not be completed. Please request a new link.",
+        });
+      })
+      .catch(() => {
+        setConfirmation({
+          status: "error",
+          message: "Email confirmation could not be completed. Please try again.",
+        });
+      });
+  }, []);
+
+  if (confirmation.status === "idle") return null;
+
+  const isSuccess = confirmation.status === "success";
+  const isWarning = confirmation.status === "warning";
+
+  return (
+    <div className="fixed inset-x-0 top-24 z-[80] mx-auto max-w-xl px-4">
+      <div className="rounded-3xl border border-[hsl(var(--border))] bg-white p-5 shadow-[0_28px_80px_-42px_rgba(18,63,102,.55)] dark:border-white/10 dark:bg-[#07131F]">
+        <div className="flex gap-4">
+          <span
+            className={cn(
+              "grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-white",
+              isSuccess ? "bg-[#18A89D]" : isWarning ? "bg-[#D99A3D]" : "bg-[#D95C59]"
+            )}
+          >
+            <CheckCircle2 className="h-5 w-5" />
+          </span>
+          <div className="min-w-0">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[hsl(var(--teal))]">
+              {isSuccess ? "Email confirmed" : isWarning ? "Email confirmed" : "Confirmation issue"}
+            </p>
+            <h2 className="mt-1 font-display text-xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">
+              {isSuccess ? "Your account is ready." : "We checked the confirmation link."}
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-[hsl(var(--muted-foreground))]">
+              {confirmation.message}
+            </p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <a href="/admin" className="primary-action inline-flex items-center gap-2 px-4 py-2.5 text-xs uppercase tracking-wider">
+                Go to dashboard
+                <ArrowRight className="h-3.5 w-3.5" />
+              </a>
+              <button
+                type="button"
+                onClick={() => setConfirmation({ status: "idle", message: "" })}
+                className="rounded-xl border border-[hsl(var(--border))] px-4 py-2.5 text-xs font-black uppercase tracking-wider text-[hsl(var(--muted-foreground))] transition hover:text-[hsl(var(--navy-950))] dark:border-white/10 dark:hover:text-white"
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Page() {
   const progress = useScrollProgress();
   const { dark, toggle } = useDarkMode();
@@ -2686,6 +2866,7 @@ export default function Page() {
           }}
         />
       </div>
+      <EmailConfirmationNotice />
 
       <Navbar
         dark={dark}
