@@ -11,21 +11,42 @@ npm run dev
 
 Then open `http://localhost:3000`.
 
-## Contact form backend integration
+## Supabase contact form integration
 
-The frontend submits to `/api/contact`. That API route validates the form and forwards it to your backend when you add this to `.env.local`:
+The frontend submits only to `/api/contact`. That server route validates the submission, reads server-side environment variables, and sends the data to Supabase through the REST API.
+
+Create a `.env.local` file with:
 
 ```bash
-CONTACT_BACKEND_URL=https://your-backend.com/api/contact
-CONTACT_BACKEND_TOKEN=optional-token
+SUPABASE_URL=https://your-project-id.supabase.co
+SUPABASE_SERVICE_KEY=sb_secret_your_key_here
 ```
 
-If `CONTACT_BACKEND_URL` is empty, the route returns success locally and logs the payload so you can test the UI before the backend is ready.
+The service key is used only by the server route. Do not expose it in browser code and do not prefix it with `VITE_` or `NEXT_PUBLIC_`.
+
+In Supabase, create the contact table from the SQL editor:
+
+```sql
+create table contact_submissions (
+  id bigint generated always as identity primary key,
+  name text not null,
+  email text not null,
+  phone text,
+  message text not null,
+  created_at timestamp with time zone default now()
+);
+```
+
+The API route sends this payload to `/rest/v1/contact_submissions`:
+
+`name`, `email`, `phone`, and `message`.
 
 ## Key files
 
 - `app/page.tsx` — full landing page and dashboard sections
-- `app/api/contact/route.ts` — backend proxy for contact form
+- `app/admin/page.tsx` — admin inbox for Supabase submissions
+- `app/api/contact/route.ts` — validates and forwards contact form submissions to Supabase
+- `app/api/leads/route.ts` — admin API for reading and clearing Supabase submissions
 - `app/layout.tsx` — font setup and metadata
 - `app/globals.css` — reveal animation, grid background, chart animation, dark mode helpers
 - `tailwind.config.ts` — Vera Systems colors and animation tokens

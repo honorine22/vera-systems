@@ -28,6 +28,9 @@ dist/
 # Coverage
 coverage/
 
+# Local backend data
+data/contact-submissions.json
+
 # IDEs
 .vscode/
 .idea/

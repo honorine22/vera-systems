@@ -54,18 +54,19 @@ type DemoTab = "ccp" | "deviations" | "suppliers" | "reports";
 type Tone = "success" | "warning" | "danger";
 
 const C = {
-  navy: "#07182A",
-  navySoft: "#102A4A",
-  blue: "#2D6CB5",
-  blueDeep: "#1A4A8A",
-  sky: "#7FB3E8",
-  ice: "#C8DCF0",
-  teal: "#149A90",
-  mint: "#6AD7C9",
-  amber: "#F59E0B",
-  green: "#24B47E",
-  red: "#E5484D",
-  slate: "#64748B",
+  navy: "#123F66",
+  navySoft: "#1D527D",
+  blue: "#4A7BAF",
+  blueDeep: "#1A3A5C",
+  sky: "#8FC2E8",
+  ice: "#DDECF7",
+  teal: "#18A89D",
+  mint: "#8ADFD4",
+  amber: "#D99A3D",
+  green: "#2FA772",
+  violet: "#7467D9",
+  red: "#D95C59",
+  slate: "#65758A",
 };
 
 type Language = "en";
@@ -472,7 +473,7 @@ const pieData = [
   { name: "Within range", value: 12, color: C.green },
   { name: "Watch", value: 1, color: C.amber },
   { name: "Resolved", value: 8, color: C.teal },
-  { name: "Pending", value: 2, color: C.blue },
+  { name: "Pending", value: 2, color: C.violet },
 ];
 
 function cn(...c: Array<string | false | null | undefined>) {
@@ -526,8 +527,7 @@ function useDarkMode() {
 
   useEffect(() => {
     const stored = localStorage.getItem("vera-theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const isDark = stored ? stored === "dark" : prefersDark;
+    const isDark = stored === "dark";
 
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
@@ -696,10 +696,10 @@ function Navbar({
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav",
+        "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 animate-nav",
         scrolled
-          ? "border-b border-[hsl(var(--border))] bg-white/90 shadow-[0_18px_45px_-35px_rgba(15,23,42,.55)] backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(var(--background))]/88"
-          : "bg-transparent"
+          ? "border-[hsl(var(--border))] bg-white/90 shadow-[0_18px_45px_-35px_rgba(15,23,42,.55)] backdrop-blur-xl dark:border-white/10 dark:bg-[#061225]/95"
+          : "border-[hsl(var(--border))]/60 bg-white/82 backdrop-blur-xl dark:border-white/10 dark:bg-[#061225]/95"
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
@@ -761,7 +761,7 @@ function Navbar({
 
           <button
             onClick={() => scrollToId("contact")}
-            className="hidden items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] px-5 py-3 text-xs font-bold uppercase tracking-wider text-white shadow-[0_18px_35px_-22px_rgba(7,24,42,.9)] transition hover:-translate-y-0.5 hover:bg-[hsl(var(--blue-700))] active:scale-95 dark:bg-white/10 dark:hover:bg-white/15 sm:inline-flex"
+            className="primary-action hidden items-center gap-2 px-5 py-3 text-xs uppercase tracking-wider sm:inline-flex"
           >
             {copy.actions.bookDemo}
             <ArrowRight className="h-3.5 w-3.5" />
@@ -845,7 +845,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => scrollToId("contact")}
-                className="hero-primary-btn group relative inline-flex items-center gap-2 overflow-hidden rounded-xl px-6 py-3.5 text-sm font-bold text-white outline-none transition active:scale-95 focus-visible:ring-2 focus-visible:ring-[#4A7BAF] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[hsl(var(--background))]"
+                className="primary-action group relative inline-flex items-center gap-2 overflow-hidden px-6 py-3.5 text-sm"
               >
                 <span className="relative z-10">{copy.actions.bookConsultation}</span>
                 <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -908,7 +908,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
                 </div>
 
                 <div className="mt-4 h-48">
-                  <ResponsiveContainer>
+                  <ResponsiveContainer width="100%" height="100%">
                     <ComposedChart
                       data={ccpTrend}
                       margin={{ top: 6, right: 6, left: -20, bottom: 0 }}
@@ -1031,92 +1031,7 @@ function ClientTypes({ copy }: { copy: SiteCopy }) {
     </section>
   );
 }
-
-function About({ copy }: { copy: SiteCopy }) {
-  return (
-    <section
-      id="about"
-      className="relative overflow-hidden bg-[hsl(var(--muted))]/40 py-28 dark:bg-[hsl(var(--background))]"
-    >
-      <div className="absolute inset-0 dot-grid opacity-35 dark:opacity-20" />
-      <div className="absolute right-0 top-0 h-[600px] w-[600px] -translate-y-1/4 translate-x-1/3 rounded-full bg-[hsl(var(--blue-100))]/50 blur-3xl dark:bg-[hsl(var(--blue-700))]/8" />
-
-      <div className="relative mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-        <div data-reveal="left">
-          <div className="hover-card relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] shadow-vera dark:border-white/10">
-            <img
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=85"
-              alt={copy.about.title}
-              className="h-full w-full object-cover transition duration-1000 hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-950))]/68 via-transparent to-transparent" />
-
-            <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/50 bg-white/88 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(var(--card))]/88">
-              <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[hsl(var(--teal))]">
-                {copy.about.established}
-              </p>
-              <p className="font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">
-                {copy.about.location}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div data-reveal="right">
-          <SectionHeader
-            eyebrow={copy.about.eyebrow}
-            title={copy.about.title}
-            body={copy.about.body}
-          />
-
-          <div className="mt-10 relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/72 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5">
-            <div className="absolute inset-y-0 left-0 w-1 rounded-l-3xl bg-gradient-to-b from-[hsl(var(--teal))] via-[hsl(var(--blue-400))] to-transparent" />
-            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[hsl(var(--teal))]">
-              {copy.about.missionLabel}
-            </p>
-            <p className="mt-3 text-balance text-lg italic leading-relaxed text-[hsl(var(--navy-950))] dark:text-white">
-              {copy.about.mission}
-            </p>
-          </div>
-
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {copy.about.pills.map((pill, index) => (
-              <InfoPill
-                key={pill.title}
-                title={pill.title}
-                body={pill.body}
-                accent={[C.blue, C.teal][index]}
-              />
-            ))}
-          </div>
-
-          <div className="mt-6 grid gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/60 px-6 py-5 backdrop-blur dark:border-white/10 dark:bg-white/[0.045] sm:grid-cols-3">
-            {copy.about.stats.map((stat, index) => (
-              <div
-                key={stat.l}
-                className={cn(
-                  "text-center",
-                  index !== 0 &&
-                    "sm:border-l sm:border-[hsl(var(--border))] sm:dark:border-white/10"
-                )}
-              >
-                <p
-                  className="font-display text-3xl font-semibold tracking-tight"
-                  style={{ color: [C.blue, C.teal, C.blueDeep][index] }}
-                >
-                  {stat.k}
-                </p>
-                <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">
-                  {stat.l}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
+function About({ copy }: { copy: SiteCopy }) { return ( <section id="about" className="relative overflow-hidden bg-[hsl(var(--muted))]/40 py-28 dark:bg-[hsl(var(--background))]" > <div className="absolute inset-0 dot-grid opacity-35 dark:opacity-20" /> <div className="absolute right-0 top-0 h-[600px] w-[600px] -translate-y-1/4 translate-x-1/3 rounded-full bg-[hsl(var(--blue-100))]/50 blur-3xl dark:bg-[hsl(var(--blue-700))]/8" /> <div className="relative mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center"> <div data-reveal="left"> <div className="hover-card relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] shadow-vera dark:border-white/10"> <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=85" alt={copy.about.title} className="h-full w-full object-cover transition duration-1000 hover:scale-105" /> <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-950))]/68 via-transparent to-transparent" /> <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/50 bg-white/88 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(var(--card))]/88"> <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[hsl(var(--teal))]"> {copy.about.established} </p> <p className="font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white"> {copy.about.location} </p> </div> </div> </div> <div data-reveal="right"> <SectionHeader eyebrow={copy.about.eyebrow} title={copy.about.title} body={copy.about.body} /> <div className="mt-10 relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/72 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"> <div className="absolute inset-y-0 left-0 w-1 rounded-l-3xl bg-gradient-to-b from-[hsl(var(--teal))] via-[hsl(var(--blue-400))] to-transparent" /> <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[hsl(var(--teal))]"> {copy.about.missionLabel} </p> <p className="mt-3 text-balance text-lg italic leading-relaxed text-[hsl(var(--navy-950))] dark:text-white"> {copy.about.mission} </p> </div> <div className="mt-6 grid gap-4 sm:grid-cols-2"> {copy.about.pills.map((pill, index) => ( <InfoPill key={pill.title} title={pill.title} body={pill.body} accent={[C.blue, C.teal][index]} /> ))} </div> <div className="mt-6 grid gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/60 px-6 py-5 backdrop-blur dark:border-white/10 dark:bg-white/[0.045] sm:grid-cols-3"> {copy.about.stats.map((stat, index) => ( <div key={stat.l} className={cn( "text-center", index !== 0 && "sm:border-l sm:border-[hsl(var(--border))] sm:dark:border-white/10" )} > <p className="font-display text-3xl font-semibold tracking-tight" style={{ color: [C.blue, C.teal, C.blueDeep][index] }} > {stat.k} </p> <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]"> {stat.l} </p> </div> ))} </div> </div> </div> </section> ); }
 
 function InfoPill({
   title,
@@ -1242,8 +1157,7 @@ function Services({ copy }: { copy: SiteCopy }) {
                   <div className="mt-6 flex items-center justify-between border-t border-[hsl(var(--border))] pt-5 dark:border-white/10">
                     <button
                       onClick={() => scrollToId("contact")}
-                      className="group/btn inline-flex items-center gap-2 rounded-xl px-4 py-2 text-[11px] font-black uppercase tracking-wider text-white transition hover:-translate-y-0.5 active:scale-95"
-                      style={{ background: service.accent }}
+                      className="primary-action group/btn inline-flex items-center gap-2 px-4 py-2 text-[11px] uppercase tracking-wider"
                     >
                       {copy.actions.learnMore}
                       <ArrowRight className="h-3.5 w-3.5 transition group-hover/btn:translate-x-0.5" />
@@ -1438,7 +1352,7 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
             </p>
             <button
               onClick={() => scrollToId("contact")}
-              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] px-5 py-2.5 text-xs font-black uppercase tracking-wider text-white transition hover:-translate-y-0.5 hover:bg-[hsl(var(--blue-700))] active:scale-95 dark:bg-[hsl(var(--blue-500))]"
+              className="primary-action mt-5 inline-flex items-center gap-2 px-5 py-2.5 text-xs uppercase tracking-wider"
             >
               {copy.actions.requestDemo}
               <ArrowRight className="h-3.5 w-3.5" />
@@ -1461,19 +1375,19 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                 </div>
 
                 <div className="h-52">
-                  <ResponsiveContainer>
+                  <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={segmentData} barGap={4}>
                       <defs>
                         <linearGradient id="barActual" x1="0" x2="0" y1="0" y2="1">
-                          <stop offset="0%" stopColor={C.blue} />
-                          <stop offset="100%" stopColor={C.teal} />
+                          <stop offset="0%" stopColor={C.blueDeep} />
+                          <stop offset="100%" stopColor={C.blue} />
                         </linearGradient>
                         <linearGradient id="barTarget" x1="0" x2="0" y1="0" y2="1">
-                          <stop offset="0%" stopColor={C.sky} stopOpacity={0.55} />
-                          <stop offset="100%" stopColor={C.sky} stopOpacity={0.15} />
+                          <stop offset="0%" stopColor={C.mint} stopOpacity={0.72} />
+                          <stop offset="100%" stopColor={C.ice} stopOpacity={0.38} />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid stroke="rgba(30,58,95,.07)" vertical={false} />
+                      <CartesianGrid stroke="rgba(26,58,92,.07)" vertical={false} />
                       <XAxis
                         dataKey="name"
                         tickLine={false}
@@ -1486,10 +1400,11 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                         tick={{ fill: "#64748b", fontSize: 11 }}
                       />
                       <Tooltip
-                        cursor={{ fill: "rgba(30,58,95,.04)" }}
+                        cursor={{ fill: "rgba(74,123,175,.06)" }}
                         contentStyle={{
                           borderRadius: 14,
-                          border: "none",
+                          border: "1px solid rgba(200,220,240,.75)",
+                          boxShadow: "0 18px 46px -26px rgba(26,58,92,.35)",
                           fontFamily: "DM Sans, sans-serif",
                         }}
                       />
@@ -1509,9 +1424,9 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                 </div>
 
                 <div className="h-52">
-                  <ResponsiveContainer>
+                  <ResponsiveContainer width="100%" height="100%">
                     <RadarChart data={radarData}>
-                      <PolarGrid stroke="rgba(30,58,95,.1)" />
+                      <PolarGrid stroke="rgba(26,58,92,.10)" />
                       <PolarAngleAxis
                         dataKey="subject"
                         tick={{ fill: "#64748b", fontSize: 10 }}
@@ -1520,16 +1435,16 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                       <Radar
                         name="Vera"
                         dataKey="A"
-                        stroke={C.teal}
-                        fill={C.teal}
+                        stroke={C.blueDeep}
+                        fill={C.blue}
                         fillOpacity={0.25}
                         strokeWidth={2}
                       />
                       <Radar
                         name="Industry"
                         dataKey="B"
-                        stroke={C.blue}
-                        fill={C.blue}
+                        stroke={C.teal}
+                        fill={C.teal}
                         fillOpacity={0.12}
                         strokeWidth={1.5}
                         strokeDasharray="4 4"
@@ -1807,15 +1722,16 @@ function CCPDashboard() {
           </div>
 
           <div className="h-36">
-            <ResponsiveContainer>
+            <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={ccpTrend} margin={{ top: 4, right: 6, left: -20, bottom: 0 }}>
                 <defs>
                   <linearGradient id="ccpAreaGrad" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor={C.teal} stopOpacity={0.35} />
-                    <stop offset="100%" stopColor={C.teal} stopOpacity={0} />
+                    <stop offset="0%" stopColor={C.blue} stopOpacity={0.34} />
+                    <stop offset="62%" stopColor={C.teal} stopOpacity={0.14} />
+                    <stop offset="100%" stopColor={C.ice} stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid stroke="rgba(30,58,95,.06)" strokeDasharray="3 6" vertical={false} />
+                <CartesianGrid stroke="rgba(26,58,92,.06)" strokeDasharray="3 6" vertical={false} />
                 <XAxis dataKey="m" tickLine={false} axisLine={false} tick={{ fill: "#64748b", fontSize: 11 }} />
                 <YAxis hide />
                 <Tooltip contentStyle={{ borderRadius: 14, border: "none", fontFamily: "DM Sans, sans-serif" }} />
@@ -1823,7 +1739,7 @@ function CCPDashboard() {
                   type="monotone"
                   dataKey="v"
                   name="CCP Score"
-                  stroke={C.teal}
+                  stroke={C.blueDeep}
                   strokeWidth={2.5}
                   fill="url(#ccpAreaGrad)"
                 />
@@ -1838,7 +1754,7 @@ function CCPDashboard() {
           </p>
 
           <div className="flex h-36 items-center">
-            <ResponsiveContainer>
+            <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={pieData}
@@ -1903,20 +1819,20 @@ function DeviationDashboard() {
         </p>
 
         <div className="mt-6 h-48">
-          <ResponsiveContainer>
+          <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={ccpTrend} margin={{ top: 4, right: 6, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="devGrad" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor={C.blue} stopOpacity={0.3} />
-                  <stop offset="100%" stopColor={C.blue} stopOpacity={0} />
+                  <stop offset="0%" stopColor={C.violet} stopOpacity={0.28} />
+                  <stop offset="100%" stopColor={C.sky} stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="rgba(30,58,95,.06)" vertical={false} />
+              <CartesianGrid stroke="rgba(26,58,92,.06)" vertical={false} />
               <XAxis dataKey="m" tickLine={false} axisLine={false} tick={{ fill: "#64748b", fontSize: 11 }} />
               <YAxis hide />
               <Tooltip contentStyle={{ borderRadius: 14, border: "none", fontFamily: "DM Sans, sans-serif" }} />
               <Area type="monotone" dataKey="v" name="Score" stroke={C.blue} strokeWidth={2} fill="url(#devGrad)" />
-              <Bar dataKey="d" name="Deviations" fill={C.red} radius={[4, 4, 0, 0]} opacity={0.72} />
+              <Bar dataKey="d" name="Deviations" fill={C.amber} radius={[4, 4, 0, 0]} opacity={0.78} />
             </ComposedChart>
           </ResponsiveContainer>
         </div>
@@ -1997,15 +1913,16 @@ function SupplierDashboard() {
         </p>
 
         <div className="mt-6 h-52">
-          <ResponsiveContainer>
+          <ResponsiveContainer width="100%" height="100%">
             <LineChart data={ccpTrend} margin={{ top: 4, right: 6, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="supLine" x1="0" x2="1" y1="0" y2="0">
-                  <stop offset="0%" stopColor={C.green} />
-                  <stop offset="100%" stopColor={C.teal} />
+                  <stop offset="0%" stopColor={C.blueDeep} />
+                  <stop offset="48%" stopColor={C.teal} />
+                  <stop offset="100%" stopColor={C.green} />
                 </linearGradient>
               </defs>
-              <CartesianGrid stroke="rgba(30,58,95,.07)" vertical={false} />
+              <CartesianGrid stroke="rgba(26,58,92,.07)" vertical={false} />
               <XAxis dataKey="m" tickLine={false} axisLine={false} tick={{ fill: "#64748b", fontSize: 11 }} />
               <YAxis domain={[80, 100]} tickLine={false} axisLine={false} tick={{ fill: "#64748b", fontSize: 11 }} />
               <Tooltip contentStyle={{ borderRadius: 14, border: "none", fontFamily: "DM Sans, sans-serif" }} />
@@ -2100,7 +2017,7 @@ function ReportsDashboard() {
       "API",
       "Custom Dashboard Export",
       "Structured data export for management reporting or ERP connection.",
-      C.red,
+      C.violet,
     ],
   ];
 
@@ -2437,7 +2354,7 @@ function CTABanner({ copy }: { copy: SiteCopy }) {
         <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
           <button
             onClick={() => scrollToId("contact")}
-            className="group inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-[#07182A] transition hover:-translate-y-0.5 hover:bg-[hsl(var(--blue-100))] active:scale-95"
+            className="primary-action group inline-flex items-center gap-2 px-7 py-3.5 text-sm"
           >
             {copy.actions.bookConsultation}
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
@@ -2445,7 +2362,7 @@ function CTABanner({ copy }: { copy: SiteCopy }) {
 
           <button
             onClick={() => scrollToId("platform")}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/20 px-7 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/10 active:scale-95"
+            className="hero-secondary-btn inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-bold text-white transition active:scale-95"
           >
             <PlayCircle className="h-4 w-4" />
             {copy.actions.explorePlatform}
@@ -2576,18 +2493,24 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json().catch(() => ({ ok: response.ok }));
+      const result = await response
+        .json()
+        .catch(() => ({ success: response.ok }));
 
-      if (!response.ok || result.ok === false) {
+      if (!response.ok || result.success === false) {
         throw new Error(result.message || "Could not send message.");
       }
 
       setStatus("success");
-      setMessage(copy.contact.success);
+      setMessage(result.message || copy.contact.success);
       form.reset();
     } catch (error) {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : copy.contact.error);
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : copy.contact.error
+      );
     }
   }
 
@@ -2608,6 +2531,19 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
         {copy.contact.formTitle}
       </h3>
 
+
+      {message && (
+        <p
+          className={cn(
+            "mt-4 rounded-2xl border px-4 py-3 text-sm",
+            status === "success"
+              ? "border-[hsl(var(--success))]/30 bg-[hsl(var(--success-light))]/30 text-[hsl(var(--success))]"
+              : "border-[hsl(var(--danger))]/30 bg-[hsl(var(--danger-light))]/30 text-[hsl(var(--danger))]"
+          )}
+        >
+          {message}
+        </p>
+      )}
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <FormField
           label={copy.contact.fields.name}
@@ -2619,7 +2555,6 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
           label={copy.contact.fields.company}
           name="company"
           placeholder={copy.contact.placeholders.company}
-          required
         />
         <FormField
           label={copy.contact.fields.email}
@@ -2640,12 +2575,12 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
             {copy.contact.fields.interest}
           </label>
           <select
-            name="interest"
+            name="subject"
             className="w-full rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/30 px-4 py-4 text-sm text-[hsl(var(--foreground))] outline-none transition focus:border-[hsl(var(--blue-400))] focus:bg-white dark:border-white/10 dark:bg-white/5 dark:focus:bg-white/[0.08]"
           >
-            {["consultancy", "platform", "demo", "both"].map((value, index) => (
-              <option key={value} value={value}>
-                {copy.contact.interests[index]}
+            {copy.contact.interests.map((interest) => (
+              <option key={interest} value={interest}>
+                {interest}
               </option>
             ))}
           </select>
@@ -2658,6 +2593,7 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
           <textarea
             name="message"
             rows={4}
+            required
             placeholder={copy.contact.placeholders.message}
             className="w-full resize-none rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/30 px-4 py-4 text-sm text-[hsl(var(--foreground))] outline-none transition placeholder:text-[hsl(var(--muted-foreground))]/50 focus:border-[hsl(var(--blue-400))] focus:bg-white dark:border-white/10 dark:bg-white/5 dark:focus:bg-white/[0.08]"
           />
@@ -2667,23 +2603,10 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="mt-6 w-full rounded-xl bg-[hsl(var(--blue-700))] px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[hsl(var(--navy-950))] disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.99] dark:bg-[hsl(var(--blue-500))]"
+        className="primary-action mt-6 w-full px-6 py-3.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
       >
         {status === "loading" ? copy.actions.sending : copy.actions.sendMessage}
       </button>
-
-      {message && (
-        <p
-          className={cn(
-            "mt-4 rounded-2xl border px-4 py-3 text-sm",
-            status === "success"
-              ? "border-[hsl(var(--success))]/30 bg-[hsl(var(--success-light))]/30 text-[hsl(var(--success))]"
-              : "border-[hsl(var(--danger))]/30 bg-[hsl(var(--danger-light))]/30 text-[hsl(var(--danger))]"
-          )}
-        >
-          {message}
-        </p>
-      )}
     </form>
   );
 }
@@ -2763,6 +2686,9 @@ function Footer({ copy }: { copy: SiteCopy }) {
           </p>
 
           <div className="flex gap-4 text-[11px] font-black uppercase tracking-[0.22em] text-[hsl(var(--muted-foreground))]">
+            <a href="/admin" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
+              Admin inbox
+            </a>
             <a href="#" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
               LinkedIn
             </a>
