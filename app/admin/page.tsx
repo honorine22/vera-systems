@@ -40,6 +40,54 @@ const C = {
   slate: "#65758A",
 };
 
+function AdminPublicNav() {
+  return (
+    <header className="sticky top-0 z-40 border-b border-[#DDECF7] bg-white/88 backdrop-blur-xl">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+        <a href="/" className="inline-flex rounded-2xl transition hover:opacity-85" aria-label="Vera Systems home">
+          <Image
+            src="/logos/vera-logo-blue-transparent.png"
+            alt="Vera Systems"
+            width={132}
+            height={76}
+            className="h-auto w-28"
+            priority
+          />
+        </a>
+
+        <nav className="hidden items-center gap-6 text-sm font-semibold text-[#65758A] md:flex">
+          <a href="/#about" className="transition hover:text-[#123F66]">About</a>
+          <a href="/#services" className="transition hover:text-[#123F66]">Services</a>
+          <a href="/#platform" className="transition hover:text-[#123F66]">Platform</a>
+          <a href="/#contact" className="transition hover:text-[#123F66]">Contact</a>
+        </nav>
+
+        <a
+          href="/#contact"
+          className="rounded-2xl bg-[#123F66] px-5 py-3 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#1D527D]"
+        >
+          Book demo
+        </a>
+      </div>
+    </header>
+  );
+}
+
+function AdminPublicFooter() {
+  return (
+    <footer className="border-t border-[#DDECF7] bg-white/80 px-6 py-8 text-[#65758A]">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm md:flex-row md:items-center md:justify-between">
+        <p>© 2026 Vera Systems Ltd. · Kigali, Rwanda</p>
+        <div className="flex gap-5 font-semibold">
+          <a href="/#services" className="transition hover:text-[#123F66]">Services</a>
+          <a href="/#contact" className="transition hover:text-[#123F66]">Contact</a>
+          <a href="/" className="transition hover:text-[#123F66]">Website</a>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("en", {
     dateStyle: "medium",
@@ -389,20 +437,24 @@ export default function AdminPage() {
 
   if (state === "checking" || (state === "loading" && !user)) {
     return (
-      <main className="grid min-h-screen place-items-center bg-[#F6F9FC] px-6 text-[#123F66]">
-        <div className="text-center">
-          <Image
-            src="/logos/vera-logo-blue-transparent.png"
-            alt="Vera Systems"
-            width={160}
-            height={90}
-            className="mx-auto h-auto w-36"
-            priority
-          />
-          <p className="mt-6 text-sm font-bold uppercase tracking-[0.22em] text-[#65758A]">
-            Opening secure dashboard
-          </p>
+      <main className="min-h-screen bg-[#F6F9FC] text-[#123F66]">
+        <AdminPublicNav />
+        <div className="grid min-h-[calc(100vh-80px)] place-items-center px-6">
+          <div className="text-center">
+            <Image
+              src="/logos/vera-logo-blue-transparent.png"
+              alt="Vera Systems"
+              width={160}
+              height={90}
+              className="mx-auto h-auto w-36"
+              priority
+            />
+            <p className="mt-6 text-sm font-bold text-[#65758A]">
+              Opening secure dashboard
+            </p>
+          </div>
         </div>
+        <AdminPublicFooter />
       </main>
     );
   }
@@ -410,13 +462,9 @@ export default function AdminPage() {
   if (state === "auth" && !user) {
     return (
       <main className="min-h-screen bg-[#F6F9FC] text-[#123F66]">
-        <section className="mx-auto grid min-h-screen max-w-6xl items-center gap-10 px-6 py-10 lg:grid-cols-[1fr_0.9fr]">
+        <AdminPublicNav />
+        <section className="mx-auto grid min-h-[calc(100vh-80px)] max-w-6xl items-center gap-10 px-6 py-10 lg:grid-cols-[1fr_0.9fr]">
           <div>
-            <a href="/" className="inline-flex items-center gap-2 text-sm font-bold text-[#65758A] transition hover:text-[#123F66]">
-              <ArrowLeft className="h-4 w-4" />
-              Back to website
-            </a>
-
             <Image
               src="/logos/vera-logo-blue-transparent.png"
               alt="Vera Systems"
@@ -502,14 +550,16 @@ export default function AdminPage() {
             </button>
           </form>
         </section>
+        <AdminPublicFooter />
       </main>
     );
   }
 
   return (
     <main className="min-h-screen bg-[#F4F8FB] text-[#123F66]">
+      <AdminPublicNav />
       <div className="min-h-screen">
-        <aside className="flex flex-col border-r border-[#DDECF7] bg-white px-5 py-6 shadow-[18px_0_60px_-52px_rgba(18,63,102,.5)] lg:fixed lg:inset-y-0 lg:left-0 lg:w-[292px]">
+        <aside className="flex flex-col border-r border-[#DDECF7] bg-white px-5 py-6 shadow-[18px_0_60px_-52px_rgba(18,63,102,.5)] lg:fixed lg:bottom-0 lg:left-0 lg:top-20 lg:w-[292px]">
           <a href="/" aria-label="Back to Vera Systems website" className="inline-flex w-fit rounded-3xl transition hover:opacity-85">
             <Image
               src="/logos/vera-logo-blue-transparent.png"
@@ -638,6 +688,7 @@ export default function AdminPage() {
               canClear={leads.length > 0}
             />
           )}
+          <AdminPublicFooter />
         </section>
       </div>
     </main>

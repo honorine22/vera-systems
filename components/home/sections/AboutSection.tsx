@@ -1,4 +1,4 @@
-import { Database, ImageIcon, ShieldCheck, Users } from "lucide-react";
+import { Database, ShieldCheck, Users } from "lucide-react";
 import type { SiteCopy } from "../translations";
 
 const C = {
@@ -6,6 +6,11 @@ const C = {
   teal: "#18A89D",
   blueDeep: "#1A3A5C",
 };
+
+const founderImages = [
+  "/images/founder-norbert-rafiki.jpeg",
+  "/images/founder-corneille-niyobyiringiro.jpeg",
+];
 
 function SectionHeader({
   eyebrow,
@@ -74,7 +79,7 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
           <div data-reveal="left">
             <div className="hover-card relative aspect-[4/4.7] overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] shadow-vera dark:border-white/10">
               <img
-                src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=1100&q=85"
+                src="/images/about-food-safety-data-monitoring.png"
                 alt={copy.about.title}
                 className="h-full w-full object-cover transition duration-1000 hover:scale-105"
               />
@@ -139,35 +144,33 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
             {copy.about.team.map((member, index) => (
               <article
                 key={member.name}
-                className="hover-card relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-5 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
+                className="hover-card group relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/92 p-4 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5 sm:p-5"
               >
                 <div
                   className="absolute -right-16 -top-16 h-44 w-44 rounded-full opacity-10 blur-3xl"
                   style={{ background: [C.blue, C.teal][index] ?? C.blueDeep }}
                 />
-                <div className="relative grid gap-5 sm:grid-cols-[128px_1fr]">
-                  <div
-                    className="relative grid h-36 overflow-hidden rounded-3xl border border-white/80 shadow-md dark:border-white/10"
-                    style={{
-                      background: `linear-gradient(135deg, ${[C.blueDeep, C.teal][index] ?? C.blue}26, ${[C.blue, C.teal][index] ?? C.blueDeep}12)`,
-                    }}
-                    aria-label={`${member.name} headshot placeholder`}
-                  >
-                    <div className="absolute inset-0 dot-grid opacity-35" />
-                    <div
-                      className="absolute inset-x-5 bottom-4 h-14 rounded-t-full"
-                      style={{ background: [C.blueDeep, C.teal][index] ?? C.blue }}
+                <div className="relative grid gap-5 sm:grid-cols-[148px_1fr]">
+                  <div className="relative h-48 overflow-hidden rounded-3xl border border-white/80 bg-[hsl(var(--blue-100))] shadow-md dark:border-white/10 sm:h-full">
+                    <img
+                      src={founderImages[index] ?? founderImages[0]}
+                      alt={member.name}
+                      className="h-full min-h-[190px] w-full object-cover object-top transition duration-700 group-hover:scale-105"
                     />
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[hsl(var(--navy-950))]/36 to-transparent" />
                     <div
-                      className="absolute left-1/2 top-8 h-14 w-14 -translate-x-1/2 rounded-full"
+                      className="absolute bottom-3 left-3 rounded-xl px-2.5 py-1 text-xs font-bold text-white shadow-soft"
                       style={{ background: [C.blueDeep, C.teal][index] ?? C.blue }}
-                    />
-                    <div className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-xl bg-white/80 text-[hsl(var(--blue-700))] backdrop-blur dark:bg-white/10 dark:text-white">
-                      <ImageIcon className="h-4 w-4" />
+                    >
+                      {member.name
+                        .split(" ")
+                        .slice(0, 2)
+                        .map((part) => part[0])
+                        .join("")}
                     </div>
                   </div>
 
-                  <div>
+                  <div className="flex min-w-0 flex-col justify-center">
                     <h4 className="font-display text-lg font-bold text-[hsl(var(--navy-950))] dark:text-white">
                       {member.name}
                     </h4>

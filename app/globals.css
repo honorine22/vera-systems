@@ -225,7 +225,18 @@
   }
 
   .marquee-track {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  .flow-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5.5rem, black calc(100% - 5.5rem), transparent);
+    mask-image: linear-gradient(to right, transparent, black 5.5rem, black calc(100% - 5.5rem), transparent);
+  }
+
+  .flow-fade-soft {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 4rem, black calc(100% - 4rem), transparent);
+    mask-image: linear-gradient(to right, transparent, black 4rem, black calc(100% - 4rem), transparent);
   }
 
   .marquee {

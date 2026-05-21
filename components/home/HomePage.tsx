@@ -418,10 +418,10 @@ function Navbar({
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 animate-nav",
+        "fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav",
         scrolled
-          ? "border-[hsl(var(--border))] bg-white/90 shadow-[0_18px_45px_-35px_rgba(15,23,42,.55)] backdrop-blur-xl dark:border-white/10 dark:bg-[#061225]/95"
-          : "border-[hsl(var(--border))]/60 bg-white/82 backdrop-blur-xl dark:border-white/10 dark:bg-[#061225]/95"
+          ? "border-[hsl(var(--border))] border-b bg-white/90 shadow-[0_18px_45px_-35px_rgba(15,23,42,.55)] backdrop-blur-xl dark:border-white/10 dark:bg-[#061225]/95"
+          : "bg-white/82 backdrop-blur-xl dark:bg-[#061225]/95"
       )}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
@@ -457,13 +457,13 @@ function Navbar({
               className={cn(
                 "relative rounded-xl px-3.5 py-2 text-sm font-semibold transition-all duration-200",
                 activeSection === item.href
-                  ? "bg-[hsl(var(--blue-100))]/70 text-[hsl(var(--blue-700))] dark:bg-white/8 dark:text-[hsl(var(--blue-300))]"
+                  ? "text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]"
                   : "text-[hsl(var(--navy-900))]/55 hover:bg-white/60 hover:text-[hsl(var(--navy-950))] dark:text-white/55 dark:hover:bg-white/7 dark:hover:text-white"
               )}
             >
               {copy.nav[item.key]}
               {activeSection === item.href && (
-                <span className="absolute bottom-1 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full bg-[hsl(var(--blue-500))]" />
+                <span className="absolute bottom-1 left-1/2 h-0.5 w-10 -translate-x-1/2 rounded-full bg-[hsl(var(--blue-500))]" />
               )}
             </button>
           ))}
@@ -1038,14 +1038,14 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
 
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-[1.35fr_.65fr]">
+        <div className="grid items-stretch gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
           <div
-            className="hover-card rounded-3xl border border-[hsl(var(--border))] bg-white/75 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
+            className="hover-card rounded-3xl border border-[hsl(var(--border))] bg-white/75 p-4 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5 sm:p-5"
             data-reveal
           >
-            <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-[1.15fr_.85fr]">
+            <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-[minmax(420px,1fr)_340px]">
               {/* Segment performance chart intentionally removed so the platform preview focuses on the compliance radar. */}
-              <div>
+              <div className="flex min-w-0 flex-col">
                 <div className="mb-4 flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-[hsl(var(--navy-950))] dark:text-white">
                     Compliance radar
@@ -1053,19 +1053,19 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                   <Eye className="h-4 w-4" style={{ color: C.teal }} />
                 </div>
 
-                <div className="h-80">
+                <div className="min-h-[340px] flex-1">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadarChart
                       data={radarData}
                       cx="50%"
-                      cy="46%"
-                      outerRadius="62%"
-                      margin={{ top: 24, right: 56, bottom: 38, left: 56 }}
+                      cy="50%"
+                      outerRadius="76%"
+                      margin={{ top: 20, right: 28, bottom: 22, left: 28 }}
                     >
                       <PolarGrid stroke="rgba(26,58,92,.10)" />
                       <PolarAngleAxis
                         dataKey="subject"
-                        tick={{ fill: "#65758A", fontSize: 11, fontWeight: 600 }}
+                        tick={{ fill: "#65758A", fontSize: 11, fontWeight: 700 }}
                         tickLine={false}
                       />
                       <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
@@ -1097,16 +1097,6 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                     </RadarChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="mt-1 flex justify-center gap-5 text-xs font-bold text-[hsl(var(--navy-900))] dark:text-white/80">
-                  <span className="inline-flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 rounded-sm" style={{ background: C.teal }} />
-                    Industry
-                  </span>
-                  <span className="inline-flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 rounded-sm" style={{ background: C.blueDeep }} />
-                    Vera
-                  </span>
-                </div>
               </div>
 
               <div className="flex flex-col justify-center gap-3">
@@ -1132,7 +1122,7 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                 ].map(({ icon: Icon, title, description, color }) => (
                   <div
                     key={title}
-                    className="hover-card flex items-start gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/75 p-5 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
+                    className="hover-card flex items-start gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/82 p-4 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
                   >
                     <div
                       className="grid h-10 w-10 flex-none place-items-center rounded-xl text-white shadow-md"
@@ -1153,17 +1143,26 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
               </div>
             </div>
           </div>
-          <div>
+          <div className="grid">
           <div
-            className="hover-card mb-2 rounded-3xl border border-[hsl(var(--border))] bg-white/70 p-5 backdrop-blur dark:border-white/10 dark:bg-white/5"
+            className="hover-card flex h-full flex-col justify-between rounded-3xl border border-[hsl(var(--border))] bg-white/78 p-7 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
             data-reveal="right"
           >
-            <p className="text-base italic leading-relaxed text-[hsl(var(--navy-950))]/80 dark:text-white/80">
-              {copy.platform.quote}
-            </p>
+            <div>
+              <div className="mb-5 h-40 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/45 dark:border-white/10">
+                <img
+                  src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=85"
+                  alt={copy.platform.title}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <p className="text-base italic leading-relaxed text-[hsl(var(--navy-950))]/80 dark:text-white/80">
+                {copy.platform.quote}
+              </p>
+            </div>
             <button
               onClick={() => scrollToId("contact")}
-              className="primary-action mt-4 inline-flex items-center gap-2 px-5 py-2.5 text-sm"
+              className="primary-action mt-7 inline-flex w-fit items-center gap-2 px-5 py-2.5 text-sm"
             >
               {copy.actions.requestDemo}
               <ArrowRight className="h-3.5 w-3.5" />

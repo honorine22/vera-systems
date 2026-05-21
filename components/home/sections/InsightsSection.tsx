@@ -86,9 +86,9 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
           </a>
         </div>
 
-        <div className="relative mt-14 grid gap-6 lg:grid-cols-12">
-          <InsightFeatured item={feature} />
-          <div className="grid gap-6 lg:col-span-6">
+        <div className="flow-fade -mx-6 mt-10 overflow-hidden px-6 py-4">
+          <div className="no-scrollbar relative flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6">
+            <InsightFeatured item={feature} />
             {rows.map((item) => (
               <InsightRow key={item.title} item={item} />
             ))}
@@ -103,9 +103,9 @@ function InsightFeatured({ item }: { item: InsightItem }) {
   return (
     <a
       href="#"
-      className="hover-card group relative col-span-12 flex flex-col overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] bg-white p-3 shadow-vera dark:border-white/10 dark:bg-white/[0.04] lg:col-span-6"
+      className="hover-card group relative flex w-[86vw] max-w-[520px] flex-none snap-start flex-col overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] bg-white p-3 shadow-vera dark:border-white/10 dark:bg-white/[0.04]"
     >
-      <div className="relative h-72 w-full overflow-hidden rounded-[1.55rem] md:h-80">
+      <div className="relative h-56 w-full overflow-hidden rounded-[1.55rem]">
         <img
           src={item.image}
           alt=""
@@ -122,11 +122,11 @@ function InsightFeatured({ item }: { item: InsightItem }) {
           <ArrowRight className="h-5 w-5 shrink-0 text-[hsl(var(--blue-700))] transition group-hover:translate-x-1 dark:text-[hsl(var(--blue-300))]" />
         </div>
 
-        <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-[hsl(var(--navy-950))] dark:text-white md:text-[2.55rem]">
+        <h3 className="text-balance font-display text-2xl font-semibold leading-tight text-[hsl(var(--navy-950))] dark:text-white">
           {item.title}
         </h3>
 
-        <p className="mt-4 max-w-2xl text-base leading-8 text-[hsl(var(--muted-foreground))]">
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-[hsl(var(--muted-foreground))]">
           {item.body}
         </p>
 
@@ -147,9 +147,9 @@ function InsightRow({ item }: { item: InsightItem }) {
   return (
     <a
       href="#"
-      className="hover-card group relative grid gap-4 overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-white p-4 shadow-soft transition dark:border-white/10 dark:bg-white/[0.045] md:grid-cols-[180px_1fr]"
+      className="hover-card group relative flex w-[82vw] max-w-[390px] flex-none snap-start flex-col overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-white p-4 shadow-soft transition dark:border-white/10 dark:bg-white/[0.045]"
     >
-      <div className="relative h-44 overflow-hidden rounded-[1.15rem] md:h-full">
+      <div className="relative h-44 overflow-hidden rounded-[1.15rem]">
         <img
           src={item.image}
           alt=""
