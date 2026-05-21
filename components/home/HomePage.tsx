@@ -58,6 +58,7 @@ import {
   type NavKey,
   type SiteCopy,
 } from "./translations";
+import AboutSection from "./sections/AboutSection";
 import InsightsSection from "./sections/InsightsSection";
 import ServicesSection from "./sections/ServicesSection";
 import WhyVeraSection from "./sections/WhyVeraSection";
@@ -565,11 +566,12 @@ function Navbar({
 function Hero({ copy }: { copy: SiteCopy }) {
   const heroStats = copy.hero.stats.map((stat, index) => ({
     ...stat,
-    color: ["#4A7BAF", "#149A90", "#1A3A5C"][index],
+    color: ["#4A7BAF", "#149A90", "#1A3A5C", "#F0A22E"][index],
     tint: [
       "rgba(200, 220, 240, .34)",
       "rgba(20, 154, 144, .10)",
       "rgba(232, 242, 250, .62)",
+      "rgba(240, 162, 46, .12)",
     ][index],
   }));
 
@@ -613,7 +615,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
               </button>
             </div>
 
-            <div className="mt-10 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="mt-10 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
               {heroStats.map((stat) => (
                 <div
                   key={stat.l}
@@ -684,7 +686,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
                           borderRadius: 14,
                           border: "1px solid rgba(200,220,240,.8)",
                           boxShadow: "0 18px 46px -22px rgba(26,58,92,.35)",
-                          fontFamily: "DM Sans, sans-serif",
+                          fontFamily: "Montserrat, sans-serif",
                         }}
                       />
                       <Area
@@ -782,30 +784,6 @@ function ClientTypes({ copy }: { copy: SiteCopy }) {
     </section>
   );
 }
-function About({ copy }: { copy: SiteCopy }) { return ( <section id="about" className="relative overflow-hidden bg-[hsl(var(--muted))]/40 py-28 dark:bg-[hsl(var(--background))]" > <div className="absolute inset-0 dot-grid opacity-35 dark:opacity-20" /> <div className="absolute right-0 top-0 h-[600px] w-[600px] -translate-y-1/4 translate-x-1/3 rounded-full bg-[hsl(var(--blue-100))]/50 blur-3xl dark:bg-[hsl(var(--blue-700))]/8" /> <div className="relative mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center"> <div data-reveal="left"> <div className="hover-card relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] shadow-vera dark:border-white/10"> <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=900&q=85" alt={copy.about.title} className="h-full w-full object-cover transition duration-1000 hover:scale-105" /> <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-950))]/68 via-transparent to-transparent" /> <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/50 bg-white/88 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(var(--card))]/88"> <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[hsl(var(--teal))]"> {copy.about.established} </p> <p className="font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white"> {copy.about.location} </p> </div> </div> </div> <div data-reveal="right"> <SectionHeader eyebrow={copy.about.eyebrow} title={copy.about.title} body={copy.about.body} /> <div className="mt-10 relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/72 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"> <div className="absolute inset-y-0 left-0 w-1 rounded-l-3xl bg-gradient-to-b from-[hsl(var(--teal))] via-[hsl(var(--blue-400))] to-transparent" /> <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[hsl(var(--teal))]"> {copy.about.missionLabel} </p> <p className="mt-3 text-balance text-lg italic leading-relaxed text-[hsl(var(--navy-950))] dark:text-white"> {copy.about.mission} </p> </div> <div className="mt-6 grid gap-4 sm:grid-cols-2"> {copy.about.pills.map((pill, index) => ( <InfoPill key={pill.title} title={pill.title} body={pill.body} accent={[C.blue, C.teal][index]} /> ))} </div> <div className="mt-6 grid gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/60 px-6 py-5 backdrop-blur dark:border-white/10 dark:bg-white/[0.045] sm:grid-cols-3"> {copy.about.stats.map((stat, index) => ( <div key={stat.l} className={cn( "text-center", index !== 0 && "sm:border-l sm:border-[hsl(var(--border))] sm:dark:border-white/10" )} > <p className="font-display text-3xl font-semibold tracking-tight" style={{ color: [C.blue, C.teal, C.blueDeep][index] }} > {stat.k} </p> <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]"> {stat.l} </p> </div> ))} </div> </div> </div> </section> ); }
-
-function InfoPill({
-  title,
-  body,
-  accent,
-}: {
-  title: string;
-  body: string;
-  accent: string;
-}) {
-  return (
-    <div className="hover-card rounded-2xl border border-[hsl(var(--border))] bg-white/70 p-5 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5">
-      <div className="mb-3 h-0.5 w-8 rounded-full" style={{ background: accent }} />
-      <p className="text-sm font-extrabold text-[hsl(var(--navy-950))] dark:text-white">
-        {title}
-      </p>
-      <p className="mt-2 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
-        {body}
-      </p>
-    </div>
-  );
-}
-
 function Services({ copy }: { copy: SiteCopy }) {
   const serviceItems = copy.services.items.map((item, index) => ({
     ...services[index],
@@ -2589,7 +2567,7 @@ export default function HomePage() {
       />
       <Hero copy={copy} />
       <ClientTypes copy={copy} />
-      <About copy={copy} />
+      <AboutSection copy={copy} />
       <ServicesSection copy={copy} />
       <StackExperience copy={copy} />
       <PlatformDemo copy={copy} />

@@ -46,9 +46,10 @@ export const siteCopy = {
       titleEnd: ".",
       body: "Vera brings HACCP, ISO 22000, supplier checks, temperature logs, and corrective actions into one workspace built for food teams in East Africa.",
       stats: [
-        { k: "98.7%", l: "records complete" },
-        { k: "3.4×", l: "faster follow-up" },
-        { k: "240+", l: "controls tracked" },
+        { k: "3", l: "cold-room deviations in 3 months" },
+        { k: "1", l: "pending supplier visit" },
+        { k: "Live", l: "supplier competence visibility" },
+        { k: "Raised", l: "internal non-conformities" },
       ],
     },
     clients: {
@@ -66,13 +67,13 @@ export const siteCopy = {
     },
     about: {
       eyebrow: "About Vera",
-      title: "Food safety systems built for daily operations",
-      body: "We combine food-safety practice with clear digital records. The result is a working system your team can use every day, not only when an audit is close.",
+      title: "Food Safety Systems Built on the Foundation of Data and Real-time Monitoring",
+      body: "Vera Systems began because the same compliance gaps kept appearing across the food businesses we audited: backfilled logs, missed deviations, and HACCP files completed only the week before an audit. We are a team with food science, data science, and audit experience, building working systems your floor staff can use every day, so food safety management decisions are informed by real data, not the scattered paperwork an auditor sees on Friday.",
       established: "Based in",
       location: "Kigali · Rwanda",
       missionLabel: "Mission",
       mission:
-        "To help food businesses in Rwanda and East Africa keep safer operations through practical standards, better records, and faster corrective action.",
+        "To elevate food safety across Africa through scientific rigor and data-driven systems that improve compliance, efficiency, and trust.",
       pills: [
         {
           title: "Standards-led",
@@ -88,23 +89,41 @@ export const siteCopy = {
         { k: "140+", l: "Checks completed" },
         { k: "60+", l: "Operations supported" },
       ],
+      foundersEyebrow: "Founders",
+      foundersTitle: "Built by food-safety and data practitioners",
+      team: [
+        {
+          name: "Norbert Rafiki",
+          role: "Co-founder & Food Safety Management Consultant",
+          credential: "FSSC 22000 IRCA Certified Lead Auditor · 7 years",
+          bio: "Norbert leads food safety management systems, audit readiness, and implementation support for teams that need practical controls, not paperwork theater.",
+          initials: "NR",
+        },
+        {
+          name: "Corneille Pierre Niyobyiringiro",
+          role: "Co-founder & Data Systems Lead",
+          credential: "Data science, analytics, and digital systems",
+          bio: "Corneille brings data science and system-building experience to turn compliance records into real-time visibility for managers and operational teams.",
+          initials: "CP",
+        },
+      ],
     },
     services: {
       eyebrow: "Services",
-      title: "Consultancy and software working as one system.",
-      body: "Start with the support your operation needs now, then add more structure as the business grows.",
+      title: "Services.",
+      body: "Most food businesses face the same challenge: compliance systems that are built for auditors, not for operations. At Vera Systems, we take a different approach. We believe food safety is not a single problem; it is a system that demands expertise across standards, technology, people, and science. That is why we bring all four together, combining deep food safety knowledge with digital tools, capacity building, and research capability to help manufacturers, exporters, and hospitality businesses build compliance that actually works on the floor, not just on paper.",
       items: [
         {
           label: "Food Safety Consultancy",
-          title: "Compliance systems that can be used on site",
+          title: "Compliance support that meets you where you are",
           impact:
-            "Close the gaps that create audit pressure, product risk, and avoidable rework.",
-          body: "HACCP design, ISO 22000 gap analysis, facility checks, verification schedules, staff training, and corrective action planning.",
+            "Whether you are preparing for export certification or navigating HACCP compliance for the first time, we meet you where you are.",
+          body: "Vera Systems provides hands-on advisory, gap assessment, and implementation support aligned to internationally recognized standards, including HACCP, FSSC 22000, and ISO 22000. We do not just audit and leave; we work alongside your team to build food safety systems that are practical, audit-ready, and built to last.",
           bullets: [
-            "HACCP system design and implementation",
-            "ISO 22000 readiness checks",
-            "Kitchen and facility inspections",
-            "Food-handler training and verification tools",
+            "Export certification preparation",
+            "HACCP and ISO 22000 gap assessments",
+            "FSSC 22000 implementation support",
+            "Audit-ready corrective action planning",
           ],
           statLabel: "audit readiness",
         },
@@ -121,6 +140,34 @@ export const siteCopy = {
             "Supplier performance tracking",
           ],
           statLabel: "faster follow-up",
+        },
+        {
+          label: "Training & Capacity Building",
+          title: "Competence that keeps compliance alive",
+          impact:
+            "Compliance is only sustainable when your people understand it.",
+          body: "We deliver structured training programs tailored to your sector and operations, covering food safety fundamentals, HACCP principles, internal auditing, and standard-specific requirements such as ISO 22000. From front-line staff to quality managers, we build the internal competence your organization needs to maintain compliance confidently, not just at certification time.",
+          bullets: [
+            "Food safety fundamentals",
+            "HACCP principles and practice",
+            "Internal auditing skills",
+            "ISO 22000 role-based requirements",
+          ],
+          statLabel: "team competence",
+        },
+        {
+          label: "Research & Technical Studies",
+          title: "Scientific evidence for better decisions",
+          impact:
+            "When a standard is not enough and you need evidence, we provide it.",
+          body: "Vera Systems supports food businesses, individuals in the sector, and hospitality operators in designing and executing scientific studies, including shelf-life testing, process validation, microbiological risk assessments, and HACCP-based hazard studies. Whether launching a new product, responding to a regulatory requirement, or validating a critical control point, our research services translate scientific rigor into actionable compliance outcomes.",
+          bullets: [
+            "Shelf-life testing support",
+            "Process validation studies",
+            "Microbiological risk assessments",
+            "HACCP-based hazard studies",
+          ],
+          statLabel: "technical evidence",
         },
       ],
     },
@@ -375,9 +422,10 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
       titleEnd: ".",
       body: "Vera réunit HACCP, ISO 22000, contrôles fournisseurs, relevés de température et actions correctives dans un espace de travail clair pour les équipes alimentaires d’Afrique de l’Est.",
       stats: [
-        { k: "98.7%", l: "registres complets" },
-        { k: "3.4×", l: "suivi plus rapide" },
-        { k: "240+", l: "contrôles suivis" },
+        { k: "3", l: "écarts chambre froide en 3 mois" },
+        { k: "1", l: "visite fournisseur en attente" },
+        { k: "Live", l: "visibilité compétence fournisseur" },
+        { k: "Ouvertes", l: "non-conformités internes" },
       ],
     },
     clients: {
@@ -395,13 +443,13 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
     },
     about: {
       eyebrow: "À propos de Vera",
-      title: "Des systèmes de sécurité alimentaire conçus pour les opérations quotidiennes",
-      body: "Nous combinons la pratique de la sécurité alimentaire avec des registres numériques clairs. Le résultat est un système que votre équipe peut utiliser chaque jour, pas seulement avant un audit.",
+      title: "Des systèmes de sécurité alimentaire fondés sur les données et le suivi en temps réel",
+      body: "Vera Systems est né parce que les mêmes écarts de conformité revenaient dans les entreprises alimentaires que nous auditions : registres remplis après coup, déviations manquées et dossiers HACCP complétés seulement la semaine précédant l’audit. Notre équipe réunit science alimentaire, data science et expérience d’audit pour construire des systèmes que les équipes de terrain utilisent chaque jour, afin que les décisions de sécurité alimentaire reposent sur des données réelles, pas sur des documents dispersés vus par l’auditeur le vendredi.",
       established: "Basé à",
       location: "Kigali · Rwanda",
       missionLabel: "Mission",
       mission:
-        "Aider les entreprises alimentaires au Rwanda et en Afrique de l’Est à renforcer leurs opérations grâce à des standards pratiques, de meilleurs registres et des actions correctives plus rapides.",
+        "Élever la sécurité alimentaire en Afrique grâce à la rigueur scientifique et à des systèmes pilotés par les données qui améliorent la conformité, l’efficacité et la confiance.",
       pills: [
         {
           title: "Basé sur les standards",
@@ -417,23 +465,41 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
         { k: "140+", l: "Contrôles réalisés" },
         { k: "60+", l: "Opérations accompagnées" },
       ],
+      foundersEyebrow: "Fondateurs",
+      foundersTitle: "Créé par des praticiens de la sécurité alimentaire et de la donnée",
+      team: [
+        {
+          name: "Norbert Rafiki",
+          role: "Co-fondateur et consultant en systèmes de management de la sécurité alimentaire",
+          credential: "Lead Auditor FSSC 22000 certifié IRCA · 7 ans",
+          bio: "Norbert dirige les systèmes de management de la sécurité alimentaire, la préparation aux audits et l’appui à la mise en œuvre pour des contrôles pratiques.",
+          initials: "NR",
+        },
+        {
+          name: "Corneille Pierre Niyobyiringiro",
+          role: "Co-fondateur et responsable systèmes de données",
+          credential: "Data science, analytique et systèmes numériques",
+          bio: "Corneille apporte une expérience en data science et en conception de systèmes pour transformer les registres de conformité en visibilité temps réel.",
+          initials: "CP",
+        },
+      ],
     },
     services: {
       eyebrow: "Services",
-      title: "Conseil et logiciel dans un même système.",
-      body: "Commencez par le support dont votre opération a besoin aujourd’hui, puis ajoutez plus de structure au fil de la croissance.",
+      title: "Services.",
+      body: "La plupart des entreprises alimentaires rencontrent le même défi : des systèmes de conformité conçus pour les auditeurs, pas pour les opérations. Chez Vera Systems, nous adoptons une autre approche. Nous pensons que la sécurité alimentaire n’est pas un problème unique ; c’est un système qui exige une expertise des standards, de la technologie, des personnes et de la science. C’est pourquoi nous réunissons ces quatre dimensions, avec une expertise approfondie en sécurité alimentaire, des outils numériques, le renforcement des capacités et la recherche pour aider fabricants, exportateurs et entreprises hôtelières à bâtir une conformité qui fonctionne sur le terrain, pas seulement sur papier.",
       items: [
         {
           label: "Conseil en sécurité alimentaire",
-          title: "Des systèmes de conformité utilisables sur site",
+          title: "Un accompagnement adapté à votre niveau de départ",
           impact:
-            "Réduisez les écarts qui créent de la pression d’audit, des risques produit et du retravail.",
-          body: "Conception HACCP, analyse des écarts ISO 22000, contrôles de site, plannings de vérification, formation et plans d’actions correctives.",
+            "Que vous prépariez une certification export ou découvriez la conformité HACCP, nous partons de votre réalité.",
+          body: "Vera Systems fournit du conseil terrain, des évaluations d’écarts et un appui à la mise en œuvre alignés sur les standards reconnus, dont HACCP, FSSC 22000 et ISO 22000. Nous n’auditons pas pour partir ensuite ; nous travaillons avec votre équipe pour construire des systèmes pratiques, prêts pour l’audit et durables.",
           bullets: [
-            "Conception et mise en œuvre HACCP",
-            "Évaluations de préparation ISO 22000",
-            "Inspections de cuisines et sites",
-            "Formation et outils de vérification",
+            "Préparation à la certification export",
+            "Évaluations d’écarts HACCP et ISO 22000",
+            "Appui à la mise en œuvre FSSC 22000",
+            "Plans d’actions correctives auditables",
           ],
           statLabel: "préparation audit",
         },
@@ -450,6 +516,34 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
             "Suivi des fournisseurs",
           ],
           statLabel: "suivi plus rapide",
+        },
+        {
+          label: "Formation & renforcement des capacités",
+          title: "Des compétences qui maintiennent la conformité",
+          impact:
+            "La conformité n’est durable que lorsque vos équipes la comprennent.",
+          body: "Nous proposons des formations structurées adaptées à votre secteur et à vos opérations : bases de la sécurité alimentaire, principes HACCP, audit interne et exigences spécifiques comme ISO 22000. Du personnel terrain aux responsables qualité, nous renforçons la compétence interne nécessaire pour maintenir la conformité avec confiance.",
+          bullets: [
+            "Fondamentaux de sécurité alimentaire",
+            "Principes et pratique HACCP",
+            "Compétences d’audit interne",
+            "Exigences ISO 22000 par rôle",
+          ],
+          statLabel: "compétence équipe",
+        },
+        {
+          label: "Recherche & études techniques",
+          title: "Des preuves scientifiques pour décider",
+          impact:
+            "Quand un standard ne suffit pas et qu’il faut des preuves, nous les produisons.",
+          body: "Vera Systems accompagne les entreprises alimentaires, les professionnels du secteur et les opérateurs hôteliers dans la conception et l’exécution d’études scientifiques : durée de vie, validation de procédés, évaluations de risques microbiologiques et études de dangers HACCP. Nos services traduisent la rigueur scientifique en résultats de conformité actionnables.",
+          bullets: [
+            "Appui aux tests de durée de vie",
+            "Études de validation de procédés",
+            "Évaluations de risques microbiologiques",
+            "Études de dangers basées sur HACCP",
+          ],
+          statLabel: "preuves techniques",
         },
       ],
     },
@@ -623,9 +717,10 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
       titleEnd: ".",
       body: "Vera ihuza HACCP, ISO 22000, igenzura ry’abatanga ibicuruzwa, ubushyuhe n’ibikorwa bikosora mu mwanya umwe worohereza amakipe y’ibiribwa muri Afurika y’Iburasirazuba.",
       stats: [
-        { k: "98.7%", l: "inyandiko zuzuye" },
-        { k: "3.4×", l: "gukurikirana byihuse" },
-        { k: "240+", l: "kontorole zikurikiranwa" },
+        { k: "3", l: "deviations za cold rooms mu mezi 3" },
+        { k: "1", l: "supplier visit itararangira" },
+        { k: "Live", l: "kureba supplier competence" },
+        { k: "Raised", l: "internal non-conformities" },
       ],
     },
     clients: {
@@ -643,13 +738,13 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
     },
     about: {
       eyebrow: "Ibyerekeye Vera",
-      title: "Sisitemu z’umutekano w’ibiribwa zubakiye ku kazi ka buri munsi",
-      body: "Duhuza ubumenyi bw’umutekano w’ibiribwa n’inyandiko z’ikoranabuhanga zisobanutse, kugira ngo ikipe ibikoreshe buri munsi, atari mbere y’audit gusa.",
+      title: "Sisitemu z’umutekano w’ibiribwa zubakiye kuri data no gukurikirana ako kanya",
+      body: "Vera Systems yatangiye kubera ko icyuho kimwe cya compliance cyakomezaga kugaragara mu bucuruzi bw’ibiribwa twakoragamo audit: inyandiko zuzuzwa nyuma, deviations zitamenyekanye, na dosiye za HACCP zuzuzwa mu cyumweru kibanziriza audit gusa. Turi ikipe ifite food science, data science n’ubunararibonye bwa audit, yubaka sisitemu abakozi bo hasi bakoresha buri munsi kugira ngo ibyemezo bya food safety management bishingire kuri data nyayo, atari ku mpapuro zitandukanye auditor abona ku wa Gatanu.",
       established: "Iherereye",
       location: "Kigali · Rwanda",
       missionLabel: "Intego",
       mission:
-        "Gufasha ubucuruzi bw’ibiribwa mu Rwanda no muri Afurika y’Iburasirazuba gukomeza ibikorwa bifite umutekano binyuze ku mabwiriza akora, inyandiko nziza n’ibikorwa bikosora byihuse.",
+        "Kuzamura umutekano w’ibiribwa muri Afurika binyuze ku rigor ya science na sisitemu ziyobowe na data, zigateza imbere compliance, efficiency n’icyizere.",
       pills: [
         {
           title: "Bishingiye ku bipimo",
@@ -665,23 +760,41 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
         { k: "140+", l: "Isuzuma ryakozwe" },
         { k: "60+", l: "Ibikorwa byafashijwe" },
       ],
+      foundersEyebrow: "Abashinze",
+      foundersTitle: "Yubatswe n’abakora food safety na data",
+      team: [
+        {
+          name: "Norbert Rafiki",
+          role: "Co-founder & Food Safety Management Consultant",
+          credential: "FSSC 22000 IRCA Certified Lead Auditor · imyaka 7",
+          bio: "Norbert ayobora food safety management systems, kwitegura audit no gushyira mu bikorwa controls zikora mu kazi ka buri munsi.",
+          initials: "NR",
+        },
+        {
+          name: "Corneille Pierre Niyobyiringiro",
+          role: "Co-founder & Data Systems Lead",
+          credential: "Data science, analytics na digital systems",
+          bio: "Corneille azana ubumenyi bwa data science no kubaka systems kugira ngo compliance records zihinduke real-time visibility ku bayobozi n’amakipe akora.",
+          initials: "CP",
+        },
+      ],
     },
     services: {
       eyebrow: "Serivisi",
-      title: "Ubujyanama na software bikora nka sisitemu imwe.",
-      body: "Tangirira ku bufasha ukeneye ubu, wongereho imiterere uko ubucuruzi bukura.",
+      title: "Serivisi.",
+      body: "Ubucuruzi bwinshi bw’ibiribwa buhura n’ikibazo kimwe: compliance systems zubakiwe auditors, si operations. Kuri Vera Systems tubifata ukundi. Twemera ko food safety atari ikibazo kimwe; ni system isaba ubumenyi mu standards, technology, people na science. Ni yo mpamvu tubihuza byose, tukavanga food safety knowledge, digital tools, capacity building na research capability kugira ngo manufacturers, exporters n’amahoteli bubake compliance ikora ku kazi, atari ku mpapuro gusa.",
       items: [
         {
           label: "Ubujyanama mu mutekano w’ibiribwa",
-          title: "Sisitemu za compliance zikoreshwa aho mukorera",
+          title: "Ubufasha buhera aho mugeze",
           impact:
-            "Gufunga icyuho gitera igitutu cya audit, ingaruka ku bicuruzwa n’akazi gasubirwamo.",
-          body: "Gutegura HACCP, kureba icyuho cya ISO 22000, kugenzura site, gahunda z’isuzuma, amahugurwa n’ibikorwa bikosora.",
+            "Waba utegura export certification cyangwa utangiye HACCP compliance, duhera ku kuri kw’ibikorwa byawe.",
+          body: "Vera Systems itanga hands-on advisory, gap assessment n’ubufasha mu implementation bujyanye na standards zemewe ku rwego mpuzamahanga nka HACCP, FSSC 22000 na ISO 22000. Ntidukora audit ngo tugende; dukorana n’ikipe yawe kubaka food safety systems zikora, ziteguye audit kandi zirambye.",
           bullets: [
-            "Gutegura no gushyira mu bikorwa HACCP",
-            "Kureba uko mwiteguye ISO 22000",
-            "Isuzuma rya kitchen na facility",
-            "Amahugurwa n’ibikoresho by’isuzuma",
+            "Kwitegura export certification",
+            "HACCP na ISO 22000 gap assessments",
+            "FSSC 22000 implementation support",
+            "Corrective action planning yiteguye audit",
           ],
           statLabel: "kwitegura audit",
         },
@@ -698,6 +811,34 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
             "Gukurikirana abatanga ibicuruzwa",
           ],
           statLabel: "gukurikirana byihuse",
+        },
+        {
+          label: "Training & Capacity Building",
+          title: "Ubumenyi butuma compliance ikomeza",
+          impact:
+            "Compliance iramba iyo abantu bayisobanukiwe.",
+          body: "Dutanga structured training programs zijyanye na sector n’ibikorwa byanyu, zirimo food safety fundamentals, HACCP principles, internal auditing n’ibisabwa na standards nka ISO 22000. Kuva ku bakozi bo hasi kugeza kuri quality managers, twubaka competence ikenewe ngo mukomeze compliance mutegereje certification gusa.",
+          bullets: [
+            "Food safety fundamentals",
+            "HACCP principles and practice",
+            "Internal auditing skills",
+            "ISO 22000 role-based requirements",
+          ],
+          statLabel: "team competence",
+        },
+        {
+          label: "Research & Technical Studies",
+          title: "Ibimenyetso bya science byo gufata ibyemezo",
+          impact:
+            "Iyo standard idahagije mukeneye evidence, turayitanga.",
+          body: "Vera Systems ifasha food businesses, abantu bakora muri sector n’amahoteli gutegura no gukora scientific studies nka shelf-life testing, process validation, microbiological risk assessments na HACCP-based hazard studies. Serivisi zacu zihindura scientific rigor mo compliance outcomes zikoreshwa mu bikorwa.",
+          bullets: [
+            "Shelf-life testing support",
+            "Process validation studies",
+            "Microbiological risk assessments",
+            "HACCP-based hazard studies",
+          ],
+          statLabel: "technical evidence",
         },
       ],
     },

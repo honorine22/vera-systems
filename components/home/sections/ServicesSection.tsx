@@ -1,9 +1,11 @@
-import { ArrowRight, CheckCircle2, Cpu, Shield } from "lucide-react";
+import { ArrowRight, CheckCircle2, Cpu, GraduationCap, Microscope, Shield } from "lucide-react";
 import type { SiteCopy } from "../translations";
 
 const C = {
   blue: "#4A7BAF",
   teal: "#18A89D",
+  blueDeep: "#1A3A5C",
+  amber: "#F0A22E",
 };
 
 const services = [
@@ -20,6 +22,20 @@ const services = [
     stat: { value: "3.4×", label: "Faster response" },
     accent: C.teal,
     icon: Cpu,
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=1200&q=85",
+    stat: { value: "100%", label: "Team competence" },
+    accent: C.blueDeep,
+    icon: GraduationCap,
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?auto=format&fit=crop&w=1200&q=85",
+    stat: { value: "Lab", label: "Technical evidence" },
+    accent: C.amber,
+    icon: Microscope,
   },
 ];
 
@@ -59,9 +75,9 @@ function SectionHeader({
 
 export default function ServicesSection({ copy }: { copy: SiteCopy }) {
   const serviceItems = copy.services.items.map((item, index) => ({
-    ...services[index],
+    ...services[index % services.length],
     ...item,
-    stat: { ...services[index].stat, label: item.statLabel },
+    stat: { ...services[index % services.length].stat, label: item.statLabel },
   }));
 
   return (
