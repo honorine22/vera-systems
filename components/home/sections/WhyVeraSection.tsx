@@ -26,7 +26,7 @@ function SectionHeader({
 }) {
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <p className="inline-flex items-center gap-2.5 text-[11px] font-black uppercase tracking-[0.24em] text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
+      <p className="inline-flex items-center gap-2.5 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
         <span className="h-px w-8 bg-current opacity-50" />
         {eyebrow}
         <span className="h-px w-8 bg-current opacity-50" />
@@ -94,7 +94,7 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
                   </div>
 
                   <p
-                    className="font-mono text-[11px] font-bold tracking-[0.22em]"
+                    className="font-mono text-xs font-bold"
                     style={{ color: card.accent }}
                   >
                     0{index + 1}

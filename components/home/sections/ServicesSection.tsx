@@ -53,8 +53,8 @@ function SectionHeader({
   body?: string;
 }) {
   return (
-    <div className="mx-auto max-w-3xl text-center" data-reveal>
-      <p className="inline-flex items-center gap-2.5 text-[11px] font-black uppercase tracking-[0.24em] text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
+    <div className="mx-auto max-w-5xl text-center" data-reveal>
+      <p className="inline-flex items-center gap-2.5 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
         <span className="h-px w-8 bg-current opacity-50" />
         {eyebrow}
         <span className="h-px w-8 bg-current opacity-50" />
@@ -65,7 +65,7 @@ function SectionHeader({
       </h2>
 
       {body && (
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[hsl(var(--muted-foreground))] md:text-lg">
+        <p className="mx-auto mt-5 max-w-5xl text-base leading-8 text-[hsl(var(--muted-foreground))] md:text-lg">
           {body}
         </p>
       )}
@@ -116,7 +116,7 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <div
-                        className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.18em] text-white"
+                        className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-bold text-white"
                         style={{ background: service.accent }}
                       >
                         <Icon className="h-3.5 w-3.5" />
@@ -137,7 +137,7 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
                       <p className="font-display text-2xl font-bold" style={{ color: service.accent }}>
                         {service.stat.value}
                       </p>
-                      <p className="text-[10px] font-semibold uppercase tracking-wider text-[hsl(var(--muted-foreground))]">
+                      <p className="text-xs font-semibold text-[hsl(var(--muted-foreground))]">
                         {service.stat.label}
                       </p>
                     </div>
@@ -170,7 +170,7 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
                   <div className="mt-6 flex items-center justify-between border-t border-[hsl(var(--border))] pt-5 dark:border-white/10">
                     <button
                       onClick={() => scrollToId("contact")}
-                      className="primary-action group/btn inline-flex items-center gap-2 px-4 py-2 text-[11px] uppercase tracking-wider"
+                      className="primary-action group/btn inline-flex items-center gap-2 px-4 py-2 text-xs"
                     >
                       {copy.actions.learnMore}
                       <ArrowRight className="h-3.5 w-3.5 transition group-hover/btn:translate-x-0.5" />

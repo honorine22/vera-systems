@@ -37,7 +37,7 @@ function SectionHeader({
 }) {
   return (
     <div className="max-w-3xl" data-reveal>
-      <p className="inline-flex items-center gap-2.5 text-[11px] font-black uppercase tracking-[0.24em] text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
+      <p className="inline-flex items-center gap-2.5 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
         <span className="h-px w-8 bg-current opacity-50" />
         {eyebrow}
         <span className="h-px w-8 bg-current opacity-50" />
@@ -79,7 +79,7 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
           />
           <a
             href="#"
-            className="primary-action inline-flex w-fit items-center gap-2 px-5 py-3 text-xs uppercase tracking-wider"
+            className="primary-action inline-flex w-fit items-center gap-2 px-5 py-3 text-sm"
           >
             All articles
             <ArrowRight className="h-3.5 w-3.5" />
@@ -116,7 +116,7 @@ function InsightFeatured({ item }: { item: InsightItem }) {
 
       <div className="flex flex-1 flex-col p-5 sm:p-7">
         <div className="mb-5 flex items-center justify-between gap-3">
-          <span className="inline-flex items-center rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.16em]" style={{ color: C.teal }}>
+          <span className="inline-flex items-center rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1.5 text-xs font-bold" style={{ color: C.teal }}>
             {item.tag}
           </span>
           <ArrowRight className="h-5 w-5 shrink-0 text-[hsl(var(--blue-700))] transition group-hover:translate-x-1 dark:text-[hsl(var(--blue-300))]" />
@@ -160,7 +160,7 @@ function InsightRow({ item }: { item: InsightItem }) {
       <div className="flex min-w-0 flex-1 flex-col justify-center py-2 pr-1">
         <div className="mb-3 flex items-center justify-between gap-3">
           <span
-            className="rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em]"
+            className="rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1 text-xs font-bold"
             style={{ color: C.teal }}
           >
             {item.tag}

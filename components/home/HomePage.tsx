@@ -336,7 +336,7 @@ function SectionHeader({
     <div className={cn("max-w-3xl", centered && "mx-auto text-center")} data-reveal>
       <p
         className={cn(
-          "inline-flex items-center gap-2.5 text-[11px] font-black uppercase tracking-[0.24em]",
+          "inline-flex items-center gap-2.5 text-sm font-bold",
           light
             ? "text-white/55"
             : "text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]"
@@ -455,7 +455,7 @@ function Navbar({
               key={item.href}
               onClick={() => scrollToId(item.href)}
               className={cn(
-                "relative rounded-xl px-3.5 py-2 text-[11px] font-black uppercase tracking-[0.18em] transition-all duration-200",
+                "relative rounded-xl px-3.5 py-2 text-sm font-semibold transition-all duration-200",
                 activeSection === item.href
                   ? "bg-[hsl(var(--blue-100))]/70 text-[hsl(var(--blue-700))] dark:bg-white/8 dark:text-[hsl(var(--blue-300))]"
                   : "text-[hsl(var(--navy-900))]/55 hover:bg-white/60 hover:text-[hsl(var(--navy-950))] dark:text-white/55 dark:hover:bg-white/7 dark:hover:text-white"
@@ -475,7 +475,7 @@ function Navbar({
             <select
               value={language}
               onChange={(event) => onLanguageChange(event.target.value as Language)}
-              className="h-10 appearance-none rounded-xl border border-[hsl(var(--border))] bg-white/80 px-3 pr-8 text-[11px] font-black uppercase tracking-[0.18em] text-[hsl(var(--navy-950))] outline-none transition hover:bg-[hsl(var(--muted))] focus:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-white/5 dark:text-white"
+              className="h-10 appearance-none rounded-xl border border-[hsl(var(--border))] bg-white/80 px-3 pr-8 text-xs font-bold text-[hsl(var(--navy-950))] outline-none transition hover:bg-[hsl(var(--muted))] focus:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-white/5 dark:text-white"
             >
               {languageOptions.map((option) => (
                 <option key={option.code} value={option.code}>
@@ -498,7 +498,7 @@ function Navbar({
 
           <button
             onClick={() => scrollToId("contact")}
-            className="primary-action hidden items-center gap-2 px-5 py-3 text-xs uppercase tracking-wider sm:inline-flex"
+            className="primary-action hidden items-center gap-2 px-5 py-3 text-sm sm:inline-flex"
           >
             {copy.actions.bookDemo}
             <ArrowRight className="h-3.5 w-3.5" />
@@ -506,7 +506,7 @@ function Navbar({
 
           <a
             href="/admin"
-            className="hidden items-center gap-2 rounded-xl border border-[hsl(var(--border))] bg-white/80 px-4 py-3 text-xs font-black uppercase tracking-wider text-[hsl(var(--navy-950))] transition hover:-translate-y-0.5 hover:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 md:inline-flex"
+            className="hidden items-center gap-2 rounded-xl border border-[hsl(var(--border))] bg-white/80 px-4 py-3 text-sm font-bold text-[hsl(var(--navy-950))] transition hover:-translate-y-0.5 hover:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 md:inline-flex"
           >
             <LogIn className="h-3.5 w-3.5" />
             Dashboard
@@ -566,12 +566,11 @@ function Navbar({
 function Hero({ copy }: { copy: SiteCopy }) {
   const heroStats = copy.hero.stats.map((stat, index) => ({
     ...stat,
-    color: ["#4A7BAF", "#149A90", "#1A3A5C", "#F0A22E"][index],
+    color: ["#4A7BAF", "#149A90", "#1A3A5C"][index],
     tint: [
       "rgba(200, 220, 240, .34)",
       "rgba(20, 154, 144, .10)",
       "rgba(232, 242, 250, .62)",
-      "rgba(240, 162, 46, .12)",
     ][index],
   }));
 
@@ -615,7 +614,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
               </button>
             </div>
 
-            <div className="mt-10 grid max-w-3xl grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-10 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
               {heroStats.map((stat) => (
                 <div
                   key={stat.l}
@@ -631,7 +630,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
                   >
                     {stat.k}
                   </div>
-                  <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))] dark:text-white/55">
+                  <div className="mt-1 text-xs font-semibold leading-snug text-[hsl(var(--muted-foreground))] dark:text-white/55">
                     {stat.l}
                   </div>
                 </div>
@@ -646,7 +645,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
               <div className="hero-chart-card relative float-soft overflow-hidden rounded-[2rem] border border-white/80 bg-white/78 p-5 shadow-vera backdrop-blur-xl transition duration-500 dark:border-white/10 dark:bg-[hsl(var(--card))]/75">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <div className="text-xs font-medium uppercase tracking-[0.16em] text-[hsl(var(--muted-foreground))] dark:text-white/55">
+                    <div className="text-xs font-medium text-[hsl(var(--muted-foreground))] dark:text-white/55">
                       CCP compliance · YTD
                     </div>
                     <div className="mt-1 font-display text-3xl font-semibold text-[#1A3A5C] dark:text-white">
@@ -730,7 +729,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
                       >
                         {stat.v}
                       </p>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[hsl(var(--muted-foreground))] dark:text-white/50">
+                      <p className="text-xs font-semibold text-[hsl(var(--muted-foreground))] dark:text-white/50">
                         {stat.l}
                       </p>
                     </div>
@@ -739,7 +738,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
               </div>
 
               <div className="hero-chip-card absolute -bottom-4 -right-4 hidden rounded-2xl border border-[#C8DCF0] bg-white/92 px-4 py-3 text-xs font-semibold shadow-soft backdrop-blur md:block dark:border-white/10 dark:bg-[hsl(var(--card))]/90">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#149A90]">
+                <p className="text-xs font-bold text-[#149A90]">
                   Audit ready
                 </p>
                 <p className="text-[#1A3A5C] dark:text-white">
@@ -761,7 +760,7 @@ function ClientTypes({ copy }: { copy: SiteCopy }) {
   return (
     <section className="relative overflow-hidden border-y border-[hsl(var(--border))] bg-white/80 py-14 dark:bg-[hsl(var(--muted))]/25">
       <div className="mx-auto max-w-7xl px-6">
-        <p className="text-center text-[10px] font-black uppercase tracking-[0.28em] text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
+        <p className="text-center text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
           {copy.clients.eyebrow}
         </p>
 
@@ -1039,70 +1038,22 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
 
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-[1.35fr_.65fr]">
           <div
-            className="hover-card rounded-3xl border border-[hsl(var(--border))] bg-white/75 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5 lg:col-span-2"
+            className="hover-card rounded-3xl border border-[hsl(var(--border))] bg-white/75 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
             data-reveal
           >
-            <div className="grid h-full grid-cols-1 gap-6 sm:grid-cols-2">
+            <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-[1.15fr_.85fr]">
+              {/* Segment performance chart intentionally removed so the platform preview focuses on the compliance radar. */}
               <div>
                 <div className="mb-4 flex items-center justify-between">
-                  <h3 className="text-sm font-semibold text-[hsl(var(--navy-950))] dark:text-white">
-                    Segment performance
-                  </h3>
-                  <BarChart3 className="h-4 w-4" style={{ color: C.blue }} />
-                </div>
-
-                <div className="h-52">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={segmentData} barGap={4}>
-                      <defs>
-                        <linearGradient id="barActual" x1="0" x2="0" y1="0" y2="1">
-                          <stop offset="0%" stopColor={C.blueDeep} />
-                          <stop offset="100%" stopColor={C.blue} />
-                        </linearGradient>
-                        <linearGradient id="barTarget" x1="0" x2="0" y1="0" y2="1">
-                          <stop offset="0%" stopColor={C.mint} stopOpacity={0.72} />
-                          <stop offset="100%" stopColor={C.ice} stopOpacity={0.38} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid stroke="rgba(26,58,92,.07)" vertical={false} />
-                      <XAxis
-                        dataKey="name"
-                        tickLine={false}
-                        axisLine={false}
-                        tick={{ fill: "#64748b", fontSize: 11 }}
-                      />
-                      <YAxis
-                        tickLine={false}
-                        axisLine={false}
-                        tick={{ fill: "#64748b", fontSize: 11 }}
-                      />
-                      <Tooltip
-                        cursor={{ fill: "rgba(74,123,175,.06)" }}
-                        contentStyle={{
-                          borderRadius: 14,
-                          border: "1px solid rgba(200,220,240,.75)",
-                          boxShadow: "0 18px 46px -26px rgba(26,58,92,.35)",
-                          fontFamily: "DM Sans, sans-serif",
-                        }}
-                      />
-                      <Bar dataKey="v" name="Score" fill="url(#barActual)" radius={[6, 6, 0, 0]} />
-                      <Bar dataKey="b" name="Target" fill="url(#barTarget)" radius={[6, 6, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              <div>
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="text-sm font-semibold text-[hsl(var(--navy-950))] dark:text-white">
+                  <h3 className="text-lg font-semibold text-[hsl(var(--navy-950))] dark:text-white">
                     Compliance radar
                   </h3>
                   <Eye className="h-4 w-4" style={{ color: C.teal }} />
                 </div>
 
-                <div className="h-72">
+                <div className="h-80">
                   <ResponsiveContainer width="100%" height="100%">
                     <RadarChart
                       data={radarData}
@@ -1140,7 +1091,7 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                           borderRadius: 14,
                           border: "1px solid rgba(200,220,240,.75)",
                           boxShadow: "0 18px 46px -26px rgba(26,58,92,.35)",
-                          fontFamily: "DM Sans, sans-serif",
+                          fontFamily: "Montserrat, sans-serif",
                         }}
                       />
                     </RadarChart>
@@ -1157,11 +1108,54 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                   </span>
                 </div>
               </div>
+
+              <div className="flex flex-col justify-center gap-3">
+                {[
+                  {
+                    icon: Shield,
+                    title: "ISO 22000 ready",
+                    description: "Audit-grade evidence by default.",
+                    color: C.blue,
+                  },
+                  {
+                    icon: Zap,
+                    title: "Record sync",
+                    description: "Updates across active sites.",
+                    color: C.teal,
+                  },
+                  {
+                    icon: Clock,
+                    title: "Guided setup",
+                    description: "Start with your first records.",
+                    color: C.blueDeep,
+                  },
+                ].map(({ icon: Icon, title, description, color }) => (
+                  <div
+                    key={title}
+                    className="hover-card flex items-start gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/75 p-5 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
+                  >
+                    <div
+                      className="grid h-10 w-10 flex-none place-items-center rounded-xl text-white shadow-md"
+                      style={{ background: color }}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-[hsl(var(--navy-950))] dark:text-white">
+                        {title}
+                      </div>
+                      <div className="text-sm text-[hsl(var(--muted-foreground))]">
+                        {description}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-<div>
+          <div>
           <div
-            className="hover-card max-w-sm mb-2 rounded-3xl border border-[hsl(var(--border))] bg-white/70 p-4 backdrop-blur dark:border-white/10 dark:bg-white/5"
+            className="hover-card mb-2 rounded-3xl border border-[hsl(var(--border))] bg-white/70 p-5 backdrop-blur dark:border-white/10 dark:bg-white/5"
             data-reveal="right"
           >
             <p className="text-base italic leading-relaxed text-[hsl(var(--navy-950))]/80 dark:text-white/80">
@@ -1169,55 +1163,11 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
             </p>
             <button
               onClick={() => scrollToId("contact")}
-              className="primary-action mt-3 inline-flex items-center gap-2 px-5 py-2.5 text-xs uppercase tracking-wider"
+              className="primary-action mt-4 inline-flex items-center gap-2 px-5 py-2.5 text-sm"
             >
               {copy.actions.requestDemo}
               <ArrowRight className="h-3.5 w-3.5" />
             </button>
-          </div>
-
-          <div className="space-y-2">
-            {[
-              {
-                icon: Shield,
-                title: "ISO 22000 ready",
-                description: "Audit-grade evidence by default.",
-                color: C.blue,
-              },
-              {
-                icon: Zap,
-                title: "Record sync",
-                description: "Updates across active sites.",
-                color: C.teal,
-              },
-              {
-                icon: Clock,
-                title: "Guided setup",
-                description: "Start with your first records.",
-                color: C.blueDeep,
-              },
-            ].map(({ icon: Icon, title, description, color }) => (
-              <div
-                key={title}
-                className="hover-card flex items-start gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/75 p-5 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
-                data-reveal
-              >
-                <div
-                  className="grid h-10 w-10 flex-none place-items-center rounded-xl text-white shadow-md"
-                  style={{ background: `linear-gradient(135deg, ${color}, ${color}cc)` }}
-                >
-                  <Icon className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="font-semibold text-[hsl(var(--navy-950))] dark:text-white">
-                    {title}
-                  </div>
-                  <div className="text-sm text-[hsl(var(--muted-foreground))]">
-                    {description}
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
           </div>
         </div>
@@ -1242,7 +1192,7 @@ function DemoTabs() {
             key={tab.id}
             onClick={() => setActive(tab.id)}
             className={cn(
-              "relative whitespace-nowrap rounded-t-lg px-5 pb-4 text-[11px] font-black uppercase tracking-[0.16em] transition-all duration-200",
+              "relative whitespace-nowrap rounded-t-lg px-5 pb-4 text-sm font-bold transition-all duration-200",
               active === tab.id
                 ? "bg-[hsl(var(--muted))]/50 text-[hsl(var(--navy-950))] dark:bg-white/5 dark:text-white"
                 : "text-[hsl(var(--muted-foreground))] hover:text-[hsl(var(--navy-900))] dark:hover:text-white/80"
@@ -1296,7 +1246,7 @@ function HealthStatCard({
   return (
     <div className={cn("rounded-2xl border px-4 py-3 text-center", colors.bg, colors.border)}>
       <p className={cn("font-display text-2xl font-semibold", colors.text)}>{value}</p>
-      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">
+      <p className="text-xs font-semibold text-[hsl(var(--muted-foreground))]">
         {label}
       </p>
     </div>
