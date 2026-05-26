@@ -240,8 +240,8 @@
   }
 
   .rail-fade {
-    -webkit-mask-image: linear-gradient(to right, transparent 0, black 3.75rem, black calc(100% - 3.75rem), transparent 100%);
-    mask-image: linear-gradient(to right, transparent 0, black 3.75rem, black calc(100% - 3.75rem), transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%);
   }
 
   .marquee {

@@ -131,14 +131,14 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
             return (
               <article
                 key={service.title}
-                className="hover-card group relative flex min-h-[410px] w-[min(82vw,620px)] flex-none snap-start flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-transparent shadow-vera dark:border-white/10"
+                className="hover-card group relative flex min-h-[390px] w-[min(78vw,540px)] flex-none snap-start flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white shadow-[0_22px_58px_-46px_rgba(26,58,92,0.62)] dark:border-white/10 dark:bg-[hsl(var(--background))]"
               >
                 <div
                   className="absolute inset-x-0 top-0 h-1"
                   style={{ background: service.accent }}
                 />
 
-                <div className="relative flex h-full flex-1 flex-col p-5 sm:p-6">
+                <div className="relative flex h-full flex-1 flex-col p-5">
                   <div>
                     <div
                       className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-bold text-white"
@@ -147,16 +147,16 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
                       <Icon className="h-3.5 w-3.5" />
                       {service.label}
                     </div>
-                    <h3 className="mt-4 text-balance font-display text-xl font-semibold text-[hsl(var(--navy-950))] dark:text-white md:text-2xl">
+                    <h3 className="mt-4 text-balance font-display text-xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">
                       {service.title}
                     </h3>
                   </div>
 
                   <div className="flex-1">
-                    <p className="mt-5 text-sm font-semibold leading-6" style={{ color: service.accent }}>
+                    <p className="mt-4 text-sm font-semibold leading-6" style={{ color: service.accent }}>
                       {service.impact}
                     </p>
-                    <p className="mt-3 text-sm leading-7 text-[hsl(var(--muted-foreground))]">
+                    <p className="mt-3 text-sm leading-6 text-[hsl(var(--muted-foreground))]">
                       {service.body}
                     </p>
 

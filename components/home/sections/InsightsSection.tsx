@@ -79,15 +79,14 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="insights"
-      className="relative overflow-hidden bg-[#F4F8FB] py-28 dark:bg-[#07131F]"
+      className="relative overflow-visible bg-white py-28 dark:bg-[#07131F]"
     >
-      <div className="absolute inset-0 dot-grid opacity-25 dark:opacity-10" />
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto max-w-7xl px-6">
         <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
             eyebrow={copy.insights.eyebrow}
             title={copy.insights.title}
-            body={copy.insights.body}
+            // body={copy.insights.body}
           />
           <a
             href="#"
@@ -97,33 +96,33 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
             <ArrowRight className="h-3.5 w-3.5" />
           </a>
         </div>
+      </div>
 
-        <div className="relative -mx-6 mt-10">
-          <button
-            type="button"
-            onClick={() => scrollInsights(-1)}
-            aria-label="Previous article"
-            className="absolute left-8 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:-translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollInsights(1)}
-            aria-label="Next article"
-            className="absolute right-8 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+      <div className="relative mt-10">
+        <button
+          type="button"
+          onClick={() => scrollInsights(-1)}
+          aria-label="Previous article"
+          className="absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:-translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollInsights(1)}
+          aria-label="Next article"
+          className="absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
 
-          <div
-            ref={railRef}
-            className="no-scrollbar rail-fade flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-8 pt-4 [scroll-padding-inline:1.5rem]"
-          >
-            {insightItems.map((item) => (
-              <InsightCard key={item.title} item={item} />
-            ))}
-          </div>
+        <div
+          ref={railRef}
+          className="no-scrollbar rail-fade flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-8 pt-2 [scroll-padding-inline:1.5rem] lg:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:[scroll-padding-inline:max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
+        >
+          {insightItems.map((item) => (
+            <InsightCard key={item.title} item={item} />
+          ))}
         </div>
       </div>
     </section>
@@ -132,11 +131,11 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
 
 function InsightCard({ item }: { item: InsightItem }) {
   return (
-    <a
+     <a
       href="#"
-      className="hover-card group relative flex h-[540px] w-[min(82vw,430px)] flex-none snap-start flex-col overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] bg-white p-3 shadow-vera dark:border-white/10 dark:bg-white/[0.04]"
+      className="hover-card group relative flex h-[450px] w-[min(78vw,360px)] flex-none snap-start flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white shadow-[0_22px_58px_-46px_rgba(26,58,92,0.62)] dark:border-white/10 dark:bg-[hsl(var(--background))]"
     >
-      <div className="relative h-52 w-full overflow-hidden rounded-[1.55rem]">
+      <div className="relative h-44 w-full overflow-hidden rounded-[1.55rem]">
         <img
           src={item.image}
           alt=""
@@ -145,19 +144,19 @@ function InsightCard({ item }: { item: InsightItem }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#07182A]/48 via-transparent to-transparent" />
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col p-5 sm:p-6">
-        <div className="mb-5 flex items-center justify-between gap-3">
+      <div className="flex min-h-0 flex-1 flex-col p-5">
+        <div className="mb-4 flex items-center justify-between gap-3">
           <span className="inline-flex items-center rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1.5 text-xs font-bold" style={{ color: C.teal }}>
             {item.tag}
           </span>
           <ArrowRight className="h-5 w-5 shrink-0 text-[hsl(var(--blue-700))] transition group-hover:translate-x-1 dark:text-[hsl(var(--blue-300))]" />
         </div>
 
-        <h3 className="text-balance font-display text-2xl font-semibold leading-tight text-[hsl(var(--navy-950))] dark:text-white">
+        <h3 className="text-balance pt-6 font-display text-xl font-semibold leading-tight text-[hsl(var(--navy-950))] dark:text-white">
           {item.title}
         </h3>
 
-        <p className="mt-4 text-sm leading-7 text-[hsl(var(--muted-foreground))]">
+        <p className="mt-4 text-sm leading-6 text-[hsl(var(--muted-foreground))]">
           {item.body}
         </p>
 
