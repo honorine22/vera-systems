@@ -79,7 +79,7 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="insights"
-      className="relative overflow-visible bg-white py-28 dark:bg-[#07131F]"
+      className="relative overflow-visible bg-white dark:bg-[#07131F]"
     >
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -118,7 +118,7 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
 
         <div
           ref={railRef}
-          className="no-scrollbar rail-fade flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-8 pt-2 [scroll-padding-inline:1.5rem] lg:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:[scroll-padding-inline:max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
+          className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-8 pt-2 [scroll-padding-inline:1.5rem] lg:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:[scroll-padding-inline:max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
         >
           {insightItems.map((item) => (
             <InsightCard key={item.title} item={item} />
