@@ -1,4 +1,7 @@
-import { ArrowRight } from "lucide-react";
+"use client";
+
+import { useRef } from "react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import type { SiteCopy } from "../translations";
 
 const C = {
@@ -57,12 +60,21 @@ function SectionHeader({
 }
 
 export default function InsightsSection({ copy }: { copy: SiteCopy }) {
+  const railRef = useRef<HTMLDivElement>(null);
   const insightItems = copy.insights.items.map((item, index) => ({
     ...insights[index],
     ...item,
   }));
 
-  const [feature, ...rows] = insightItems;
+  function scrollInsights(direction: -1 | 1) {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    rail.scrollBy({
+      left: direction * Math.min(rail.clientWidth * 0.72, 640),
+      behavior: "smooth",
+    });
+  }
 
   return (
     <section
@@ -86,11 +98,30 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
           </a>
         </div>
 
-        <div className="flow-fade -mx-6 mt-10 overflow-hidden px-6 py-4">
-          <div className="no-scrollbar relative flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6">
-            <InsightFeatured item={feature} />
-            {rows.map((item) => (
-              <InsightRow key={item.title} item={item} />
+        <div className="relative -mx-6 mt-10">
+          <button
+            type="button"
+            onClick={() => scrollInsights(-1)}
+            aria-label="Previous article"
+            className="absolute left-8 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:-translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollInsights(1)}
+            aria-label="Next article"
+            className="absolute right-8 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+
+          <div
+            ref={railRef}
+            className="no-scrollbar rail-fade flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-8 pt-4 [scroll-padding-inline:1.5rem]"
+          >
+            {insightItems.map((item) => (
+              <InsightCard key={item.title} item={item} />
             ))}
           </div>
         </div>
@@ -99,13 +130,13 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
   );
 }
 
-function InsightFeatured({ item }: { item: InsightItem }) {
+function InsightCard({ item }: { item: InsightItem }) {
   return (
     <a
       href="#"
-      className="hover-card group relative flex w-[86vw] max-w-[520px] flex-none snap-start flex-col overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] bg-white p-3 shadow-vera dark:border-white/10 dark:bg-white/[0.04]"
+      className="hover-card group relative flex h-[540px] w-[min(82vw,430px)] flex-none snap-start flex-col overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] bg-white p-3 shadow-vera dark:border-white/10 dark:bg-white/[0.04]"
     >
-      <div className="relative h-56 w-full overflow-hidden rounded-[1.55rem]">
+      <div className="relative h-52 w-full overflow-hidden rounded-[1.55rem]">
         <img
           src={item.image}
           alt=""
@@ -114,7 +145,7 @@ function InsightFeatured({ item }: { item: InsightItem }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#07182A]/48 via-transparent to-transparent" />
       </div>
 
-      <div className="flex flex-1 flex-col p-5 sm:p-7">
+      <div className="flex min-h-0 flex-1 flex-col p-5 sm:p-6">
         <div className="mb-5 flex items-center justify-between gap-3">
           <span className="inline-flex items-center rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1.5 text-xs font-bold" style={{ color: C.teal }}>
             {item.tag}
@@ -126,7 +157,7 @@ function InsightFeatured({ item }: { item: InsightItem }) {
           {item.title}
         </h3>
 
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-[hsl(var(--muted-foreground))]">
+        <p className="mt-4 text-sm leading-7 text-[hsl(var(--muted-foreground))]">
           {item.body}
         </p>
 
@@ -138,44 +169,6 @@ function InsightFeatured({ item }: { item: InsightItem }) {
             <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
           </span>
         </div>
-      </div>
-    </a>
-  );
-}
-
-function InsightRow({ item }: { item: InsightItem }) {
-  return (
-    <a
-      href="#"
-      className="hover-card group relative flex w-[82vw] max-w-[390px] flex-none snap-start flex-col overflow-hidden rounded-[1.6rem] border border-[hsl(var(--border))] bg-white p-4 shadow-soft transition dark:border-white/10 dark:bg-white/[0.045]"
-    >
-      <div className="relative h-44 overflow-hidden rounded-[1.15rem]">
-        <img
-          src={item.image}
-          alt=""
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </div>
-
-      <div className="flex min-w-0 flex-1 flex-col justify-center py-2 pr-1">
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <span
-            className="rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1 text-xs font-bold"
-            style={{ color: C.teal }}
-          >
-            {item.tag}
-          </span>
-          <ArrowRight className="h-4 w-4 shrink-0 text-[hsl(var(--blue-700))] transition group-hover:translate-x-1 dark:text-[hsl(var(--blue-300))]" />
-        </div>
-        <h4 className="text-balance text-xl font-semibold leading-tight text-[hsl(var(--navy-950))] transition-colors group-hover:text-[hsl(var(--blue-700))] dark:text-white dark:group-hover:text-[hsl(var(--blue-300))]">
-          {item.title}
-        </h4>
-        <p className="mt-3 text-sm leading-6 text-[hsl(var(--muted-foreground))]">
-          {item.body}
-        </p>
-        <span className="mt-4 text-xs font-bold text-[hsl(var(--muted-foreground))]">
-          {item.read}
-        </span>
       </div>
     </a>
   );

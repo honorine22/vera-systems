@@ -1,7 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ArrowRight, CheckCircle2, Cpu, GraduationCap, Microscope, Shield } from "lucide-react";
+import { useRef } from "react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Cpu,
+  GraduationCap,
+  Microscope,
+  Shield,
+} from "lucide-react";
 import type { SiteCopy } from "../translations";
 
 const C = {
@@ -65,150 +74,128 @@ function SectionHeader({
 }
 
 export default function ServicesSection({ copy }: { copy: SiteCopy }) {
-  const [activePage, setActivePage] = useState(0);
-  const [paused, setPaused] = useState(false);
-
+  const railRef = useRef<HTMLDivElement>(null);
   const serviceItems = copy.services.items.map((item, index) => ({
     ...services[index % services.length],
     ...item,
   }));
-  const pages = Array.from({ length: Math.ceil(serviceItems.length / 2) }, (_, index) =>
-    serviceItems.slice(index * 2, index * 2 + 2)
-  );
 
-  useEffect(() => {
-    if (paused || pages.length < 2) return;
+  function scrollServices(direction: -1 | 1) {
+    const rail = railRef.current;
+    if (!rail) return;
 
-    const timer = window.setInterval(() => {
-      setActivePage((page) => (page + 1) % pages.length);
-    }, 4200);
-
-    return () => window.clearInterval(timer);
-  }, [paused, pages.length]);
+    rail.scrollBy({
+      left: direction * Math.min(rail.clientWidth * 0.72, 760),
+      behavior: "smooth",
+    });
+  }
 
   return (
     <section
       id="services"
       className="relative overflow-hidden bg-white py-16 dark:bg-[hsl(var(--muted))]/20"
     >
-      <div className="absolute bottom-0 left-0 h-[420px] w-[420px] -translate-x-1/2 translate-y-1/4 rounded-full bg-[hsl(var(--blue-100))]/45 blur-3xl dark:bg-[hsl(var(--teal))]/6" />
-
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
           eyebrow={copy.services.eyebrow}
           title={copy.services.title}
           body={copy.services.body}
         />
+      </div>
+
+      <div className="relative mt-7">
+        <button
+          type="button"
+          onClick={() => scrollServices(-1)}
+          aria-label="Previous service"
+          className="absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:-translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollServices(1)}
+          aria-label="Next service"
+          className="absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
 
         <div
-          className="flow-fade-soft -mx-6 mt-6 overflow-hidden px-6 py-3"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onTouchStart={() => setPaused(true)}
-          onTouchEnd={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={() => setPaused(false)}
+          ref={railRef}
+          className="no-scrollbar rail-fade flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-8 pt-2 [scroll-padding-inline:1.5rem] lg:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:[scroll-padding-inline:max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
         >
-          <div
-            className="flex transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)]"
-            style={{ transform: `translateX(-${activePage * 100}%)` }}
-          >
-            {pages.map((page, pageIndex) => (
-              <div key={pageIndex} className="grid w-full flex-none gap-6 md:grid-cols-2">
-                {page.map((service) => {
-                  const Icon = service.icon;
+          {serviceItems.map((service) => {
+            const Icon = service.icon;
 
-                  return (
-                    <article
-                      key={service.title}
-                      className="hover-card group relative flex min-h-[410px] flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white shadow-vera dark:border-white/10 dark:bg-[hsl(var(--card))]"
+            return (
+              <article
+                key={service.title}
+                className="hover-card group relative flex min-h-[410px] w-[min(82vw,620px)] flex-none snap-start flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-transparent shadow-vera dark:border-white/10"
+              >
+                <div
+                  className="absolute inset-x-0 top-0 h-1"
+                  style={{ background: service.accent }}
+                />
+
+                <div className="relative flex h-full flex-1 flex-col p-5 sm:p-6">
+                  <div>
+                    <div
+                      className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-bold text-white"
+                      style={{ background: service.accent }}
                     >
-                      <div
-                        className="absolute inset-x-0 top-0 h-1"
-                        style={{ background: service.accent }}
-                      />
-                      <div
-                        className="absolute -right-20 -top-20 h-56 w-56 rounded-full opacity-10 blur-3xl transition group-hover:opacity-20"
-                        style={{ background: service.accent }}
-                      />
+                      <Icon className="h-3.5 w-3.5" />
+                      {service.label}
+                    </div>
+                    <h3 className="mt-4 text-balance font-display text-xl font-semibold text-[hsl(var(--navy-950))] dark:text-white md:text-2xl">
+                      {service.title}
+                    </h3>
+                  </div>
 
-                      <div className="relative flex h-full flex-1 flex-col p-5">
-                        <div>
-                          <div
-                            className="inline-flex items-center gap-2 rounded-xl px-3 py-1.5 text-xs font-bold text-white"
-                            style={{ background: service.accent }}
+                  <div className="flex-1">
+                    <p className="mt-5 text-sm font-semibold leading-6" style={{ color: service.accent }}>
+                      {service.impact}
+                    </p>
+                    <p className="mt-3 text-sm leading-7 text-[hsl(var(--muted-foreground))]">
+                      {service.body}
+                    </p>
+
+                    <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                      {service.bullets.map((bullet) => (
+                        <li
+                          key={bullet}
+                          className="flex items-start gap-2.5 text-sm leading-5 text-[hsl(var(--navy-900))] dark:text-white/80"
+                        >
+                          <span
+                            className="mt-0.5 flex h-4 w-4 flex-none items-center justify-center rounded-full"
+                            style={{ background: `${service.accent}18` }}
                           >
-                            <Icon className="h-3.5 w-3.5" />
-                            {service.label}
-                          </div>
-                          <h3 className="mt-3 text-balance font-display text-xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">
-                            {service.title}
-                          </h3>
-                        </div>
+                            <CheckCircle2 className="h-3.5 w-3.5" style={{ color: service.accent }} />
+                          </span>
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                        <div className="flex-1">
-                          <p className="mt-4 text-[13px] font-semibold leading-6" style={{ color: service.accent }}>
-                            {service.impact}
-                          </p>
-                          <p className="mt-2 text-[13px] leading-6 text-[hsl(var(--muted-foreground))]">
-                            {service.body}
-                          </p>
+                  <div className="mt-6 flex items-center justify-between border-t border-[hsl(var(--border))] pt-5 dark:border-white/10">
+                    <button
+                      onClick={() => scrollToId("contact")}
+                      className="primary-action group/btn inline-flex items-center gap-2 px-4 py-2 text-xs"
+                    >
+                      {copy.actions.learnMore}
+                      <ArrowRight className="h-3.5 w-3.5 transition group-hover/btn:translate-x-0.5" />
+                    </button>
 
-                          <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-                            {service.bullets.map((bullet) => (
-                              <li
-                                key={bullet}
-                                className="flex items-start gap-2.5 text-[13px] leading-5 text-[hsl(var(--navy-900))] dark:text-white/80"
-                              >
-                                <span
-                                  className="mt-0.5 flex h-4 w-4 flex-none items-center justify-center rounded-full"
-                                  style={{ background: `${service.accent}18` }}
-                                >
-                                  <CheckCircle2 className="h-3.5 w-3.5" style={{ color: service.accent }} />
-                                </span>
-                                {bullet}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-
-                        <div className="mt-5 flex items-center justify-between border-t border-[hsl(var(--border))] pt-4 dark:border-white/10">
-                          <button
-                            onClick={() => scrollToId("contact")}
-                            className="primary-action group/btn inline-flex items-center gap-2 px-4 py-2 text-xs"
-                          >
-                            {copy.actions.learnMore}
-                            <ArrowRight className="h-3.5 w-3.5 transition group-hover/btn:translate-x-0.5" />
-                          </button>
-
-                          <div
-                            className="h-8 w-8 rounded-full opacity-15 transition group-hover:scale-125 group-hover:opacity-25"
-                            style={{ background: service.accent }}
-                          />
-                        </div>
-                      </div>
-                    </article>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-5 flex justify-center gap-2">
-          {pages.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => setActivePage(index)}
-              aria-label={`Show service group ${index + 1}`}
-              className={`h-2 rounded-full transition-all ${
-                activePage === index
-                  ? "w-8 bg-[hsl(var(--blue-700))]"
-                  : "w-2 bg-[hsl(var(--border))] hover:bg-[hsl(var(--blue-300))]"
-              }`}
-            />
-          ))}
+                    <div
+                      className="h-8 w-8 rounded-full opacity-15 transition group-hover:scale-125 group-hover:opacity-25"
+                      style={{ background: service.accent }}
+                    />
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

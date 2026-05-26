@@ -239,6 +239,11 @@
     mask-image: linear-gradient(to right, transparent, black 4rem, black calc(100% - 4rem), transparent);
   }
 
+  .rail-fade {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 3.75rem, black calc(100% - 3.75rem), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, black 3.75rem, black calc(100% - 3.75rem), transparent 100%);
+  }
+
   .marquee {
     display: flex;
     gap: 3rem;
