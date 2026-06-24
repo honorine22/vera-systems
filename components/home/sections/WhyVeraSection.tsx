@@ -77,10 +77,6 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
                 className="hover-card group relative flex min-h-[270px] flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
               >
                 <div
-                  className="absolute inset-x-0 top-0 h-1"
-                  style={{ background: card.accent }}
-                />
-                <div
                   className="absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-10 blur-3xl transition-opacity group-hover:opacity-25"
                   style={{ background: card.accent }}
                 />

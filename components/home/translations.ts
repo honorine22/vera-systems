@@ -110,61 +110,87 @@ export const siteCopy = {
     services: {
       eyebrow: "Services",
       title: "Services.",
-      body: "Most food businesses face the same challenge: compliance systems that are built for auditors, not for operations. At Vera Systems, we take a different approach. We believe food safety is not a single problem; it is a system that demands expertise across standards, technology, people, and science. That is why we bring all four together, combining deep food safety knowledge with digital tools, capacity building, and research capability to help manufacturers, exporters, and hospitality businesses build compliance that actually works on the floor, not just on paper.",
+      body: `Most food businesses face the same challenge: 
+      food safety management systems that are built for auditors, not for operations. 
+      At Vera Systems, we take a different approach. 
+      We believe food safety management is not a single discipline; 
+      it is a system that demands expertise across standards, technology, 
+      people, and science. That is why we bring all four together, 
+      combining deep food safety knowledge with digital tools, capacity building, 
+      and research capabilities to help manufacturers, exporters, 
+      and hospitality businesses build compliance that actually works on the floor, 
+      not just on paper.`,
       items: [
         {
-          label: "Food Safety Consultancy",
-          title: "Compliance support that meets you where you are",
+          label: "VERA CONSULTING",
+          title: "Expert Technical assistance, auditing, implementation for food safety standards",
           impact:
-            "Whether you are preparing for export certification or navigating HACCP compliance for the first time, we meet you where you are.",
-          body: "Vera Systems provides hands-on advisory, gap assessment, and implementation support aligned to internationally recognized standards, including HACCP, FSSC 22000, and ISO 22000. We do not just audit and leave; we work alongside your team to build food safety systems that are practical, audit-ready, and built to last.",
+            `Vera Consulting is the technical and advisory core of Vera Systems, providing expert consultancy, auditing, and implementation support for internationally recognized food safety management standards. We work with food manufacturers, processors, hotels, caterers, and supply chain operators in Rwanda and across the region.
+Our consultants are hands-on practitioners with direct field experience in HACCP and ISO 22000 implementation.
+From initial system design and documentation development through to pre-certification internal auditing and post-certification surveillance, Vera Consulting accompanies clients at every stage of their compliance journey.`,
           bullets: [
-            "Hands-on advisory and gap assessment",
-            "Implementation support aligned to HACCP, FSSC 22000, and ISO 22000",
-            "Practical systems built alongside your team",
-            "Audit-ready systems built to last",
+            "HACCP plan design, implementation",
+            "ISO 22000 / FSSC 22000 gap analysis and full system implementation",
+            "Prerequisite Programme (PRP) development and periodic review",
+            "Internal audit programme design and execution",
+            "Certification readiness assessments and pre-audit preparation",
+            "Regulatory compliance advisory for food manufacturers and hospitality operators",
+            "Second-party supplier audits and conformity assessments",
+            "Standards Training and capacity building"
+
           ],
           statLabel: "audit readiness",
         },
         {
-          label: "Digital Records & Software",
-          title: "Live records for daily food-safety control",
+          label: "VERA DATA",
+          title: "Digital infrastructure and real-time intelligence for food safety operations",
           impact:
-            "Replace scattered paper logs with dashboards, alerts, audit trails, and supplier scorecards.",
-          body: "A practical records layer for CCP monitoring, hygiene checks, deviation follow-up, supplier performance, and compliance reporting.",
+            `
+            Vera Data is the digital intelligence arm of Vera Systems. Where traditional food safety consultancy relies on paper-based checklists and periodic audits, Vera Data builds the live technology layer that turns compliance into a continuous, visible process.
+We develop real-time software dashboards, digital monitoring infrastructure, and data pipelines that give food businesses instant visibility into operations on their factory floors and in their commercial kitchens. Our platforms allow clients to monitor Critical Control Points (CCPs) in real time, track hygiene and temperature data automatically, and surface compliance risks before they escalate into non-conformances.`,
+          // body: "A practical records layer for CCP monitoring, hygiene checks, deviation follow-up, supplier performance, and compliance reporting.",
           bullets: [
-            "CCP monitoring dashboards",
-            "Deviation notifications",
-            "Digital hygiene logs and sign-offs",
-            "Supplier performance tracking",
+            "Custom real-time food safety monitoring dashboards",
+            "CCP and hygiene data tracking with automated alerting",
+            "Compliance risk visualization and reporting infrastructure",
+            "Food safety data pipeline design and systems integration",
+            "Predictive risk modelling aligned with HACCP and ISO 22000",
+            "Statistical process control (SPC) and trend analysis",
+            "Digital transformation of manual compliance processes."
           ],
           statLabel: "faster follow-up",
         },
         {
-          label: "Training & Capacity Building",
-          title: "Competence that keeps compliance alive",
+          label: "VERA ACADEMY",
+          title: "Training, certification and strategic placement of food safety professionals",
           impact:
-            "Compliance is only sustainable when your people understand it.",
-          body: "We deliver structured training programs tailored to your sector and operations, covering food safety fundamentals, HACCP principles, internal auditing, and standard-specific requirements such as ISO 22000. From front-line staff to quality managers, we build the internal competence your organization needs to maintain compliance confidently, not just at certification time.",
+            `
+            Vera Academy is the capacity-building division of Vera Systems, responsible for training, certifying, and strategically deploying a pool of qualified food safety and quality management professionals. In a market where skilled, standards-trained practitioners remain scarce, Vera Academy produces competent Food Safety Team Leaders and Quality Managers who are ready to perform from day one.
+Our training programs are grounded in the same technical standards that underpin Vera Consulting fieldwork: HACCP, ISO 22000, prerequisite programs, first aid training, Documentation, statutory and regulatory requirements ensuring graduates are not just theoretically qualified but operationally capable.
+What distinguishes Vera Academy from conventional training providers is the integrated placement model. Graduates enter a curated Vera-vetted talent pool and are deployed to partner organizations under formal contracts managed by Vera Systems.`,
           bullets: [
-            "Food safety fundamentals",
-            "HACCP principles and practice",
-            "Internal auditing skills",
-            "ISO 22000 role-based requirements",
+            "Structured HACCP and ISO 22000 training programs",
+            "Food Safety Team Leader and Quality Manager certification",
+            "Industry-specific training tracks for food manufacturing and hospitality",
+            "Management of a Vera-certified professional talent pool",
+            "Managed placement and contract staffing services for partner organizations",
+            "Continuing professional development (CPD) and refresher programs for deployed staff"
           ],
           statLabel: "team competence",
         },
         {
-          label: "Research & Technical Studies",
-          title: "Scientific evidence for better decisions",
+          label: "VERA MEDIA",
+          title: "Communicating Food Safety. Building Trust. Creating Impact",
           impact:
-            "When a standard is not enough and you need evidence, we provide it.",
-          body: "Vera Systems supports food businesses, individuals in the sector, and hospitality operators in designing and executing scientific studies, including shelf-life testing, process validation, microbiological risk assessments, and HACCP-based hazard studies. Whether launching a new product, responding to a regulatory requirement, or validating a critical control point, our research services translate scientific rigor into actionable compliance outcomes.",
+            `Vera Media is the communications and public education arm of Vera Systems, translating complex food safety science into accessible, engaging, and visually compelling content for professional and public audiences. In a region where food safety awareness remains low and the demand for reliable, practitioner-led guidance is growing, Vera Media fills a critical gap between technical knowledge and everyday understanding.
+The division operates across multiple content formats: educational social media content that equips food handlers, managers, and consumers with practical knowledge; a structured podcast where industry experts, auditors, and scientists discuss real-world food safety challenges; and professionally designed awareness banners and posters deployed in food production and hospitality environments to reinforce compliance culture at the point of work.
+Vera Media does not produce generic content. Every piece of output is grounded in the technical standards and operational realities that Vera Systems encounters daily across its consulting, training, and laboratory work, making it one of the most credible voices in food safety communication across East Africa.`,
           bullets: [
-            "Shelf-life testing support",
-            "Process validation studies",
-            "Microbiological risk assessments",
-            "HACCP-based hazard studies",
+            `Educational social media content (infographics, carousels, reels, and awareness campaigns)`,
+            `Podcast production featuring industry experts and thought leaders`,
+            `Food safety posters, banners, and workplace awareness materials`,
+            `Corporate communications and certification awareness campaigns`,
+            `Professional photography and video documentation for factories, hotels, laboratories, training programs, and corporate events`
           ],
           statLabel: "technical evidence",
         },
@@ -344,23 +370,23 @@ export const siteCopy = {
 type Widen<T> = T extends string
   ? string
   : T extends number
-    ? number
-    : T extends boolean
-      ? boolean
-      : T extends readonly (infer U)[]
-        ? Array<Widen<U>>
-        : T extends object
-          ? { -readonly [K in keyof T]: Widen<T[K]> }
-          : T;
+  ? number
+  : T extends boolean
+  ? boolean
+  : T extends readonly (infer U)[]
+  ? Array<Widen<U>>
+  : T extends object
+  ? { -readonly [K in keyof T]: Widen<T[K]> }
+  : T;
 
 export type SiteCopy = Widen<(typeof siteCopy)["en"]>;
 
 type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends Array<infer U>
-    ? Array<DeepPartial<U>>
-    : T[K] extends object
-      ? DeepPartial<T[K]>
-      : T[K];
+  ? Array<DeepPartial<U>>
+  : T[K] extends object
+  ? DeepPartial<T[K]>
+  : T[K];
 };
 
 function mergeCopy<T>(base: T, override: DeepPartial<T>): T {
@@ -379,11 +405,11 @@ function mergeCopy<T>(base: T, override: DeepPartial<T>): T {
 
     result[key] =
       value &&
-      baseValue &&
-      typeof value === "object" &&
-      typeof baseValue === "object" &&
-      !Array.isArray(value) &&
-      !Array.isArray(baseValue)
+        baseValue &&
+        typeof value === "object" &&
+        typeof baseValue === "object" &&
+        !Array.isArray(value) &&
+        !Array.isArray(baseValue)
         ? mergeCopy(baseValue, value as DeepPartial<typeof baseValue>)
         : value;
   });
@@ -492,7 +518,6 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
           title: "Un accompagnement adapté à votre niveau de départ",
           impact:
             "Que vous prépariez une certification export ou découvriez la conformité HACCP, nous partons de votre réalité.",
-          body: "Vera Systems fournit du conseil terrain, des évaluations d’écarts et un appui à la mise en œuvre alignés sur les standards reconnus, dont HACCP, FSSC 22000 et ISO 22000. Nous n’auditons pas pour partir ensuite ; nous travaillons avec votre équipe pour construire des systèmes pratiques, prêts pour l’audit et durables.",
           bullets: [
             "Conseil terrain et évaluations d’écarts",
             "Appui aligné sur HACCP, FSSC 22000 et ISO 22000",
@@ -506,7 +531,6 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
           title: "Des registres en direct pour le contrôle quotidien",
           impact:
             "Remplacez les journaux papier dispersés par des tableaux de bord, alertes, pistes d’audit et scorecards fournisseurs.",
-          body: "Une couche pratique pour le suivi des CCP, l’hygiène, les écarts, les fournisseurs et les rapports de conformité.",
           bullets: [
             "Tableaux de bord CCP",
             "Notifications d’écarts",
@@ -520,7 +544,6 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
           title: "Des compétences qui maintiennent la conformité",
           impact:
             "La conformité n’est durable que lorsque vos équipes la comprennent.",
-          body: "Nous proposons des formations structurées adaptées à votre secteur et à vos opérations : bases de la sécurité alimentaire, principes HACCP, audit interne et exigences spécifiques comme ISO 22000. Du personnel terrain aux responsables qualité, nous renforçons la compétence interne nécessaire pour maintenir la conformité avec confiance.",
           bullets: [
             "Fondamentaux de sécurité alimentaire",
             "Principes et pratique HACCP",
@@ -534,7 +557,6 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
           title: "Des preuves scientifiques pour décider",
           impact:
             "Quand un standard ne suffit pas et qu’il faut des preuves, nous les produisons.",
-          body: "Vera Systems accompagne les entreprises alimentaires, les professionnels du secteur et les opérateurs hôteliers dans la conception et l’exécution d’études scientifiques : durée de vie, validation de procédés, évaluations de risques microbiologiques et études de dangers HACCP. Nos services traduisent la rigueur scientifique en résultats de conformité actionnables.",
           bullets: [
             "Appui aux tests de durée de vie",
             "Études de validation de procédés",
@@ -786,7 +808,6 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
           title: "Ubufasha buhera aho mugeze",
           impact:
             "Waba utegura export certification cyangwa utangiye HACCP compliance, duhera ku kuri kw’ibikorwa byawe.",
-          body: "Vera Systems itanga hands-on advisory, gap assessment n’ubufasha mu implementation bujyanye na standards zemewe ku rwego mpuzamahanga nka HACCP, FSSC 22000 na ISO 22000. Ntidukora audit ngo tugende; dukorana n’ikipe yawe kubaka food safety systems zikora, ziteguye audit kandi zirambye.",
           bullets: [
             "Hands-on advisory na gap assessment",
             "Implementation support ijyanye na HACCP, FSSC 22000 na ISO 22000",
@@ -800,7 +821,6 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
           title: "Inyandiko z’ako kanya zo kugenzura buri munsi",
           impact:
             "Simbuza impapuro zitandukanye dashboards, alerts, audit trails na supplier scorecards.",
-          body: "Urwego rufasha CCP monitoring, hygiene checks, deviation follow-up, supplier performance na compliance reports.",
           bullets: [
             "Dashboards za CCP",
             "Alerts z’ibyavuye ku murongo",
@@ -814,7 +834,6 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
           title: "Ubumenyi butuma compliance ikomeza",
           impact:
             "Compliance iramba iyo abantu bayisobanukiwe.",
-          body: "Dutanga structured training programs zijyanye na sector n’ibikorwa byanyu, zirimo food safety fundamentals, HACCP principles, internal auditing n’ibisabwa na standards nka ISO 22000. Kuva ku bakozi bo hasi kugeza kuri quality managers, twubaka competence ikenewe ngo mukomeze compliance mutegereje certification gusa.",
           bullets: [
             "Food safety fundamentals",
             "HACCP principles and practice",
@@ -828,7 +847,6 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
           title: "Ibimenyetso bya science byo gufata ibyemezo",
           impact:
             "Iyo standard idahagije mukeneye evidence, turayitanga.",
-          body: "Vera Systems ifasha food businesses, abantu bakora muri sector n’amahoteli gutegura no gukora scientific studies nka shelf-life testing, process validation, microbiological risk assessments na HACCP-based hazard studies. Serivisi zacu zihindura scientific rigor mo compliance outcomes zikoreshwa mu bikorwa.",
           bullets: [
             "Shelf-life testing support",
             "Process validation studies",

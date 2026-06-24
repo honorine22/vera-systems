@@ -566,142 +566,195 @@ function Navbar({
 function Hero({ copy }: { copy: SiteCopy }) {
   const heroStats = copy.hero.stats.map((stat, index) => ({
     ...stat,
-    color: ["#4A7BAF", "#149A90", "#1A3A5C"][index],
+    color: ["#4A7BAF", "#18A89D", "#1A3A5C"][index],
     tint: [
-      "rgba(200, 220, 240, .34)",
-      "rgba(20, 154, 144, .10)",
-      "rgba(232, 242, 250, .62)",
+      "rgba(232, 242, 250, .94)",
+      "rgba(232, 249, 247, .94)",
+      "rgba(247, 250, 253, .94)",
     ][index],
   }));
 
+  const titleWords = copy.hero.titleStart.trim().split(/\s+/);
+  const titleLineOne = titleWords.slice(0, 2).join(" ");
+  const titleLineTwo = titleWords.slice(2).join(" ");
+
   return (
-    <section id="hero" className="relative isolate overflow-hidden pb-24 pt-32 md:pb-28">
-      <div className="brand-aurora opacity-80" />
-      <div className="absolute inset-0 grid-bg" />
-      <div className="absolute left-1/2 top-16 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-[#E8F2FA]/70 blur-3xl dark:bg-[#4A7BAF]/10" />
-      <div className="absolute right-0 top-28 -z-10 h-96 w-96 translate-x-1/3 rounded-full bg-[#C8DCF0]/45 blur-3xl dark:bg-[#C8DCF0]/5" />
+    <section
+      id="hero"
+      className="relative isolate w-full max-w-full overflow-x-clip bg-[hsl(var(--background))] pb-16 pt-28 sm:pt-32 lg:pb-20 lg:pt-36"
+    >
+      <div className="pointer-events-none absolute inset-0 grid-bg opacity-80" />
+
+      <div className="pointer-events-none absolute right-[-11rem] top-[-9rem] -z-10 h-[42rem] w-[42rem] rounded-full bg-[#DDECF7]/70 blur-3xl dark:bg-[#4A7BAF]/10" />
+
+      <div className="pointer-events-none absolute bottom-[-15rem] left-[28%] -z-10 h-[30rem] w-[30rem] rounded-full bg-[#E8F2FA]/60 blur-3xl dark:bg-[#18A89D]/5" />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <div className="grid items-center gap-16 lg:grid-cols-12">
-          <div className="lg:col-span-7" data-reveal="left">
-            <h1 className="mt-6 max-w-2xl text-balance font-display text-5xl font-semibold leading-[1.03] tracking-[-0.055em] text-[#1A3A5C] dark:text-white md:text-6xl lg:text-7xl">
-              {copy.hero.titleStart}{" "}
-              <span className="hero-title-highlight">{copy.hero.highlight}</span>
-              {copy.hero.titleEnd}
+        <div className="grid items-center gap-12 xl:grid-cols-[minmax(0,1.1fr)_minmax(430px,.9fr)] xl:gap-12">
+          <div data-reveal="left">
+            <h1
+              className="!normal-case max-w-[700px] font-display text-6xl font-bold leading-[0.96] tracking-[-0.07em] text-[#1A3A5C] dark:text-white"
+              style={{ textTransform: "none" }}
+            >
+              <span className="block">{titleLineOne}</span>
+
+              <span className="block">
+                {titleLineTwo}{" "}
+                <span className="hero-title-highlight">
+                  {copy.hero.highlight}
+                </span>
+                {copy.hero.titleEnd}
+              </span>
             </h1>
 
-            <p className="mt-6 max-w-xl text-balance text-lg leading-relaxed text-[hsl(var(--muted-foreground))] dark:text-white/68">
+            <p className="mt-8 max-w-[700px] leading-[1.6] tracking-[-0.025em] text-[#5D7190] dark:text-white/70">
               {copy.hero.body}
             </p>
 
-            <div className="mt-9 flex flex-wrap items-center gap-3">
+            <div className="mt-9 flex flex-wrap items-center gap-3 sm:gap-4">
               <button
+                type="button"
                 onClick={() => scrollToId("contact")}
-                className="primary-action group relative inline-flex items-center gap-2 overflow-hidden px-6 py-3.5 text-sm"
+                className="primary-action group inline-flex items-center gap-2.5 px-5 py-3.5 text-sm"
               >
-                <span className="relative z-10">{copy.actions.bookConsultation}</span>
-                <ArrowRight className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                {copy.actions.bookConsultation}
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
 
               <button
+                type="button"
                 onClick={() => scrollToId("platform")}
-                className="hero-secondary-btn group inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-bold outline-none transition active:scale-95 focus-visible:ring-2 focus-visible:ring-[#4A7BAF] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[hsl(var(--background))]"
+                className="hero-secondary-btn group inline-flex items-center gap-2.5 px-5 py-3.5 text-sm"
               >
-                <span className="grid h-5 w-5 place-items-center rounded-full bg-[#E8F2FA] text-[#1A3A5C] transition duration-300 group-hover:bg-white group-hover:text-[#4A7BAF] dark:bg-white/10 dark:text-white">
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-[#E8F2FA] text-[#1A3A5C] ring-1 ring-[#C8DCF0] transition group-hover:bg-[#1A3A5C] group-hover:text-white">
                   <PlayCircle className="h-3.5 w-3.5" />
                 </span>
+
                 {copy.actions.explorePlatform}
               </button>
             </div>
 
-            <div className="mt-10 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="mt-10 grid max-w-[790px] gap-3 sm:grid-cols-3">
               {heroStats.map((stat) => (
                 <div
                   key={stat.l}
-                  className="hero-stat-card group rounded-2xl border px-5 py-4 backdrop-blur"
+                  className="hero-stat-card min-h-[125px] rounded-[1.35rem] border p-5"
                   style={{
-                    borderColor: `${stat.color}2E`,
-                    background: `linear-gradient(135deg, ${stat.tint}, rgba(255,255,255,.78))`,
+                    borderColor: `${stat.color}36`,
+                    background: `linear-gradient(135deg, ${stat.tint}, rgba(255,255,255,.72))`,
                   }}
                 >
-                  <div
-                    className="font-display text-2xl font-semibold transition-transform duration-300 group-hover:-translate-y-0.5"
+                  <p
+                    className="font-display text-[clamp(1.9rem,2.5vw,2.55rem)] font-semibold leading-none tracking-[-0.05em]"
                     style={{ color: stat.color }}
                   >
                     {stat.k}
-                  </div>
-                  <div className="mt-1 text-xs font-semibold leading-snug text-[hsl(var(--muted-foreground))] dark:text-white/55">
+                  </p>
+
+                  <p className="mt-3 text-sm font-semibold leading-[1.35] text-[#5D7190] dark:text-white/65">
                     {stat.l}
-                  </div>
+                  </p>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="lg:col-span-5" data-reveal="right">
+          <div
+            className="mx-auto w-full max-w-[540px] xl:ml-auto"
+            data-reveal="right"
+          >
             <div className="group/visual relative">
-              <div className="absolute -inset-8 rounded-[2.25rem] bg-[radial-gradient(circle_at_40%_30%,rgba(200,220,240,.65),transparent_52%),radial-gradient(circle_at_78%_72%,rgba(74,123,175,.22),transparent_58%)] blur-2xl transition duration-700 group-hover/visual:scale-105 group-hover/visual:opacity-90 dark:bg-[radial-gradient(circle_at_40%_30%,rgba(74,123,175,.20),transparent_52%),radial-gradient(circle_at_78%_72%,rgba(200,220,240,.08),transparent_58%)]" />
+              <div className="absolute -inset-7 rounded-[2rem] bg-[radial-gradient(circle_at_35%_20%,rgba(200,220,240,.8),transparent_52%),radial-gradient(circle_at_78%_75%,rgba(74,123,175,.22),transparent_58%)] blur-2xl" />
 
-              <div className="hero-chart-card relative float-soft overflow-hidden rounded-[2rem] border border-white/80 bg-white/78 p-5 shadow-vera backdrop-blur-xl transition duration-500 dark:border-white/10 dark:bg-[hsl(var(--card))]/75">
-                <div className="flex items-center justify-between gap-4">
+              <div className="hero-chart-card relative overflow-hidden rounded-[1.75rem] border border-white/80 bg-white/78 p-5 backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(var(--card))]/80 sm:p-6">
+                <div className="flex items-start justify-between gap-4">
                   <div>
-                    <div className="text-xs font-medium text-[hsl(var(--muted-foreground))] dark:text-white/55">
+                    <p className="text-xs font-semibold text-[#5D7190] dark:text-white/55">
                       CCP compliance · YTD
-                    </div>
-                    <div className="mt-1 font-display text-3xl font-semibold text-[#1A3A5C] dark:text-white">
+                    </p>
+
+                    <p className="mt-1 font-display text-4xl font-semibold tracking-[-0.05em] text-[#1A3A5C] dark:text-white">
                       96.4%
-                    </div>
+                    </p>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#E8F2FA] px-3 py-1 text-xs font-bold text-[#1A3A5C] ring-1 ring-[#C8DCF0] transition duration-300 group-hover/visual:bg-[#1A3A5C] group-hover/visual:text-white dark:bg-white/10 dark:text-white dark:ring-white/10">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#1A3A5C] px-3 py-1.5 text-xs font-bold text-white shadow-sm">
                     <TrendingUp className="h-3 w-3" />
                     +18.4%
                   </span>
                 </div>
 
-                <div className="mt-4 h-48">
+                <div className="mt-5 h-[230px] sm:h-[260px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <ComposedChart
                       data={ccpTrend}
-                      margin={{ top: 6, right: 6, left: -20, bottom: 0 }}
+                      margin={{ top: 8, right: 8, left: -20, bottom: 0 }}
                     >
                       <defs>
-                        <linearGradient id="heroGrad" x1="0" x2="0" y1="0" y2="1">
-                          <stop offset="0%" stopColor="#4A7BAF" stopOpacity={0.36} />
-                          <stop offset="100%" stopColor="#C8DCF0" stopOpacity={0.04} />
+                        <linearGradient
+                          id="heroComplianceArea"
+                          x1="0"
+                          x2="0"
+                          y1="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="0%"
+                            stopColor="#4A7BAF"
+                            stopOpacity={0.42}
+                          />
+                          <stop
+                            offset="100%"
+                            stopColor="#C8DCF0"
+                            stopOpacity={0.04}
+                          />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid stroke="rgba(26,58,92,.08)" vertical={false} />
+
+                      <CartesianGrid
+                        stroke="rgba(26,58,92,.08)"
+                        vertical={false}
+                      />
+
                       <XAxis
                         dataKey="m"
                         tickLine={false}
                         axisLine={false}
-                        tick={{ fill: "#64748b", fontSize: 11 }}
+                        tick={{ fill: "#65758A", fontSize: 11 }}
                       />
+
                       <YAxis hide />
+
                       <Tooltip
-                        cursor={{ stroke: "#4A7BAF", strokeDasharray: 4, strokeWidth: 1 }}
+                        cursor={{
+                          stroke: "#4A7BAF",
+                          strokeDasharray: "4 4",
+                          strokeWidth: 1,
+                        }}
                         contentStyle={{
                           borderRadius: 14,
-                          border: "1px solid rgba(200,220,240,.8)",
-                          boxShadow: "0 18px 46px -22px rgba(26,58,92,.35)",
+                          border: "1px solid rgba(200,220,240,.85)",
+                          boxShadow:
+                            "0 18px 42px -24px rgba(26,58,92,.35)",
                           fontFamily: "Montserrat, sans-serif",
                         }}
                       />
+
                       <Area
                         type="monotone"
                         dataKey="v"
                         name="Actual"
                         stroke="#1A3A5C"
                         strokeWidth={2.5}
-                        fill="url(#heroGrad)"
+                        fill="url(#heroComplianceArea)"
                       />
+
                       <Line
                         type="monotone"
                         dataKey="p"
                         name="Target"
                         stroke="#4A7BAF"
-                        strokeWidth={1.6}
+                        strokeWidth={1.5}
                         strokeDasharray="4 4"
                         dot={false}
                       />
@@ -711,37 +764,32 @@ function Hero({ copy }: { copy: SiteCopy }) {
 
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   {[
-                    { v: "12", l: "CCPs OK", t: "success" as Tone },
-                    { v: "1", l: "Watch", t: "warning" as Tone },
-                    { v: "0", l: "Critical", t: "danger" as Tone },
-                  ].map((stat) => (
+                    { value: "12", label: "CCPs OK", color: "#2FA772" },
+                    { value: "1", label: "Watch", color: "#D99A3D" },
+                    { value: "0", label: "Critical", color: "#D95C59" },
+                  ].map((item) => (
                     <div
-                      key={stat.l}
-                      className="hero-metric-card rounded-xl border border-[#C8DCF0]/75 bg-white/76 p-3 text-center transition duration-300 dark:border-white/10 dark:bg-white/5"
+                      key={item.label}
+                      className="hero-metric-card rounded-xl border border-[#C8DCF0]/75 bg-white/70 px-2 py-3 text-center dark:border-white/10 dark:bg-white/5"
                     >
                       <p
-                        className={cn(
-                          "font-display text-xl font-semibold",
-                          stat.t === "success" && "text-[hsl(var(--success))]",
-                          stat.t === "warning" && "text-[hsl(var(--warning))]",
-                          stat.t === "danger" && "text-[hsl(var(--danger))]"
-                        )}
+                        className="font-display text-2xl font-semibold"
+                        style={{ color: item.color }}
                       >
-                        {stat.v}
+                        {item.value}
                       </p>
-                      <p className="text-xs font-semibold text-[hsl(var(--muted-foreground))] dark:text-white/50">
-                        {stat.l}
+
+                      <p className="mt-1 text-xs font-semibold text-[#5D7190] dark:text-white/55">
+                        {item.label}
                       </p>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="hero-chip-card absolute -bottom-4 -right-4 hidden rounded-2xl border border-[#C8DCF0] bg-white/92 px-4 py-3 text-xs font-semibold shadow-soft backdrop-blur md:block dark:border-white/10 dark:bg-[hsl(var(--card))]/90">
-                <p className="text-xs font-bold text-[#149A90]">
-                  Audit ready
-                </p>
-                <p className="text-[#1A3A5C] dark:text-white">
+              <div className="hero-chip-card absolute -bottom-4 -right-4 hidden rounded-2xl border border-[#8FC2E8] bg-white/90 px-4 py-3 text-xs shadow-[0_18px_35px_-22px_rgba(26,58,92,.35)] backdrop-blur md:block dark:border-white/10 dark:bg-[hsl(var(--card))]/90">
+                <p className="font-bold text-[#18A89D]">Audit ready</p>
+                <p className="mt-0.5 font-semibold text-[#1A3A5C] dark:text-white">
                   ISO 22000 — 96%
                 </p>
               </div>
@@ -754,27 +802,35 @@ function Hero({ copy }: { copy: SiteCopy }) {
 }
 
 function ClientTypes({ copy }: { copy: SiteCopy }) {
-  const clients = useMemo(() => [...copy.clients.items], [copy.clients.items]);
-  const doubled = [...clients, ...clients];
+  const clients = copy.clients.items;
 
   return (
-    <section className="relative overflow-hidden border-y border-[hsl(var(--border))] bg-white/80 py-14 dark:bg-[hsl(var(--muted))]/25">
+    <section className="relative overflow-hidden border-y border-[hsl(var(--border))] bg-white/80 py-12 md:py-14 dark:bg-[hsl(var(--muted))]/25">
       <div className="mx-auto max-w-7xl px-6">
         <p className="text-center text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
           {copy.clients.eyebrow}
         </p>
 
-        <div className="marquee-track mt-8 overflow-hidden">
-          <div className="marquee">
-            {doubled.map((client, index) => (
+        <div className="client-types-mask mt-8 overflow-hidden">
+          <div className="client-types-motion flex w-max items-center">
+            {[0, 1].map((groupIndex) => (
               <div
-                key={`${client}-${index}`}
-                className="flex flex-none items-center gap-3 text-[hsl(var(--navy-900))]/45 dark:text-white/40"
+                key={groupIndex}
+                aria-hidden={groupIndex === 1}
+                className="flex shrink-0 items-center gap-10 pr-10 lg:gap-16 lg:pr-16"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--teal))]" />
-                <span className="font-display text-base font-extrabold tracking-tight">
-                  {client}
-                </span>
+                {clients.map((client) => (
+                  <div
+                    key={`${groupIndex}-${client}`}
+                    className="inline-flex shrink-0 items-center gap-3 whitespace-nowrap text-[hsl(var(--navy-900))]/45 dark:text-white/40"
+                  >
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[hsl(var(--teal))]" />
+
+                    <span className="font-display text-base font-extrabold tracking-tight md:text-lg">
+                      {client}
+                    </span>
+                  </div>
+                ))}
               </div>
             ))}
           </div>
@@ -783,6 +839,7 @@ function ClientTypes({ copy }: { copy: SiteCopy }) {
     </section>
   );
 }
+
 function Services({ copy }: { copy: SiteCopy }) {
   const serviceItems = copy.services.items.map((item, index) => ({
     ...services[index],
@@ -817,10 +874,6 @@ function Services({ copy }: { copy: SiteCopy }) {
                   `reveal-delay-${index + 1}`
                 )}
               >
-                <div
-                  className="absolute inset-x-0 top-0 h-1"
-                  style={{ background: service.accent }}
-                />
                 <div
                   className="absolute -right-20 -top-20 h-56 w-56 rounded-full opacity-10 blur-3xl transition group-hover:opacity-20"
                   style={{ background: service.accent }}
@@ -857,11 +910,8 @@ function Services({ copy }: { copy: SiteCopy }) {
                     </div>
                   </div>
 
-                  <p className="mt-4 text-sm font-semibold leading-relaxed" style={{ color: service.accent }}>
+                  <p className="mt-4 text-sm leading-relaxed" style={{ color: service.accent }}>
                     {service.impact}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
-                    {service.body}
                   </p>
 
                   <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
