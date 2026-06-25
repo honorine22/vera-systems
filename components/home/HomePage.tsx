@@ -7,6 +7,7 @@ import {
   Award,
   BarChart3,
   CheckCircle2,
+  ChevronLeft,
   ChevronRight,
   Clock,
   Cpu,
@@ -62,6 +63,7 @@ import AboutSection from "./sections/AboutSection";
 import InsightsSection from "./sections/InsightsSection";
 import ServicesSection from "./sections/ServicesSection";
 import WhyVeraSection from "./sections/WhyVeraSection";
+import StackExperience from "./sections/HowItWorks";
 
 type DemoTab = "ccp" | "deviations" | "suppliers" | "reports";
 type Tone = "success" | "warning" | "danger";
@@ -333,7 +335,7 @@ function SectionHeader({
   centered?: boolean;
 }) {
   return (
-    <div className={cn("max-w-3xl", centered && "mx-auto text-center")} data-reveal>
+    <div className={cn("", centered && "mx-auto text-center")} data-reveal>
       <p
         className={cn(
           "inline-flex items-center gap-2.5 text-sm font-bold",
@@ -955,124 +957,6 @@ function Services({ copy }: { copy: SiteCopy }) {
   );
 }
 
-function StackExperience({ copy }: { copy: SiteCopy }) {
-  const [activeStep, setActiveStep] = useState(0);
-
-  const stepItems = copy.stack.cards.map((item, index) => ({
-    ...stackCards[index],
-    ...item,
-  }));
-
-  const step = stepItems[activeStep];
-
-  return (
-    <section className="relative overflow-hidden bg-[hsl(var(--navy-950))] py-28 text-white dark:bg-[#061225]">
-      <div className="absolute inset-0 grid-bg opacity-15 dark:opacity-10" />
-      <div className="brand-aurora opacity-30 dark:opacity-20" />
-
-      <div className="relative mx-auto max-w-7xl px-6">
-        <SectionHeader
-          light
-          eyebrow={copy.stack.eyebrow}
-          title={copy.stack.title}
-          body={copy.stack.body}
-        />
-
-        <div className="mt-14 flex flex-wrap gap-3" data-reveal>
-          {stepItems.map((card, index) => (
-            <button
-              key={card.eyebrow}
-              onClick={() => setActiveStep(index)}
-              className={cn(
-                "rounded-xl border px-5 py-2.5 text-[11px] font-black uppercase tracking-[0.16em] transition-all duration-300",
-                activeStep === index
-                  ? "border-white bg-white text-[#07182A] shadow-lg"
-                  : "border-white/15 text-white/55 hover:border-white/35 hover:text-white"
-              )}
-            >
-              <span className="font-mono">{card.eyebrow}</span> /{" "}
-              {card.title.split(" ").slice(0, 3).join(" ")}…
-            </button>
-          ))}
-        </div>
-
-        <div key={activeStep} className="mt-8 grid gap-6 lg:grid-cols-[1.5fr_0.5fr]">
-          <div className="hover-card rounded-3xl border border-white/10 bg-white/[0.045] p-8 backdrop-blur-xl">
-            <div className="flex items-start gap-6">
-              <div className="hidden flex-none sm:block">
-                <span
-                  className="font-display text-7xl font-black leading-none"
-                  style={{
-                    background: `linear-gradient(135deg, ${step.color}, ${step.colorLight})`,
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                  }}
-                >
-                  {step.eyebrow}
-                </span>
-              </div>
-
-              <div className="flex-1">
-                <p
-                  className="text-[11px] font-black uppercase tracking-[0.22em]"
-                  style={{ color: step.colorLight }}
-                >
-                  Step {step.eyebrow}
-                </p>
-                <h3 className="mt-2 font-display text-2xl font-semibold text-white">
-                  {step.title}
-                </h3>
-                <p className="mt-4 text-base leading-relaxed text-white/70">
-                  {step.body}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-8 flex gap-2">
-              {stepItems.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setActiveStep(index)}
-                  aria-label={`Go to step ${index + 1}`}
-                  className="h-1.5 rounded-full transition-all duration-300"
-                  style={{
-                    width: index === activeStep ? "2rem" : "0.75rem",
-                    background:
-                      index === activeStep ? step.color : "rgba(255,255,255,.24)",
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-4">
-            <div className="hover-card flex flex-1 flex-col items-center justify-center rounded-3xl border border-white/10 bg-white/[0.045] p-6 text-center backdrop-blur-xl">
-              <p className="font-display text-5xl font-black" style={{ color: step.color }}>
-                {step.metric}
-              </p>
-              <p
-                className="mt-2 text-[11px] font-black uppercase tracking-[0.18em]"
-                style={{ color: step.colorLight }}
-              >
-                {step.label}
-              </p>
-            </div>
-
-            <button
-              onClick={() => setActiveStep((activeStep + 1) % stepItems.length)}
-              className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.045] px-5 py-4 text-sm font-semibold text-white/70 backdrop-blur-xl transition hover:border-white/30 hover:text-white"
-            >
-              {copy.stack.nextStep}
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function PlatformDemo({ copy }: { copy: SiteCopy }) {
   return (
     <section
@@ -1194,30 +1078,30 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
             </div>
           </div>
           <div className="grid">
-          <div
-            className="hover-card flex h-full flex-col justify-between rounded-3xl border border-[hsl(var(--border))] bg-white/78 p-7 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
-            data-reveal="right"
-          >
-            <div>
-              <div className="mb-5 h-40 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/45 dark:border-white/10">
-                <img
-                  src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=85"
-                  alt={copy.platform.title}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <p className="text-base italic leading-relaxed text-[hsl(var(--navy-950))]/80 dark:text-white/80">
-                {copy.platform.quote}
-              </p>
-            </div>
-            <button
-              onClick={() => scrollToId("contact")}
-              className="primary-action mt-7 inline-flex w-fit items-center gap-2 px-5 py-2.5 text-sm"
+            <div
+              className="hover-card flex h-full flex-col justify-between rounded-3xl border border-[hsl(var(--border))] bg-white/78 p-7 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
+              data-reveal="right"
             >
-              {copy.actions.requestDemo}
-              <ArrowRight className="h-3.5 w-3.5" />
-            </button>
-          </div>
+              <div>
+                <div className="mb-5 h-40 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/45 dark:border-white/10">
+                  <img
+                    src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=85"
+                    alt={copy.platform.title}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <p className="text-base italic leading-relaxed text-[hsl(var(--navy-950))]/80 dark:text-white/80">
+                  {copy.platform.quote}
+                </p>
+              </div>
+              <button
+                onClick={() => scrollToId("contact")}
+                className="primary-action mt-7 inline-flex w-fit items-center gap-2 px-5 py-2.5 text-sm"
+              >
+                {copy.actions.requestDemo}
+                <ArrowRight className="h-3.5 w-3.5" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -2538,7 +2422,6 @@ function EmailConfirmationNotice() {
 }
 
 export default function HomePage() {
-  const progress = useScrollProgress();
   const { dark, toggle } = useDarkMode();
   const { language, setLanguage, copy } = useLanguage();
 
@@ -2546,16 +2429,7 @@ export default function HomePage() {
 
   return (
     <main className="relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
-      <div className="fixed inset-x-0 top-0 z-[60] h-0.5">
-        <div
-          className="h-full transition-[width] duration-150"
-          style={{
-            width: `${progress}%`,
-            background: `linear-gradient(90deg, ${C.teal}, ${C.blue}, ${C.sky})`,
-          }}
-        />
-      </div>
-      <EmailConfirmationNotice />
+     <EmailConfirmationNotice />
 
       <Navbar
         dark={dark}

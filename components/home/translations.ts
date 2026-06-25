@@ -198,29 +198,93 @@ Vera Media does not produce generic content. Every piece of output is grounded i
     },
     stack: {
       eyebrow: "How it works",
-      title: "A practical route to stronger food safety",
-      body: "From the first site walkthrough to working records and routine reporting, each step is clear and usable.",
+      journeyLabel:
+        "Vera Systems client journey — from first inquiry to continuous live compliance",
+      title: "Your journey with Vera",
+      body:
+        "From the first conversation to a system that runs every shift — here is what working with us looks like.",
+      progressLabel: "The implementation journey",
+      stepLabel: "Step",
+      handoffLabel: "What happens next",
+      previousStep: "Previous step",
       nextStep: "Next step",
+      cta:
+        "Start with a free scoping call. We respond with a practical plan within 48 hours.",
+      ctaAction: "Book a free scoping call",
       cards: [
         {
-          title: "Map the real operating risk",
-          body: "We review CCPs, hygiene behavior, supplier risk, documentation gaps, staff routines, and audit pressure points.",
-          label: "first risk snapshot",
+          title: "Inquiry & scoping",
+          body:
+            "You describe your operation — product type, team size, existing records, and target standard. We identify the right scope and confirm what a realistic engagement looks like for your business.",
+          handoff: "Scope agreed, engagement confirmed",
+          advantage: "",
+          features: [],
         },
         {
-          title: "Turn compliance into workflow",
-          body: "Procedures become checklists, controls, escalation paths, and evidence trails that fit day-to-day work.",
-          label: "faster evidence retrieval",
+          title: "Gap assessment",
+          body:
+            "We conduct a structured review of your current practices against HACCP principles or your target ISO standard — identifying control gaps, documentation shortfalls, and risk exposure points before any work begins.",
+          handoff: "Gap report delivered, priorities ranked",
+          advantage: "",
+          features: [],
         },
         {
-          title: "Track performance in real time",
-          body: "Dashboards show CCP status, deviations, supplier scores, hygiene logs, and readiness indicators.",
-          label: "CCP tracking",
+          title: "System design & roadmap",
+          body:
+            "We design the full food safety management system: CCP identification, critical limits, PRP framework, documentation structure, monitoring procedures, and a time-bound implementation roadmap with clear milestones.",
+          handoff: "Roadmap signed off",
+          advantage: "",
+          features: [],
         },
         {
-          title: "Use data to reduce repeat failures",
-          body: "Management sees trends, corrective-action loops, supplier patterns, and practical recommendations.",
-          label: "audit-ready reporting",
+          title: "Implementation & training",
+          body:
+            "We build the system on your floor: SOPs written and deployed, HACCP plan finalised, staff trained on monitoring duties, corrective action procedures embedded, and records brought into a working state.",
+          handoff: "System operational, team trained",
+          advantage: "",
+          features: [],
+        },
+        {
+          title: "Digital go-live",
+          body:
+            "Paper logs are replaced with a live digital workspace. Your CCPs are connected to a real-time monitoring dashboard — temperature deviations, hygiene checks, and corrective actions are tracked automatically, every shift.",
+          handoff: "Compliance visible in real time",
+          advantage: "Vera advantage",
+          features: [
+            "Live CCP dashboard",
+            "Automated deviation alerts",
+            "Real-time temperature logs",
+            "Digital compliance records",
+          ],
+        },
+        {
+          title: "Internal pre-audit & verification",
+          body:
+            "We run a Vera-led mock audit against your target standard — HACCP, ISO 22000, or FSSC 22000. Findings are documented, evidence gaps are closed, and the system is verified before any certification body steps in.",
+          handoff: "System audit-ready",
+          advantage: "",
+          features: [],
+        },
+        {
+          title: "Certification & sign-off",
+          body:
+            "Your operation achieves certification or compliance sign-off against the agreed standard. Every record, log, and corrective action is already organised — audit preparation is a review, not a scramble.",
+          handoff: "Certified. Now the real work begins.",
+          advantage: "",
+          features: [],
+        },
+        {
+          title: "Continuous monitoring & improvement",
+          body:
+            "Most consultants leave after certification. We stay. Your dashboard keeps running, deviations are tracked, suppliers are scored, and monthly trend reports surface risks before they become non-conformances.",
+          handoff: "Continuous improvement is now in motion",
+          advantage: "Vera advantage",
+          features: [
+            "Predictive risk trends",
+            "Supplier compliance scoring",
+            "Surveillance audit support",
+            "System refinement",
+          ],
         },
       ],
     },
@@ -568,30 +632,94 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
       ],
     },
     stack: {
-      eyebrow: "Méthode",
-      title: "Un chemin pratique vers une sécurité alimentaire plus forte",
-      body: "De la première visite de site aux registres actifs et rapports réguliers, chaque étape reste claire et utilisable.",
+      eyebrow: "Comment ça fonctionne",
+      journeyLabel:
+        "Parcours client Vera Systems — de la première demande à une conformité continue en temps réel",
+      title: "Votre parcours avec Vera",
+      body:
+        "De la première conversation à un système qui fonctionne à chaque poste — voici comment se déroule notre accompagnement.",
+      progressLabel: "Le parcours de mise en œuvre",
+      stepLabel: "Étape",
+      handoffLabel: "Ce qui se passe ensuite",
+      previousStep: "Étape précédente",
       nextStep: "Étape suivante",
+      cta:
+        "Commencez par un appel gratuit de cadrage. Nous vous répondons avec un plan pratique sous 48 heures.",
+      ctaAction: "Réserver un appel de cadrage",
       cards: [
         {
-          title: "Cartographier le risque réel",
-          body: "Nous analysons CCP, hygiène, risques fournisseurs, écarts documentaires, routines et points de pression d’audit.",
-          label: "premier aperçu risque",
+          title: "Demande initiale et cadrage",
+          body:
+            "Vous nous décrivez votre activité — type de produits, taille de l’équipe, registres existants et norme visée. Nous définissons le périmètre adapté et confirmons à quoi ressemble un accompagnement réaliste pour votre entreprise.",
+          handoff: "Périmètre validé, mission confirmée",
+          advantage: "",
+          features: [],
         },
         {
-          title: "Transformer la conformité en flux de travail",
-          body: "Les procédures deviennent checklists, contrôles, chemins d’escalade et preuves adaptées au quotidien.",
-          label: "preuves retrouvées plus vite",
+          title: "Évaluation des écarts",
+          body:
+            "Nous réalisons une revue structurée de vos pratiques actuelles au regard des principes HACCP ou de votre norme ISO cible, afin d’identifier les écarts de contrôle, les insuffisances documentaires et les points d’exposition au risque avant le début des travaux.",
+          handoff: "Rapport d’écarts remis, priorités classées",
+          advantage: "",
+          features: [],
         },
         {
-          title: "Suivre la performance en temps réel",
-          body: "Les tableaux de bord montrent l’état CCP, les écarts, les scores fournisseurs, l’hygiène et la préparation.",
-          label: "suivi CCP",
+          title: "Conception du système et feuille de route",
+          body:
+            "Nous concevons l’ensemble du système de management de la sécurité alimentaire : identification des CCP, limites critiques, cadre des PRP, structure documentaire, procédures de suivi et feuille de route de mise en œuvre avec des jalons précis.",
+          handoff: "Feuille de route approuvée",
+          advantage: "",
+          features: [],
         },
         {
-          title: "Utiliser les données pour réduire les répétitions",
-          body: "La direction voit tendances, boucles correctives, modèles fournisseurs et recommandations pratiques.",
-          label: "rapport prêt pour audit",
+          title: "Mise en œuvre et formation",
+          body:
+            "Nous déployons le système sur votre site : procédures opérationnelles écrites et appliquées, plan HACCP finalisé, personnel formé aux responsabilités de suivi, actions correctives intégrées et registres rendus opérationnels.",
+          handoff: "Système opérationnel, équipe formée",
+          advantage: "",
+          features: [],
+        },
+        {
+          title: "Mise en service numérique",
+          body:
+            "Les registres papier sont remplacés par un espace de travail numérique en direct. Vos CCP sont reliés à un tableau de bord de suivi en temps réel — écarts de température, contrôles d’hygiène et actions correctives sont suivis automatiquement à chaque poste.",
+          handoff: "Conformité visible en temps réel",
+          advantage: "Avantage Vera",
+          features: [
+            "Tableau de bord CCP en direct",
+            "Alertes automatiques d’écarts",
+            "Relevés de température en temps réel",
+            "Registres de conformité numériques",
+          ],
+        },
+        {
+          title: "Pré-audit interne et vérification",
+          body:
+            "Nous réalisons un audit blanc mené par Vera selon votre norme cible — HACCP, ISO 22000 ou FSSC 22000. Les constats sont documentés, les écarts de preuve sont comblés et le système est vérifié avant l’intervention d’un organisme de certification.",
+          handoff: "Système prêt pour l’audit",
+          advantage: "",
+          features: [],
+        },
+        {
+          title: "Certification et validation",
+          body:
+            "Votre activité obtient la certification ou la validation de conformité selon la norme convenue. Chaque registre, relevé et action corrective est déjà organisé — la préparation de l’audit devient une revue, et non une course contre la montre.",
+          handoff: "Certifié. Le vrai travail commence maintenant.",
+          advantage: "",
+          features: [],
+        },
+        {
+          title: "Suivi continu et amélioration",
+          body:
+            "La plupart des consultants partent après la certification. Nous restons. Votre tableau de bord continue de fonctionner, les écarts sont suivis, les fournisseurs sont évalués et les rapports mensuels font ressortir les risques avant qu’ils ne deviennent des non-conformités.",
+          handoff: "L’amélioration continue est en marche",
+          advantage: "Avantage Vera",
+          features: [
+            "Tendances prédictives des risques",
+            "Évaluation de conformité des fournisseurs",
+            "Appui aux audits de surveillance",
+            "Amélioration continue du système",
+          ],
         },
       ],
     },
@@ -858,30 +986,94 @@ const translatedCopy: Record<Exclude<Language, "en">, SiteCopy> = {
       ],
     },
     stack: {
-      eyebrow: "Uko bikora",
-      title: "Inzira ifatika iganisha ku mutekano w’ibiribwa ukomeye",
-      body: "Kuva ku gusura site bwa mbere kugeza ku nyandiko zikora na reports, buri ntambwe iba isobanutse.",
+      eyebrow: "Uko dukorana",
+      journeyLabel:
+        "Urugendo rw’umukiliya wa Vera Systems — kuva ku busabe bwa mbere kugera kuri compliance ikomeza ikurikiranywa ako kanya",
+      title: "Urugendo rwawe na Vera",
+      body:
+        "Kuva ku kiganiro cya mbere kugeza kuri sisitemu ikora muri buri shift — dore uko gukorana na twe bigenda.",
+      progressLabel: "Urugendo rwo gushyira sisitemu mu bikorwa",
+      stepLabel: "Intambwe",
+      handoffLabel: "Igikurikira",
+      previousStep: "Intambwe ibanza",
       nextStep: "Intambwe ikurikira",
+      cta:
+        "Tangirira ku kiganiro cy'ubuntu cyo kugena ibyo mukeneye. Tuzagusubiza gahunda ifatika mu masaha 48.",
+      ctaAction: "Saba ikiganiro cyo kugena ibyo mukeneye",
       cards: [
         {
-          title: "Kugaragaza risk nyayo",
-          body: "Tureba CCPs, hygiene, supplier risk, icyuho mu nyandiko, routines n’ibibazo bya audit.",
-          label: "ishusho ya mbere ya risk",
+          title: "Kubaza no kugena ibikenewe",
+          body:
+            "Uratubwira uko ibikorwa byawe bimeze — ubwoko bw’ibicuruzwa, umubare w’abakozi, inyandiko musanganywe n’igipimo mugamije. Tumenya scope iboneye kandi tukemeza uko ubufatanye bushoboka ku kigo cyanyu.",
+          handoff: "Ibikenewe byemeranyijweho, ubufatanye bwemejwe",
+          advantage: "",
+          features: [],
         },
         {
-          title: "Guhindura compliance mu murongo w’akazi",
-          body: "Procedures zihinduka checklists, controls, escalation paths n’ibimenyetso bihuye n’akazi.",
-          label: "kubona evidence vuba",
+          title: "Isuzuma ry’icyuho",
+          body:
+            "Dukora isuzuma riteguye ry’imikorere musanganywe dushingiye ku mahame ya HACCP cyangwa ku gipimo cya ISO mugamije, tukagaragaza icyuho muri controls, inyandiko zibura n’ahashobora guterwa n’ingaruka mbere yo gutangira akazi.",
+          handoff: "Raporo y’icyuho yatanzwe, ibyihutirwa bitondekwa",
+          advantage: "",
+          features: [],
         },
         {
-          title: "Gukurikirana performance ako kanya",
-          body: "Dashboards zerekana CCP status, deviations, supplier scores, hygiene logs na readiness.",
-          label: "gukurikirana CCP",
+          title: "Igishushanyo cya sisitemu n’ikarita y’inzira",
+          body:
+            "Dushushanya sisitemu yose yo gucunga umutekano w’ibiribwa: kumenya CCPs, critical limits, PRP framework, imiterere y’inyandiko, uburyo bwo gukurikirana n’ikarita y’inzira ifite igihe n’intambwe zisobanutse.",
+          handoff: "Ikarita y’inzira yemejwe",
+          advantage: "",
+          features: [],
         },
         {
-          title: "Gukoresha data kugabanya amakosa asubira",
-          body: "Management ibona trends, corrective actions, supplier patterns n’inama zifatika.",
-          label: "raporo yiteguye audit",
+          title: "Gushyira mu bikorwa no guhugura",
+          body:
+            "Dushyira sisitemu mu bikorwa aho mukorera: SOPs zirandikwa zikanakoreshwa, HACCP plan irarangizwa, abakozi bagahugurwa ku nshingano zo gukurikirana, corrective actions zigashyirwa mu mikorere, n’inyandiko zigatangira gukora.",
+          handoff: "Sisitemu irakora, ikipe yarahuguwe",
+          advantage: "",
+          features: [],
+        },
+        {
+          title: "Gutangiza sisitemu y’ikoranabuhanga",
+          body:
+            "Paper logs zisimbuzwa digital workspace ikora ako kanya. CCPs zanyu zihuzwa na dashboard ikurikirana real time — temperature deviations, hygiene checks na corrective actions bikagenzurwa mu buryo bwikora muri buri shift.",
+          handoff: "Compliance igaragara ako kanya",
+          advantage: "Inyungu ya Vera",
+          features: [
+            "Live CCP dashboard",
+            "Automated deviation alerts",
+            "Real-time temperature logs",
+            "Digital compliance records",
+          ],
+        },
+        {
+          title: "Pre-audit y’imbere n’igenzura",
+          body:
+            "Dukora mock audit iyobowe na Vera dushingiye ku gipimo mugamije — HACCP, ISO 22000 cyangwa FSSC 22000. Ibyabonetse birandikwa, icyuho mu bimenyetso kigakosorwa, kandi sisitemu ikagenzurwa mbere y’uko certification body itangira.",
+          handoff: "Sisitemu yiteguye audit",
+          advantage: "",
+          features: [],
+        },
+        {
+          title: "Certification no kwemezwa",
+          body:
+            "Ibikorwa byanyu bibona certification cyangwa compliance sign-off bijyanye n’igipimo mwemeranyijeho. Buri record, log na corrective action biba byaratunganijwe — kwitegura audit biba isuzuma risanzwe, atari uguhihibikanira ku munota wa nyuma.",
+          handoff: "Mubonye certification. Ubu akazi nyako karatangiye.",
+          advantage: "",
+          features: [],
+        },
+        {
+          title: "Gukurikirana no kunoza bikomeza",
+          body:
+            "Abajyanama benshi barangiza bamaze kubona certification. Twebwe turagumana namwe. Dashboard yanyu ikomeza gukora, deviations zigakurikiranwa, suppliers bagapimwa, kandi raporo z’ukwezi zikagaragaza risks mbere y’uko ziba non-conformances.",
+          handoff: "Kwamamaza no kunoza bikomeje",
+          advantage: "Inyungu ya Vera",
+          features: [
+            "Kwamamaza risk zishobora kubaho",
+            "Gupima compliance y’abatanga ibicuruzwa",
+            "Ubufasha muri surveillance audits",
+            "Gukomeza kunoza sisitemu",
+          ],
         },
       ],
     },

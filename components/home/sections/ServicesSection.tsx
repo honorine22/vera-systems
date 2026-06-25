@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Check,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Cpu,
@@ -68,7 +69,7 @@ function SectionHeader({
       </h2>
 
       {body ? (
-        <p className="mx-auto mt-4 text-sm leading-7 text-[hsl(var(--muted-foreground))] md:text-base">
+        <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-[hsl(var(--muted-foreground))] md:text-base">
           {body}
         </p>
       ) : null}
@@ -78,8 +79,15 @@ function SectionHeader({
 
 export default function ServicesSection({ copy }: { copy: SiteCopy }) {
   const railRef = useRef<HTMLDivElement>(null);
+
   const [activeServiceIndex, setActiveServiceIndex] = useState<number | null>(
     null
+  );
+  const [expandedDescriptions, setExpandedDescriptions] = useState<number[]>(
+    []
+  );
+  const [expandedCapabilities, setExpandedCapabilities] = useState<number[]>(
+    []
   );
 
   const serviceItems: ServiceItem[] = copy.services.items.map(
@@ -109,6 +117,22 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
       left: direction * amount,
       behavior: "smooth",
     });
+  }
+
+  function toggleDescription(index: number) {
+    setExpandedDescriptions((current) =>
+      current.includes(index)
+        ? current.filter((item) => item !== index)
+        : [...current, index]
+    );
+  }
+
+  function toggleCapabilities(index: number) {
+    setExpandedCapabilities((current) =>
+      current.includes(index)
+        ? current.filter((item) => item !== index)
+        : [...current, index]
+    );
   }
 
   useEffect(() => {
@@ -169,20 +193,31 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
         >
           {serviceItems.map((service) => {
             const Icon = service.icon;
-            const visibleBullets = service.bullets.slice(0, 4);
+
+            const descriptionExpanded = expandedDescriptions.includes(
+              service.index
+            );
+            const capabilitiesExpanded = expandedCapabilities.includes(
+              service.index
+            );
+
+            const hasLongDescription = service.impact.length > 165;
+            const hasExtraCapabilities = service.bullets.length > 4;
+
+            const visibleBullets = capabilitiesExpanded
+              ? service.bullets
+              : service.bullets.slice(0, 4);
+
             const remainingBullets = Math.max(
               service.bullets.length - visibleBullets.length,
               0
             );
 
-            const hasMoreContent =
-              service.impact.length > 165 || service.bullets.length > 4;
-
             return (
               <article
                 key={service.title}
                 data-service-card
-                className="group flex h-[540px] w-[86vw] flex-none snap-start snap-always flex-col rounded-[1.65rem] border border-[hsl(var(--border))] bg-white p-6 shadow-[0_22px_56px_-42px_rgba(26,58,92,.46)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_66px_-42px_rgba(26,58,92,.54)] dark:border-white/10 dark:bg-[hsl(var(--card))] sm:w-[430px] lg:w-[440px] xl:w-[460px]"
+                className="group flex min-h-[540px] w-[86vw] flex-none snap-start snap-always flex-col rounded-[1.65rem] border border-[hsl(var(--border))] bg-white p-6 shadow-[0_22px_56px_-42px_rgba(26,58,92,.46)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_66px_-42px_rgba(26,58,92,.54)] dark:border-white/10 dark:bg-[hsl(var(--card))] sm:w-[430px] lg:w-[440px] xl:w-[460px]"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div
@@ -201,54 +236,77 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
                   </span>
                 </div>
 
-                <h3 className="mt-6 min-h-[58px] line-clamp-2 text-[1.45rem] font-semibold leading-[1.2] tracking-[-0.035em] text-[hsl(var(--navy-950))] dark:text-white">
+                <h3 className="mt-6 text-[1.45rem] font-semibold leading-[1.2] tracking-[-0.035em] text-[hsl(var(--navy-950))] dark:text-white">
                   {service.title}
                 </h3>
 
-                <p
-                  className="mt-5 min-h-[96px] line-clamp-4 text-[15px] font-medium leading-6"
-                  style={{ color: service.accent }}
-                >
-                  {service.impact}
-                </p>
-
-                <ul className="mt-6 grid min-h-[116px] auto-rows-fr gap-x-5 gap-y-4 sm:grid-cols-2">
-                  {visibleBullets.map((bullet) => (
-                    <li
-                      key={bullet}
-                      className="flex min-w-0 items-start gap-2.5 text-sm leading-5 text-[hsl(var(--navy-900))] dark:text-white/85"
-                    >
-                      <span
-                        className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full"
-                        style={{ backgroundColor: `${service.accent}18` }}
-                      >
-                        <Check
-                          className="h-3.5 w-3.5"
-                          style={{ color: service.accent }}
-                        />
-                      </span>
-
-                      <span className="line-clamp-2">{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {hasMoreContent ? (
-                  <button
-                    type="button"
-                    onClick={() => setActiveServiceIndex(service.index)}
-                    className="mt-5 inline-flex w-fit items-center gap-1.5 text-sm font-bold transition hover:opacity-70"
+                <div className="mt-5">
+                  <p
+                    className={`text-[15px] font-medium leading-6 ${
+                      descriptionExpanded ? "" : "line-clamp-4"
+                    }`}
                     style={{ color: service.accent }}
                   >
-                    Read more
-                    {remainingBullets > 0
-                      ? ` · ${remainingBullets} more`
-                      : ""}
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </button>
-                ) : (
-                  <span className="mt-5 block h-5" />
-                )}
+                    {service.impact}
+                  </p>
+
+                  {hasLongDescription ? (
+                    <button
+                      type="button"
+                      onClick={() => toggleDescription(service.index)}
+                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold transition hover:opacity-70"
+                      style={{ color: service.accent }}
+                    >
+                      {descriptionExpanded ? "Show less" : "Read more"}
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform ${
+                          descriptionExpanded ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  ) : null}
+                </div>
+
+                <div className="mt-6">
+                  <ul className="grid gap-x-5 gap-y-4 sm:grid-cols-2">
+                    {visibleBullets.map((bullet) => (
+                      <li
+                        key={bullet}
+                        className="flex min-w-0 items-start gap-2.5 text-sm leading-5 text-[hsl(var(--navy-900))] dark:text-white/85"
+                      >
+                        <span
+                          className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full"
+                          style={{ backgroundColor: `${service.accent}18` }}
+                        >
+                          <Check
+                            className="h-3.5 w-3.5"
+                            style={{ color: service.accent }}
+                          />
+                        </span>
+
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {hasExtraCapabilities ? (
+                    <button
+                      type="button"
+                      onClick={() => toggleCapabilities(service.index)}
+                      className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold transition hover:opacity-70"
+                      style={{ color: service.accent }}
+                    >
+                      {capabilitiesExpanded
+                        ? "Show fewer capabilities"
+                        : `Read more · ${remainingBullets} more`}
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform ${
+                          capabilitiesExpanded ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  ) : null}
+                </div>
 
                 <div className="mt-auto flex items-center justify-between border-t border-[hsl(var(--border))] pt-5 dark:border-white/10">
                   <button
