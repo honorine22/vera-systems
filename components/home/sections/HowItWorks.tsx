@@ -23,6 +23,7 @@ type JourneyCopy = {
   title?: string;
   body?: string;
   journeyLabel?: string;
+  progressLabel?: string;
   stepLabel?: string;
   handoffLabel?: string;
   readMoreLabel?: string;
@@ -90,15 +91,15 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
     if (!rail) return;
 
     rail.scrollBy({
-      left: direction * Math.max(360, rail.clientWidth * 0.76),
+      left: direction * Math.max(360, rail.clientWidth * 0.78),
       behavior: "smooth",
     });
   }
 
   function toggleStep(stepNumber: string) {
-    setExpandedSteps((current) => ({
-      ...current,
-      [stepNumber]: !current[stepNumber],
+    setExpandedSteps((prev) => ({
+      ...prev,
+      [stepNumber]: !prev[stepNumber],
     }));
   }
 
@@ -107,26 +108,26 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="how-it-works"
-      className="relative isolate scroll-mt-24 overflow-x-clip bg-[#F7FBFE] py-16 dark:bg-[#1A3A5C] sm:py-20"
+      className="relative isolate overflow-x-clip bg-[#F7FBFE] py-16 dark:bg-[#09213D] sm:py-20"
     >
-      <div className="relative mx-auto max-w-7xl px-6">
-        <header className="flex flex-col justify-between gap-7 border-b border-black/10 pb-7 dark:border-white/10 lg:flex-row lg:items-end">
+      <div className="mx-auto max-w-7xl px-6">
+        <header className="flex flex-col justify-between gap-6 border-b border-[#D7E3EE] pb-7 dark:border-white/10 lg:flex-row lg:items-end">
           <div className="max-w-3xl">
-            <p className="text-[10px] font-black uppercase tracking-[0.24em] text-[#3D5A75] dark:text-white/70">
+            <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#4A7BAF] dark:text-[#9BC5EA]">
               {journey.eyebrow ?? "How it works"}
             </p>
 
-            <p className="mt-3 text-[10px] font-black uppercase tracking-[0.18em] text-[#6B7A88] dark:text-white/45">
+            <p className="mt-3 text-[10px] font-black uppercase tracking-[0.2em] text-[#6F8297] dark:text-white/55">
               {journey.journeyLabel ??
                 "Vera Systems client journey — from first inquiry to continuous live compliance"}
             </p>
 
-            <h2 className="mt-4 font-display text-3xl font-semibold leading-[1.08] tracking-[-0.045em] text-[#182532] dark:text-white sm:text-4xl">
+            <h2 className="mt-4 font-display text-3xl font-semibold leading-[1.08] tracking-[-0.045em] text-[#173657] dark:text-white sm:text-4xl">
               {journey.title ?? "Your journey with Vera"}
             </h2>
 
             {journey.body ? (
-              <p className="mt-4 max-w-2xl text-sm leading-7 text-[#5F7284] dark:text-white/70 sm:text-base">
+              <p className="mt-4 max-w-2xl text-sm leading-7 text-[#6A8096] dark:text-white/72 sm:text-base">
                 {journey.body}
               </p>
             ) : null}
@@ -137,7 +138,7 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
               type="button"
               aria-label="Previous journey steps"
               onClick={() => scrollRail(-1)}
-              className="grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-white text-[#182532] shadow-sm transition hover:-translate-x-0.5 dark:border-white/15 dark:bg-white/10 dark:text-white"
+              className="grid h-10 w-10 place-items-center rounded-full border border-[#D5E1EC] bg-white text-[#4A7BAF] shadow-sm transition hover:-translate-x-0.5 hover:border-[#9BC5EA] hover:bg-[#F7FBFE] dark:border-white/15 dark:bg-white/5 dark:text-[#BFE0FA] dark:hover:bg-white/10"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -146,7 +147,7 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
               type="button"
               aria-label="Next journey steps"
               onClick={() => scrollRail(1)}
-              className="grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-white text-[#182532] shadow-sm transition hover:translate-x-0.5 dark:border-white/15 dark:bg-white/10 dark:text-white"
+              className="grid h-10 w-10 place-items-center rounded-full border border-[#D5E1EC] bg-white text-[#4A7BAF] shadow-sm transition hover:translate-x-0.5 hover:border-[#9BC5EA] hover:bg-[#F7FBFE] dark:border-white/15 dark:bg-white/5 dark:text-[#BFE0FA] dark:hover:bg-white/10"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -155,19 +156,19 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
 
         <div
           ref={railRef}
-          className="mt-9 overflow-x-auto overscroll-x-contain scroll-smooth pb-5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="mt-9 overflow-x-auto overscroll-x-contain scroll-smooth pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          <div className="flex w-max items-start gap-5 pr-6 sm:gap-6">
+          <div className="flex w-max gap-5 lg:gap-6">
             {steps.map((step, index) => (
               <div
                 key={`${step.number}-${step.title}`}
-                className="relative flex w-[82vw] max-w-[340px] flex-none flex-col sm:w-[340px]"
+                className="relative grid w-[min(84vw,350px)] flex-none grid-rows-[228px_44px_362px] sm:w-[350px]"
               >
                 <ProcessPreview index={step.index} />
 
-                <div className="relative h-[52px]">
-                  <span className="absolute left-1/2 top-0 h-[20px] w-px -translate-x-1/2 bg-black/10 dark:bg-white/15" />
-                  <span className="absolute bottom-0 left-1/2 h-[20px] w-px -translate-x-1/2 bg-black/10 dark:bg-white/15" />
+                <div className="relative">
+                  <span className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-[#C8DAEB] dark:bg-[#6B9DC8]/45" />
+                  <span className="absolute bottom-0 left-1/2 h-4 w-px -translate-x-1/2 bg-[#C8DAEB] dark:bg-[#6B9DC8]/45" />
                 </div>
 
                 <JourneyCard
@@ -175,15 +176,14 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
                   expanded={Boolean(expandedSteps[step.number])}
                   onToggle={() => toggleStep(step.number)}
                   stepLabel={journey.stepLabel ?? "Step"}
-                  handoffLabel={journey.handoffLabel ?? "What happens next"}
                   readMoreLabel={journey.readMoreLabel ?? "Read more"}
                   showLessLabel={journey.showLessLabel ?? "Show less"}
                 />
 
                 {index < steps.length - 1 ? (
-                  <span className="pointer-events-none absolute left-full top-[230px] z-20 flex w-5 items-center">
-                    <span className="h-px flex-1 bg-black/10 dark:bg-white/15" />
-                    <ArrowRight className="h-3.5 w-3.5 shrink-0 bg-[#F7FBFE] text-[#6C7A88] dark:bg-[#1A3A5C] dark:text-white/55" />
+                  <span className="pointer-events-none absolute left-full top-[248px] z-10 flex w-5 items-center">
+                    <span className="h-px flex-1 bg-[#C8DAEB] dark:bg-[#6B9DC8]/45" />
+                    <ArrowRight className="h-3.5 w-3.5 shrink-0 bg-[#F7FBFE] text-[#4A7BAF] dark:bg-[#09213D] dark:text-[#9BC5EA]" />
                   </span>
                 ) : null}
               </div>
@@ -191,8 +191,8 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
           </div>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-4 border-t border-black/10 pt-6 dark:border-white/10 sm:flex-row sm:items-center">
-          <p className="max-w-2xl text-sm leading-6 text-[#5F7284] dark:text-white/65">
+        <div className="mt-7 flex flex-col items-start justify-between gap-4 border-t border-[#D7E3EE] pt-6 dark:border-white/10 sm:flex-row sm:items-center">
+          <p className="max-w-2xl text-sm leading-6 text-[#6A8096] dark:text-white/70">
             {journey.cta ??
               "Start with a free scoping call. We respond with a practical plan within 48 hours."}
           </p>
@@ -200,7 +200,7 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
           <button
             type="button"
             onClick={() => scrollToId("contact")}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#182532] px-4 py-2.5 text-sm font-extrabold text-white transition hover:-translate-y-0.5 dark:bg-white dark:text-[#1A3A5C]"
+            className="inline-flex items-center gap-2 text-sm font-extrabold text-[#173657] transition hover:text-[#4A7BAF] dark:text-white dark:hover:text-[#9BC5EA]"
           >
             {journey.ctaAction ?? copy.actions.bookConsultation}
             <ArrowRight className="h-4 w-4" />
@@ -214,9 +214,9 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
 function BrowserDots() {
   return (
     <div className="flex gap-1.5">
-      <span className="h-3 w-3 rounded-full bg-black/12 dark:bg-white/18" />
-      <span className="h-3 w-3 rounded-full bg-black/12 dark:bg-white/18" />
-      <span className="h-3 w-3 rounded-full bg-black/12 dark:bg-white/18" />
+      <span className="h-3 w-3 rounded-full bg-[#B6D4EE] dark:bg-[#7FA9CF]" />
+      <span className="h-3 w-3 rounded-full bg-[#B6D4EE] dark:bg-[#7FA9CF]" />
+      <span className="h-3 w-3 rounded-full bg-[#B6D4EE] dark:bg-[#7FA9CF]" />
     </div>
   );
 }
@@ -225,89 +225,123 @@ function ProcessPreview({ index }: { index: number }) {
   const heading = previewTitles[index] ?? "PROCESS STEP";
 
   return (
-    <div className="h-[205px] overflow-hidden rounded-[1.45rem] border border-black/10 bg-white p-5 shadow-[0_12px_35px_-25px_rgba(0,0,0,.12)] dark:border-white/10 dark:bg-white/5 dark:shadow-none">
+    <div className="overflow-hidden rounded-[1.45rem] border border-[#D6E2ED] bg-white p-5 shadow-[0_18px_42px_-32px_rgba(23,54,87,.18)] dark:border-white/10 dark:bg-[#113252] dark:shadow-none">
       <BrowserDots />
 
-      <p className="mt-5 text-[10px] font-black uppercase tracking-[0.15em] text-black/35 dark:text-white/35">
+      <p className="mt-5 text-[11px] font-black uppercase tracking-[0.15em] text-[#6287AD] dark:text-[#CFE5F8]">
         {heading}
       </p>
 
-      {index === 0 && <NewEnquiryPreview />}
-      {index === 1 && <GapAnalysisPreview />}
-      {index === 2 && <RoadmapPreview />}
-      {index === 3 && <TrainingPreview />}
-      {index === 4 && <DashboardPreview />}
-      {index === 5 && <AuditPreview />}
-      {index === 6 && <CertificationPreview />}
-      {index === 7 && <ReviewPreview />}
+      {index === 0 ? <NewEnquiry /> : null}
+      {index === 1 ? <GapAnalysis /> : null}
+      {index === 2 ? <Roadmap /> : null}
+      {index === 3 ? <TrainingChecklist /> : null}
+      {index === 4 ? <LiveDashboard /> : null}
+      {index === 5 ? <PreAudit /> : null}
+      {index === 6 ? <Certification /> : null}
+      {index === 7 ? <MonthlyReview /> : null}
     </div>
   );
 }
 
-function SkeletonBar({
+function LoadingRow({
   width,
-  dark = false,
+  className = "",
 }: {
   width: string;
-  dark?: boolean;
+  className?: string;
 }) {
   return (
     <span
       className={cn(
-        "block h-2 rounded-full",
-        dark
-          ? "bg-[linear-gradient(90deg,rgba(255,255,255,.11),rgba(255,255,255,.2),rgba(255,255,255,.11))]"
-          : "bg-[linear-gradient(90deg,rgba(15,23,42,.08),rgba(15,23,42,.16),rgba(15,23,42,.08))]",
-        width
+        "block h-2.5 rounded-full bg-[#DEE6EE] dark:bg-white/22",
+        width,
+        className
       )}
     />
   );
 }
 
-function NewEnquiryPreview() {
+function NewEnquiry() {
   return (
     <div className="mt-5 space-y-3">
-      <div className="rounded-lg border border-black/8 bg-black/[0.02] px-4 py-3 dark:border-white/10 dark:bg-white/[0.03]">
-        <SkeletonBar width="w-4/5" />
-      </div>
-      <div className="rounded-lg border border-black/8 bg-black/[0.02] px-4 py-3 dark:border-white/10 dark:bg-white/[0.03]">
-        <SkeletonBar width="w-3/4" />
-      </div>
-      <div className="rounded-lg border border-black/8 bg-black/[0.02] px-4 py-3 dark:border-white/10 dark:bg-white/[0.03]">
-        <SkeletonBar width="w-2/3" />
+      {[
+        ["Operation", "Food manufacturer", "w-[78%]"],
+        ["Standard", "ISO 22000", "w-[62%]"],
+        ["Records", "Paper-based", "w-[54%]"],
+      ].map(([label, value, width]) => (
+        <div
+          key={label}
+          className="rounded-lg border border-[#D6E2ED] bg-[#FAFCFE] px-3 py-2.5 dark:border-white/10 dark:bg-[#0D2945]"
+        >
+          <div className="flex items-center gap-1.5 text-[10px] font-medium text-[#8899A8] dark:text-white/65">
+            <span>{label}:</span>
+            <span className="text-[#73879C] dark:text-white/72">{value}</span>
+          </div>
+          <LoadingRow width={width} className="mt-2" />
+        </div>
+      ))}
+
+      <div className="flex items-center justify-between pt-0.5 text-[10px] text-[#8A98A8] dark:text-white/62">
+        <span>Response within</span>
+        <span className="font-bold text-[#6E8398] dark:text-white/78">
+          48 hours
+        </span>
       </div>
     </div>
   );
 }
 
-function GapAnalysisPreview() {
+function GapAnalysis() {
+  const items = [
+    ["HACCP", "not documented", "w-[94%]"],
+    ["CCP monitoring", "partial", "w-[82%]"],
+    ["Supplier records", "missing", "w-[79%]"],
+    ["Temperature logs", "in place", "w-[61%]"],
+    ["Internal audit", "none", "w-[68%]"],
+  ];
+
   return (
     <div className="mt-5 space-y-3">
-      {[1, 2, 3, 4, 5].map((item, index) => (
-        <div key={item} className="flex items-center gap-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-black/18 dark:bg-white/18" />
-          <SkeletonBar
-            width={["w-full", "w-[88%]", "w-[83%]", "w-[63%]", "w-[70%]"][index]}
-          />
+      {items.map(([label, value, width]) => (
+        <div key={label}>
+          <div className="mb-1.5 text-[10px] text-[#8293A3] dark:text-white/68">
+            <span className="font-medium">{label}</span>
+            <span className="mx-1">—</span>
+            <span>{value}</span>
+          </div>
+          <LoadingRow width={width} />
         </div>
       ))}
     </div>
   );
 }
 
-function RoadmapPreview() {
+function Roadmap() {
+  const lines = [
+    ["CCP design", "w-full"],
+    ["PRP framework", "w-[78%]"],
+    ["Documentation", "w-[42%]"],
+    ["SOP deployment", "w-[58%]"],
+  ];
+
   return (
     <div className="mt-5 space-y-3">
-      {["w-full", "w-[82%]", "w-[44%]", "w-[60%]"].map((width, index) => (
-        <div key={index} className="flex items-center gap-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-black/18 dark:bg-white/18" />
-          <div className="h-2 flex-1 rounded-full bg-black/6 dark:bg-white/8">
-            <span
-              className={cn(
-                "block h-full rounded-full bg-[linear-gradient(90deg,rgba(17,24,39,.32),rgba(17,24,39,.18))] dark:bg-[linear-gradient(90deg,rgba(255,255,255,.34),rgba(255,255,255,.16))]",
-                width
-              )}
-            />
+      {lines.map(([label, width]) => (
+        <div key={label} className="flex items-center gap-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#A4B8CC] dark:bg-white/48" />
+          <div className="flex-1">
+            <div className="mb-1.5 flex items-center justify-between text-[10px] text-[#8495A6] dark:text-white/65">
+              <span>{label}</span>
+            </div>
+            <span className="block h-2.5 rounded-full bg-[#E3EAF1] dark:bg-white/14">
+              <span
+                className={cn(
+                  "block h-full rounded-full bg-[#AFC2D5] dark:bg-[#CFE5F8]/65",
+                  width
+                )}
+              />
+            </span>
           </div>
         </div>
       ))}
@@ -315,54 +349,80 @@ function RoadmapPreview() {
   );
 }
 
-function TrainingPreview() {
+function TrainingChecklist() {
+  const items = [
+    "CCP monitoring",
+    "Corrective actions",
+    "Hygiene & PRP",
+    "Record-keeping",
+    "Supplier receiving",
+  ];
+
   return (
     <div className="mt-5 space-y-3">
-      {[1, 2, 3, 4, 5].map((item) => (
-        <div key={item} className="flex items-center gap-3">
-          <span className="grid h-4 w-4 place-items-center rounded-full border border-black/14 text-[9px] font-black text-black/30 dark:border-white/18 dark:text-white/30">
+      {items.map((item) => (
+        <div
+          key={item}
+          className="flex items-center gap-2.5 text-[10px] text-[#8192A3] dark:text-white/68"
+        >
+          <span className="grid h-4 w-4 place-items-center rounded-full border border-[#BCCCDC] text-[9px] font-bold text-[#90A5B8] dark:border-white/20 dark:text-white/65">
             ✓
           </span>
-          <SkeletonBar width="w-[80%]" />
+          <div className="flex-1">
+            <div>{item}</div>
+            <LoadingRow width="w-[72%]" className="mt-1.5" />
+          </div>
         </div>
       ))}
     </div>
   );
 }
 
-function DashboardPreview() {
+function LiveDashboard() {
   return (
     <div className="mt-5">
-      <div className="space-y-2.5">
-        {[1, 2, 3].map((row, index) => (
-          <div key={row} className="flex items-center justify-between gap-2">
-            <SkeletonBar width="w-1/2" />
-            <span className="rounded-full bg-black/8 px-3 py-1 text-[9px] font-black text-black/35 dark:bg-white/10 dark:text-white/35">
-              {index === 0 ? "3.8°C" : index === 1 ? "74.2°C" : "9.4°C"}
+      <div className="space-y-3 text-[10px]">
+        {[
+          ["Cold Storage", "3.8°C"],
+          ["Pasteurization", "74.2°C"],
+          ["Receiving Dock", "9.4°C"],
+        ].map(([label, value]) => (
+          <div key={label} className="flex items-center justify-between gap-3">
+            <div className="flex-1">
+              <div className="text-[#8596A7] dark:text-white/66">{label}</div>
+              <LoadingRow width="w-[70%]" className="mt-1.5" />
+            </div>
+            <span className="rounded-full bg-[#EEF3F8] px-2.5 py-1 text-[9px] font-bold text-[#7B8FA2] dark:bg-white/12 dark:text-white/78">
+              {value}
             </span>
           </div>
         ))}
       </div>
 
       <div className="mt-5 flex items-end justify-between">
-        <div className="flex h-8 items-end gap-1">
-          {[3, 5, 4, 7, 8, 6].map((height, index) => (
+        <div className="flex h-9 items-end gap-1">
+          {[5, 8, 6, 10, 12, 9].map((height, index) => (
             <span
               key={index}
               className={cn(
-                "w-3 rounded-t-sm bg-black/18 dark:bg-white/18",
-                height === 3 && "h-3",
-                height === 4 && "h-4",
-                height === 5 && "h-5",
-                height === 6 && "h-6",
-                height === 7 && "h-7",
-                height === 8 && "h-8"
+                "w-3 rounded-t-sm bg-[#C7D3DF] dark:bg-white/30",
+                height === 5
+                  ? "h-4"
+                  : height === 6
+                    ? "h-5"
+                    : height === 8
+                      ? "h-6"
+                      : height === 9
+                        ? "h-7"
+                        : height === 10
+                          ? "h-8"
+                          : "h-9"
               )}
             />
           ))}
         </div>
 
-        <span className="text-xs font-black text-black/35 dark:text-white/35">
+        <span className="text-xs font-bold text-[#7D90A5] dark:text-white/78">
           96.4%
         </span>
       </div>
@@ -370,63 +430,84 @@ function DashboardPreview() {
   );
 }
 
-function AuditPreview() {
+function PreAudit() {
+  const items = [
+    "CCP docs — complete",
+    "PRP records — verified",
+    "Supplier list — update needed",
+    "Corrective actions — closed",
+  ];
+
   return (
     <div className="mt-5 space-y-3">
-      {[1, 2, 3, 4].map((item, index) => (
-        <SkeletonBar
-          key={item}
-          width={["w-[58%]", "w-[52%]", "w-[66%]", "w-[60%]"][index]}
-        />
-      ))}
-      <div className="pt-2">
-        <SkeletonBar width="w-[48%]" />
-      </div>
-    </div>
-  );
-}
-
-function CertificationPreview() {
-  return (
-    <div className="mt-5 grid h-[115px] place-items-center rounded-xl border border-black/8 bg-black/[0.02] dark:border-white/10 dark:bg-white/[0.03]">
-      <div className="w-[72%] space-y-3">
-        <SkeletonBar width="w-[72%]" />
-        <SkeletonBar width="w-[54%]" />
-        <div className="flex justify-center pt-1">
-          <span className="h-8 w-28 rounded-full bg-[linear-gradient(90deg,rgba(15,23,42,.10),rgba(15,23,42,.18),rgba(15,23,42,.10))] dark:bg-[linear-gradient(90deg,rgba(255,255,255,.08),rgba(255,255,255,.16),rgba(255,255,255,.08))]" />
+      {items.map((item, index) => (
+        <div key={item}>
+          <div className="text-[10px] text-[#8696A7] dark:text-white/68">
+            {item}
+          </div>
+          <LoadingRow
+            width={index === 0 ? "w-[72%]" : index === 1 ? "w-[66%]" : index === 2 ? "w-[82%]" : "w-[61%]"}
+            className="mt-1.5"
+          />
         </div>
+      ))}
+
+      <p className="pt-1 text-[10px] font-bold text-[#778CA0] dark:text-white/78">
+        1 minor · 0 major · Ready
+      </p>
+    </div>
+  );
+}
+
+function Certification() {
+  return (
+    <div className="mt-5 grid h-[122px] place-items-center rounded-xl border border-[#D5E1EC] bg-[#FAFCFE] text-center dark:border-white/10 dark:bg-[#0D2945]">
+      <div className="w-[76%]">
+        <p className="font-display text-base font-black text-[#173657] dark:text-white">
+          ISO 22000 : 2018
+        </p>
+
+        <p className="mt-1 text-[10px] text-[#8A99A8] dark:text-white/66">
+          Food Safety Management
+        </p>
+
+        <LoadingRow width="w-full" className="mx-auto mt-3" />
+        <LoadingRow width="w-3/5" className="mx-auto mt-2" />
+
+        <span className="mt-3 inline-flex rounded-full bg-[#EDF3F8] px-3 py-1 text-[9px] font-bold text-[#7A8EA3] dark:bg-white/12 dark:text-white/78">
+          Certified
+        </span>
       </div>
     </div>
   );
 }
 
-function ReviewPreview() {
+function MonthlyReview() {
+  const lines = [
+    ["CCP compliance", "98.1%", "w-[96%]"],
+    ["Supplier score", "84/100", "w-[84%]"],
+    ["Open deviations", "2 closed", "w-[34%]"],
+  ];
+
   return (
     <div className="mt-5 space-y-4">
-      {[
-        ["w-[96%]", "w-10"],
-        ["w-[84%]", "w-12"],
-        ["w-[35%]", "w-14"],
-      ].map(([lineWidth, tagWidth], index) => (
-        <div key={index}>
-          <div className="mb-1.5 flex items-center justify-between">
-            <SkeletonBar width="w-2/5" />
-            <span
-              className={cn(
-                "block h-3 rounded-full bg-black/10 dark:bg-white/10",
-                tagWidth
-              )}
-            />
+      {lines.map(([label, value, width]) => (
+        <div key={label}>
+          <div className="flex items-center justify-between text-[10px]">
+            <span className="text-[#8394A4] dark:text-white/66">{label}</span>
+            <span className="font-bold text-[#6C8196] dark:text-white/8૦">
+              {value}
+            </span>
           </div>
 
-          <div className="h-3 rounded-full bg-black/6 dark:bg-white/8">
+          <span className="mt-1.5 block h-2.5 rounded-full bg-[#E3EAF1] dark:bg-white/14">
             <span
               className={cn(
-                "block h-full rounded-full bg-[linear-gradient(90deg,rgba(17,24,39,.32),rgba(17,24,39,.18))] dark:bg-[linear-gradient(90deg,rgba(255,255,255,.34),rgba(255,255,255,.16))]",
-                lineWidth
+                "block h-full rounded-full bg-[#BACBDB] dark:bg-[#CFE5F8]/65",
+                width
               )}
             />
-          </div>
+          </span>
         </div>
       ))}
     </div>
@@ -446,35 +527,35 @@ function JourneyCard({
   expanded: boolean;
   onToggle: () => void;
   stepLabel: string;
-  handoffLabel: string;
+  handoffLabel?: string;
   readMoreLabel: string;
   showLessLabel: string;
 }) {
-  const hasMoreContent = step.body.length > 175 || step.features.length > 2;
+  const hasMoreContent = step.body.length > 180 || step.features.length > 2;
   const visibleFeatures = expanded ? step.features : step.features.slice(0, 2);
 
   return (
-    <article className="relative flex h-[380px] flex-col overflow-hidden rounded-[1.45rem] border border-black/10 bg-white p-5 shadow-[0_16px_42px_-28px_rgba(0,0,0,.12)] transition duration-300 hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5 dark:shadow-none">
-      <span className="pointer-events-none absolute right-4 top-2 font-display text-[5.45rem] font-black leading-none tracking-[-0.1em] text-black/[0.05] dark:text-white/[0.08]">
+    <article className="relative flex h-full flex-col overflow-hidden rounded-[1.45rem] border border-[#D7E3EE] bg-white p-5 shadow-[0_18px_42px_-32px_rgba(23,54,87,.18)] transition duration-300 hover:-translate-y-0.5 hover:border-[#A8D2EE] hover:shadow-[0_22px_48px_-32px_rgba(74,123,175,.22)] dark:border-white/10 dark:bg-[#113252] dark:shadow-none dark:hover:border-[#8FC2E8]/40 dark:hover:bg-[#153A5F]">
+      <span className="pointer-events-none absolute right-4 top-2 font-display text-[5.55rem] font-black leading-none tracking-[-0.1em] text-[#DDE9F4] dark:text-[#8CB8DD]/18">
         {step.number}
       </span>
 
       <div className="relative">
-        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#516D87] dark:text-white/70">
+        <p className="text-[10px] font-black uppercase tracking-[0.18em] text-[#4A7BAF] dark:text-[#9BC5EA]">
           {step.phase}
         </p>
 
-        <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#7A8794] dark:text-white/45">
+        <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#73879B] dark:text-white/55">
           {stepLabel} {step.number}
         </p>
 
         {step.advantage ? (
-          <span className="mt-3 inline-flex rounded-full bg-black/[0.04] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.13em] text-[#5B6977] dark:bg-white/10 dark:text-white/70">
+          <span className="mt-3 inline-flex rounded-full bg-[#EAF4FD] px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.13em] text-[#4A7BAF] dark:bg-[#214B73] dark:text-[#BFE0FA]">
             {step.advantage}
           </span>
         ) : null}
 
-        <h3 className="mt-3 max-w-[78%] font-display text-[1.32rem] font-semibold leading-[1.12] tracking-[-0.04em] text-[#182532] dark:text-white">
+        <h3 className="mt-6 font-display text-[1.35rem] font-semibold leading-[1.12] tracking-[-0.04em] text-[#173657] dark:text-white">
           {step.title}
         </h3>
       </div>
@@ -482,7 +563,7 @@ function JourneyCard({
       <div className="relative mt-4 flex-1">
         <p
           className={cn(
-            "text-sm leading-7 text-[#65798D] dark:text-white/72",
+            "text-sm leading-7 dark:text-white/78",
             !expanded && hasMoreContent && "line-clamp-4"
           )}
         >
@@ -494,7 +575,7 @@ function JourneyCard({
             type="button"
             onClick={onToggle}
             aria-expanded={expanded}
-            className="mt-2 inline-flex items-center gap-1 text-xs font-extrabold text-[#4D647A] transition hover:text-[#182532] dark:text-white/80 dark:hover:text-white"
+            className="mt-4 inline-flex items-center gap-1 text-xs font-extrabold text-[#4A7BAF] transition hover:text-[#173657] dark:text-[#BFE0FA] dark:hover:text-white"
           >
             {expanded ? showLessLabel : readMoreLabel}
             <ChevronDown
@@ -511,23 +592,13 @@ function JourneyCard({
             {visibleFeatures.map((feature) => (
               <span
                 key={feature}
-                className="rounded-full border border-black/8 bg-black/[0.03] px-2.5 py-1 text-[10px] font-bold text-[#5B6977] dark:border-white/10 dark:bg-white/[0.06] dark:text-white/70"
+                className="rounded-full border border-[#D8E5EF] bg-[#F2F8FD] px-2.5 py-1 text-[10px] font-bold text-[#4A7BAF] dark:border-white/10 dark:bg-[#1D466C] dark:text-[#C7E3F9]"
               >
                 {feature}
               </span>
             ))}
           </div>
         ) : null}
-      </div>
-
-      <div className="relative mt-4 border-t border-black/10 pt-3 dark:border-white/12">
-        <p className="text-[9px] font-black uppercase tracking-[0.16em] text-[#7A8794] dark:text-white/45">
-          {handoffLabel}
-        </p>
-
-        <p className="mt-1 text-xs font-bold leading-5 text-[#182532] dark:text-white">
-          {step.handoff}
-        </p>
       </div>
     </article>
   );

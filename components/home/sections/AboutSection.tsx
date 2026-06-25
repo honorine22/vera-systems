@@ -75,7 +75,7 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
       <div className="absolute right-0 top-0 h-[600px] w-[600px] -translate-y-1/4 translate-x-1/3 rounded-full bg-[hsl(var(--blue-100))]/50 blur-3xl dark:bg-[hsl(var(--blue-700))]/8" />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+        <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
           <div data-reveal="left">
             <div className="hover-card relative aspect-[4/4.7] overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] shadow-vera dark:border-white/10">
               <img
@@ -112,7 +112,7 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
               </p>
             </div>
 
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+            {/* <div className="mt-5 grid gap-4 sm:grid-cols-2">
               {copy.about.pills.map((pill, index) => (
                 <InfoPill
                   key={pill.title}
@@ -121,7 +121,7 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
                   accent={[C.blue, C.teal][index] ?? C.blueDeep}
                 />
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
 
