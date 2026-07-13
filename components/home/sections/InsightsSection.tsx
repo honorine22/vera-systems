@@ -19,11 +19,11 @@ const insights = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=85",
+      "https://images.pexels.com/photos/8488032/pexels-photo-8488032.jpeg?auto=compress&cs=tinysrgb&w=900",
   },
   {
     image:
-      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=85",
+      "https://images.pexels.com/photos/8944957/pexels-photo-8944957.jpeg?auto=compress&cs=tinysrgb&w=900",
   },
 ];
 

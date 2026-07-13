@@ -79,7 +79,7 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
           <div data-reveal="left">
             <div className="hover-card relative aspect-[4/4.7] overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] shadow-vera dark:border-white/10">
               <img
-                src="/images/about-food-safety-data-monitoring.png"
+                src="https://images.pexels.com/photos/18712504/pexels-photo-18712504.jpeg?auto=compress&cs=tinysrgb&w=1200"
                 alt={copy.about.title}
                 className="h-full w-full object-cover transition duration-1000 hover:scale-105"
               />
@@ -109,6 +109,16 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
               </p>
               <p className="mt-3 text-balance text-base italic leading-7 text-[hsl(var(--navy-950))] dark:text-white">
                 {copy.about.mission}
+              </p>
+            </div>
+
+            <div className="mt-4 relative overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/78 p-5 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <div className="absolute inset-y-0 left-0 w-1 rounded-l-3xl bg-gradient-to-b from-[hsl(var(--blue-400))] via-[hsl(var(--teal))] to-transparent" />
+              <p className="text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
+                {copy.about.visionLabel}
+              </p>
+              <p className="mt-3 text-balance text-base italic leading-7 text-[hsl(var(--navy-950))] dark:text-white">
+                {copy.about.vision}
               </p>
             </div>
 

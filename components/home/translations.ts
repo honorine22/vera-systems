@@ -19,7 +19,7 @@ export const languageOptions: Array<{ code: Language; short: string; label: stri
 export const siteCopy = {
   en: {
     languageLabel: "Language",
-    logoSubtitle: "Precision food safety",
+    logoSubtitle: "Precision food safety, powered by data",
     nav: {
       about: "About",
       services: "Services",
@@ -41,14 +41,14 @@ export const siteCopy = {
       darkMode: "Dark mode",
     },
     hero: {
-      titleStart: "From inspection records to",
-      highlight: "daily control",
+      titleStart: "From backfilled paperwork to",
+      highlight: "real-time control",
       titleEnd: ".",
-      body: "Vera brings HACCP, ISO 22000, supplier checks, temperature logs, and corrective actions into one workspace built for food teams in East Africa.",
+      body: "Africa's leading food safety consultancy — we build the awareness and capacity food teams need, and power it with real-time monitoring, so HACCP and ISO 22000 become daily practice, not paperwork.",
       stats: [
-        { k: "3", l: "cold-room deviations in 3 months" },
-        { k: "1", l: "pending supplier visit" },
-        { k: "Live", l: "supplier competence visibility" },
+        { k: "24/7", l: "CCP monitoring, not spot checks" },
+        { k: "0", l: "backdated log entries" },
+        { k: "100%", l: "digital HACCP & ISO 22000 evidence" },
       ],
     },
     clients: {
@@ -73,6 +73,9 @@ export const siteCopy = {
       missionLabel: "Mission",
       mission:
         "To elevate food safety across Africa through scientific rigor and data-driven systems that improve compliance, efficiency, and trust.",
+      visionLabel: "Vision",
+      vision:
+        "To become the definitive source of objective evidence for African food safety, building an intelligent, data-driven ecosystem where scientific rigor and real-time traceability drive industry-wide excellence.",
       pills: [
         {
           title: "Standards-led",
@@ -383,7 +386,7 @@ Vera Media does not produce generic content. Every piece of output is grounded i
     },
     contact: {
       eyebrow: "Get in touch",
-      title: "Start with clarity. Move to control.",
+      title: "Learning food safety, with experience",
       body: "Book a consultation and see how Vera can improve compliance work, records, and follow-up.",
       talk: "Talk to us",
       cardTitle: "Ready to improve your food-safety system?",

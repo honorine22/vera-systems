@@ -11,21 +11,14 @@ import {
   ChevronRight,
   Clock,
   Cpu,
-  Eye,
   Globe,
-  LogIn,
   Mail,
   MapPin,
-  Menu,
-  Moon,
   Phone,
   PlayCircle,
   Shield,
   Star,
-  Sun,
   TrendingUp,
-  X,
-  Zap,
 } from "lucide-react";
 import {
   Area,
@@ -40,11 +33,6 @@ import {
   LineChart,
   Pie,
   PieChart,
-  PolarAngleAxis,
-  PolarGrid,
-  PolarRadiusAxis,
-  Radar,
-  RadarChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -54,9 +42,7 @@ import Image from "next/image";
 import {
   getLocalizedCopy,
   languageOptions,
-  navItems,
   type Language,
-  type NavKey,
   type SiteCopy,
 } from "./translations";
 import AboutSection from "./sections/AboutSection";
@@ -64,6 +50,8 @@ import InsightsSection from "./sections/InsightsSection";
 import ServicesSection from "./sections/ServicesSection";
 import WhyVeraSection from "./sections/WhyVeraSection";
 import StackExperience from "./sections/HowItWorks";
+import SiteHeader from "../layout/SiteHeader";
+import SiteFooter from "../layout/SiteFooter";
 
 type DemoTab = "ccp" | "deviations" | "suppliers" | "reports";
 type Tone = "success" | "warning" | "danger";
@@ -182,15 +170,6 @@ const segmentData = [
   { name: "Restaurants", v: 64, b: 75 },
   { name: "Hotels", v: 47, b: 70 },
   { name: "Cold chain", v: 72, b: 85 },
-];
-
-const radarData = [
-  { subject: "HACCP", A: 95, B: 68 },
-  { subject: "ISO 22000", A: 88, B: 55 },
-  { subject: "Supplier", A: 82, B: 60 },
-  { subject: "Hygiene", A: 91, B: 72 },
-  { subject: "Traceability", A: 78, B: 50 },
-  { subject: "Deviations", A: 93, B: 64 },
 ];
 
 const pieData = [
@@ -373,207 +352,10 @@ function SectionHeader({
   );
 }
 
-function Navbar({
-  dark,
-  toggleDark,
-  language,
-  onLanguageChange,
-  copy,
-}: {
-  dark: boolean;
-  toggleDark: () => void;
-  language: Language;
-  onLanguageChange: (language: Language) => void;
-  copy: SiteCopy;
-}) {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-
-  useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 28);
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-
-    return () => window.removeEventListener("scroll", update);
-  }, []);
-
-  useEffect(() => {
-    const sections = navItems
-      .map((item) => document.getElementById(item.href))
-      .filter(Boolean) as HTMLElement[];
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter((entry) => entry.isIntersecting);
-        if (visible.length) setActiveSection(visible[visible.length - 1].target.id);
-      },
-      { threshold: 0.35 }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav",
-        scrolled
-          ? "border-[hsl(var(--border))] border-b bg-white/90 shadow-[0_18px_45px_-35px_rgba(15,23,42,.55)] backdrop-blur-xl dark:border-white/10 dark:bg-[#061225]/95"
-          : "bg-white/82 backdrop-blur-xl dark:bg-[#061225]/95"
-      )}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
-        <button
-          onClick={() => scrollToId("hero")}
-          className="-ml-1 rounded-2xl outline-none transition focus-visible:ring-2 focus-visible:ring-[hsl(var(--blue-400))]"
-          aria-label="Vera Systems home"
-        >
-          {/* <Logo subtitle={copy.logoSubtitle} /> */}
-          <Image
-            src="/logos/vera-logo-blue-transparent.png"
-            alt="Vera Systems"
-            width={92}
-            height={58}
-            className="h-auto w-20 dark:hidden"
-            priority
-          />
-          <Image
-            src="/logos/vera-logo-light-transparent.png"
-            alt="Vera Systems"
-            width={92}
-            height={58}
-            className="hidden h-auto w-20 dark:block"
-            priority
-          />
-        </button>
-
-        <nav className="hidden items-center gap-1 lg:flex">
-          {navItems.map((item) => (
-            <button
-              key={item.href}
-              onClick={() => scrollToId(item.href)}
-              className={cn(
-                "relative rounded-xl px-3.5 py-2 text-sm font-semibold transition-all duration-200",
-                activeSection === item.href
-                  ? "text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]"
-                  : "text-[hsl(var(--navy-900))]/55 hover:bg-white/60 hover:text-[hsl(var(--navy-950))] dark:text-white/55 dark:hover:bg-white/7 dark:hover:text-white"
-              )}
-            >
-              {copy.nav[item.key]}
-              {activeSection === item.href && (
-                <span className="absolute bottom-1 left-1/2 h-0.5 w-10 -translate-x-1/2 rounded-full bg-[hsl(var(--blue-500))]" />
-              )}
-            </button>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <label className="relative hidden sm:block" aria-label={copy.languageLabel}>
-            <span className="sr-only">{copy.languageLabel}</span>
-            <select
-              value={language}
-              onChange={(event) => onLanguageChange(event.target.value as Language)}
-              className="h-10 appearance-none rounded-xl border border-[hsl(var(--border))] bg-white/80 px-3 pr-8 text-xs font-bold text-[hsl(var(--navy-950))] outline-none transition hover:bg-[hsl(var(--muted))] focus:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-white/5 dark:text-white"
-            >
-              {languageOptions.map((option) => (
-                <option key={option.code} value={option.code}>
-                  {option.short}
-                </option>
-              ))}
-            </select>
-            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[hsl(var(--muted-foreground))]">
-              ▾
-            </span>
-          </label>
-
-          <button
-            onClick={toggleDark}
-            aria-label="Toggle theme"
-            className="grid h-10 w-10 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/80 text-[hsl(var(--muted-foreground))] transition hover:bg-[hsl(var(--muted))] hover:text-[hsl(var(--navy-950))] dark:border-white/10 dark:bg-white/5 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
-          >
-            {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
-
-          <button
-            onClick={() => scrollToId("contact")}
-            className="primary-action hidden items-center gap-2 px-5 py-3 text-sm sm:inline-flex"
-          >
-            {copy.actions.bookDemo}
-            <ArrowRight className="h-3.5 w-3.5" />
-          </button>
-
-          <a
-            href="/admin"
-            className="hidden items-center gap-2 rounded-xl border border-[hsl(var(--border))] bg-white/80 px-4 py-3 text-sm font-bold text-[hsl(var(--navy-950))] transition hover:-translate-y-0.5 hover:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 md:inline-flex"
-          >
-            <LogIn className="h-3.5 w-3.5" />
-            Dashboard
-          </a>
-
-          <button
-            onClick={() => setOpen((value) => !value)}
-            aria-label="Menu"
-            className="grid h-10 w-10 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/80 transition hover:bg-[hsl(var(--muted))] dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 lg:hidden"
-          >
-            {open ? (
-              <X className="h-4 w-4 dark:text-white" />
-            ) : (
-              <Menu className="h-4 w-4 dark:text-white" />
-            )}
-          </button>
-        </div>
-      </div>
-
-      <div
-        className={cn(
-          "mx-4 origin-top overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-white/10 dark:bg-[hsl(var(--background))]/95 lg:hidden",
-          open ? "mt-2 max-h-96 opacity-100" : "max-h-0 opacity-0"
-        )}
-      >
-        <nav className="flex flex-col gap-1 p-3">
-          {navItems.map((item) => (
-            <button
-              key={item.href}
-              onClick={() => {
-                setOpen(false);
-                scrollToId(item.href);
-              }}
-              className={cn(
-                "rounded-xl px-4 py-3 text-left text-sm font-semibold transition",
-                activeSection === item.href
-                  ? "bg-[hsl(var(--blue-100))]/60 text-[hsl(var(--blue-700))] dark:bg-white/8 dark:text-[hsl(var(--blue-300))]"
-                  : "text-[hsl(var(--navy-950))] hover:bg-[hsl(var(--muted))]/60 dark:text-white dark:hover:bg-white/5"
-              )}
-            >
-              {copy.nav[item.key]}
-            </button>
-          ))}
-          <a
-            href="/admin"
-            className="mt-2 flex items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] px-4 py-3 text-sm font-bold text-white dark:bg-white dark:text-[hsl(var(--navy-950))]"
-          >
-            <LogIn className="h-4 w-4" />
-            Dashboard login
-          </a>
-        </nav>
-      </div>
-    </header>
-  );
-}
-
 function Hero({ copy }: { copy: SiteCopy }) {
   const heroStats = copy.hero.stats.map((stat, index) => ({
     ...stat,
-    color: ["#4A7BAF", "#18A89D", "#1A3A5C"][index],
-    tint: [
-      "rgba(232, 242, 250, .94)",
-      "rgba(232, 249, 247, .94)",
-      "rgba(247, 250, 253, .94)",
-    ][index],
+    lightColor: ["#8FC2E8", "#8ADFD4", "#EAF4FC"][index],
   }));
 
   const titleWords = copy.hero.titleStart.trim().split(/\s+/);
@@ -583,33 +365,53 @@ function Hero({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="hero"
-      className="relative isolate w-full max-w-full overflow-x-clip bg-[hsl(var(--background))] pb-16 pt-28 sm:pt-32 lg:pb-20 lg:pt-36"
+      className="relative isolate w-full max-w-full overflow-x-clip pb-20 pt-28 sm:pt-32 lg:pb-28 lg:pt-36"
     >
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-80" />
+      <div className="pointer-events-none absolute inset-0 -z-30 overflow-hidden bg-[#0A1B2E]">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster="https://images.pexels.com/videos/8633309/tomato-plant-8633309.jpeg?auto=compress&cs=tinysrgb&h=1200"
+          className="h-full w-full object-cover opacity-90"
+        >
+          <source
+            src="https://videos.pexels.com/video-files/8633309/8633309-hd_1920_1080_30fps.mp4"
+            type="video/mp4"
+          />
+        </video>
 
-      <div className="pointer-events-none absolute right-[-11rem] top-[-9rem] -z-10 h-[42rem] w-[42rem] rounded-full bg-[#DDECF7]/70 blur-3xl dark:bg-[#4A7BAF]/10" />
-
-      <div className="pointer-events-none absolute bottom-[-15rem] left-[28%] -z-10 h-[30rem] w-[30rem] rounded-full bg-[#E8F2FA]/60 blur-3xl dark:bg-[#18A89D]/5" />
+        {/* Directional scrim: near-opaque navy behind the copy, opening up toward the visual */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A1B2E] via-[#0A1B2E]/88 to-[#0A1B2E]/45 sm:via-[#0A1B2E]/80 sm:to-[#0A1B2E]/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1B2E] via-transparent to-[#0A1B2E]/40" />
+      </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-12 xl:grid-cols-[minmax(0,1.1fr)_minmax(430px,.9fr)] xl:gap-12">
           <div data-reveal="left">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-white/90 backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#8ADFD4]" />
+              {copy.logoSubtitle}
+            </div>
+
             <h1
-              className="!normal-case max-w-[700px] font-display text-6xl font-bold leading-[0.96] tracking-[-0.07em] text-[#1A3A5C] dark:text-white"
+              className="!normal-case mt-6 max-w-[700px] font-display text-6xl font-bold leading-[0.96] tracking-[-0.07em] text-white"
               style={{ textTransform: "none" }}
             >
               <span className="block">{titleLineOne}</span>
 
               <span className="block">
                 {titleLineTwo}{" "}
-                <span className="hero-title-highlight">
+                <span className="hero-title-highlight-dark">
                   {copy.hero.highlight}
                 </span>
                 {copy.hero.titleEnd}
               </span>
             </h1>
 
-            <p className="mt-8 max-w-[700px] leading-[1.6] tracking-[-0.025em] text-[#5D7190] dark:text-white/70">
+            <p className="mt-8 max-w-[700px] leading-[1.6] tracking-[-0.025em] text-white/75">
               {copy.hero.body}
             </p>
 
@@ -626,9 +428,9 @@ function Hero({ copy }: { copy: SiteCopy }) {
               <button
                 type="button"
                 onClick={() => scrollToId("platform")}
-                className="hero-secondary-btn group inline-flex items-center gap-2.5 px-5 py-3.5 text-sm"
+                className="hero-secondary-btn-dark group inline-flex items-center gap-2.5 rounded-2xl px-5 py-3.5 text-sm font-bold"
               >
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-[#E8F2FA] text-[#1A3A5C] ring-1 ring-[#C8DCF0] transition group-hover:bg-[#1A3A5C] group-hover:text-white">
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-white/15 text-white ring-1 ring-white/25 transition group-hover:bg-white group-hover:text-[#1A3A5C]">
                   <PlayCircle className="h-3.5 w-3.5" />
                 </span>
 
@@ -640,20 +442,16 @@ function Hero({ copy }: { copy: SiteCopy }) {
               {heroStats.map((stat) => (
                 <div
                   key={stat.l}
-                  className="hero-stat-card min-h-[125px] rounded-[1.35rem] border p-5"
-                  style={{
-                    borderColor: `${stat.color}36`,
-                    background: `linear-gradient(135deg, ${stat.tint}, rgba(255,255,255,.72))`,
-                  }}
+                  className="hero-stat-card-dark min-h-[125px] rounded-[1.35rem] border border-white/15 bg-white/8 p-5 backdrop-blur-md"
                 >
                   <p
                     className="font-display text-[clamp(1.9rem,2.5vw,2.55rem)] font-semibold leading-none tracking-[-0.05em]"
-                    style={{ color: stat.color }}
+                    style={{ color: stat.lightColor }}
                   >
                     {stat.k}
                   </p>
 
-                  <p className="mt-3 text-sm font-semibold leading-[1.35] text-[#5D7190] dark:text-white/65">
+                  <p className="mt-3 text-sm font-semibold leading-[1.35] text-white/70">
                     {stat.l}
                   </p>
                 </div>
@@ -666,21 +464,21 @@ function Hero({ copy }: { copy: SiteCopy }) {
             data-reveal="right"
           >
             <div className="group/visual relative">
-              <div className="absolute -inset-7 rounded-[2rem] bg-[radial-gradient(circle_at_35%_20%,rgba(200,220,240,.8),transparent_52%),radial-gradient(circle_at_78%_75%,rgba(74,123,175,.22),transparent_58%)] blur-2xl" />
+              <div className="absolute -inset-7 rounded-[2rem] bg-[radial-gradient(circle_at_35%_20%,rgba(143,194,232,.22),transparent_52%),radial-gradient(circle_at_78%_75%,rgba(74,123,175,.28),transparent_58%)] blur-2xl" />
 
-              <div className="hero-chart-card relative overflow-hidden rounded-[1.75rem] border border-white/80 bg-white/78 p-5 backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(var(--card))]/80 sm:p-6">
+              <div className="hero-chart-card relative overflow-hidden rounded-[1.75rem] border border-white/20 bg-white/10 p-5 backdrop-blur-2xl sm:p-6">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs font-semibold text-[#5D7190] dark:text-white/55">
+                    <p className="text-xs font-semibold text-white/60">
                       CCP compliance · YTD
                     </p>
 
-                    <p className="mt-1 font-display text-4xl font-semibold tracking-[-0.05em] text-[#1A3A5C] dark:text-white">
+                    <p className="mt-1 font-display text-4xl font-semibold tracking-[-0.05em] text-white">
                       96.4%
                     </p>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#1A3A5C] px-3 py-1.5 text-xs font-bold text-white shadow-sm">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-white px-3 py-1.5 text-xs font-bold text-[#1A3A5C] shadow-sm">
                     <TrendingUp className="h-3 w-3" />
                     +18.4%
                   </span>
@@ -702,19 +500,19 @@ function Hero({ copy }: { copy: SiteCopy }) {
                         >
                           <stop
                             offset="0%"
-                            stopColor="#4A7BAF"
-                            stopOpacity={0.42}
+                            stopColor="#8FC2E8"
+                            stopOpacity={0.55}
                           />
                           <stop
                             offset="100%"
-                            stopColor="#C8DCF0"
-                            stopOpacity={0.04}
+                            stopColor="#8FC2E8"
+                            stopOpacity={0.02}
                           />
                         </linearGradient>
                       </defs>
 
                       <CartesianGrid
-                        stroke="rgba(26,58,92,.08)"
+                        stroke="rgba(255,255,255,.14)"
                         vertical={false}
                       />
 
@@ -722,31 +520,34 @@ function Hero({ copy }: { copy: SiteCopy }) {
                         dataKey="m"
                         tickLine={false}
                         axisLine={false}
-                        tick={{ fill: "#65758A", fontSize: 11 }}
+                        tick={{ fill: "rgba(255,255,255,.6)", fontSize: 11 }}
                       />
 
                       <YAxis hide />
 
                       <Tooltip
                         cursor={{
-                          stroke: "#4A7BAF",
+                          stroke: "#8FC2E8",
                           strokeDasharray: "4 4",
                           strokeWidth: 1,
                         }}
                         contentStyle={{
                           borderRadius: 14,
-                          border: "1px solid rgba(200,220,240,.85)",
+                          background: "rgba(10,27,46,.94)",
+                          border: "1px solid rgba(255,255,255,.18)",
                           boxShadow:
-                            "0 18px 42px -24px rgba(26,58,92,.35)",
+                            "0 18px 42px -24px rgba(0,0,0,.5)",
                           fontFamily: "Montserrat, sans-serif",
                         }}
+                        labelStyle={{ color: "rgba(255,255,255,.6)" }}
+                        itemStyle={{ color: "#EAF4FC" }}
                       />
 
                       <Area
                         type="monotone"
                         dataKey="v"
                         name="Actual"
-                        stroke="#1A3A5C"
+                        stroke="#EAF4FC"
                         strokeWidth={2.5}
                         fill="url(#heroComplianceArea)"
                       />
@@ -755,7 +556,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
                         type="monotone"
                         dataKey="p"
                         name="Target"
-                        stroke="#4A7BAF"
+                        stroke="#8ADFD4"
                         strokeWidth={1.5}
                         strokeDasharray="4 4"
                         dot={false}
@@ -766,13 +567,13 @@ function Hero({ copy }: { copy: SiteCopy }) {
 
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   {[
-                    { value: "12", label: "CCPs OK", color: "#2FA772" },
-                    { value: "1", label: "Watch", color: "#D99A3D" },
-                    { value: "0", label: "Critical", color: "#D95C59" },
+                    { value: "12", label: "Compliant", color: "#6FE3B4" },
+                    { value: "1", label: "At risk", color: "#F0C36B" },
+                    { value: "0", label: "Non-conforming", color: "#F0908E" },
                   ].map((item) => (
                     <div
                       key={item.label}
-                      className="hero-metric-card rounded-xl border border-[#C8DCF0]/75 bg-white/70 px-2 py-3 text-center dark:border-white/10 dark:bg-white/5"
+                      className="hero-metric-card rounded-xl border border-white/15 bg-white/8 px-2 py-3 text-center"
                     >
                       <p
                         className="font-display text-2xl font-semibold"
@@ -781,7 +582,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
                         {item.value}
                       </p>
 
-                      <p className="mt-1 text-xs font-semibold text-[#5D7190] dark:text-white/55">
+                      <p className="mt-1 text-xs font-semibold text-white/60">
                         {item.label}
                       </p>
                     </div>
@@ -789,9 +590,9 @@ function Hero({ copy }: { copy: SiteCopy }) {
                 </div>
               </div>
 
-              <div className="hero-chip-card absolute -bottom-4 -right-4 hidden rounded-2xl border border-[#8FC2E8] bg-white/90 px-4 py-3 text-xs shadow-[0_18px_35px_-22px_rgba(26,58,92,.35)] backdrop-blur md:block dark:border-white/10 dark:bg-[hsl(var(--card))]/90">
-                <p className="font-bold text-[#18A89D]">Audit ready</p>
-                <p className="mt-0.5 font-semibold text-[#1A3A5C] dark:text-white">
+              <div className="hero-chip-card absolute -bottom-4 -right-4 hidden rounded-2xl border border-white/25 bg-[#0A1B2E]/80 px-4 py-3 text-xs shadow-[0_18px_35px_-22px_rgba(0,0,0,.55)] backdrop-blur-xl md:block">
+                <p className="font-bold text-[#8ADFD4]">Audit ready</p>
+                <p className="mt-0.5 font-semibold text-white">
                   ISO 22000 — 96%
                 </p>
               </div>
@@ -957,7 +758,7 @@ function Services({ copy }: { copy: SiteCopy }) {
   );
 }
 
-function PlatformDemo({ copy }: { copy: SiteCopy }) {
+export function PlatformDemo({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="platform"
@@ -970,139 +771,6 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
         <div className="mb-14 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeader eyebrow={copy.platform.eyebrow} title={copy.platform.title} />
 
-        </div>
-
-        <div className="grid items-stretch gap-5 xl:grid-cols-[minmax(0,1fr)_380px]">
-          <div
-            className="hover-card rounded-3xl border border-[hsl(var(--border))] bg-white/75 p-4 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5 sm:p-5"
-            data-reveal
-          >
-            <div className="grid h-full grid-cols-1 gap-4 lg:grid-cols-[minmax(420px,1fr)_340px]">
-              {/* Segment performance chart intentionally removed so the platform preview focuses on the compliance radar. */}
-              <div className="flex min-w-0 flex-col">
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="text-lg font-semibold text-[hsl(var(--navy-950))] dark:text-white">
-                    Compliance radar
-                  </h3>
-                  <Eye className="h-4 w-4" style={{ color: C.teal }} />
-                </div>
-
-                <div className="min-h-[340px] flex-1">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart
-                      data={radarData}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius="76%"
-                      margin={{ top: 20, right: 28, bottom: 22, left: 28 }}
-                    >
-                      <PolarGrid stroke="rgba(26,58,92,.10)" />
-                      <PolarAngleAxis
-                        dataKey="subject"
-                        tick={{ fill: "#65758A", fontSize: 11, fontWeight: 700 }}
-                        tickLine={false}
-                      />
-                      <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
-                      <Radar
-                        name="Vera"
-                        dataKey="A"
-                        stroke={C.blueDeep}
-                        fill={C.blue}
-                        fillOpacity={0.25}
-                        strokeWidth={2}
-                      />
-                      <Radar
-                        name="Industry"
-                        dataKey="B"
-                        stroke={C.teal}
-                        fill={C.teal}
-                        fillOpacity={0.12}
-                        strokeWidth={1.5}
-                        strokeDasharray="4 4"
-                      />
-                      <Tooltip
-                        contentStyle={{
-                          borderRadius: 14,
-                          border: "1px solid rgba(200,220,240,.75)",
-                          boxShadow: "0 18px 46px -26px rgba(26,58,92,.35)",
-                          fontFamily: "Montserrat, sans-serif",
-                        }}
-                      />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              <div className="flex flex-col justify-center gap-3">
-                {[
-                  {
-                    icon: Shield,
-                    title: "ISO 22000 ready",
-                    description: "Audit-grade evidence by default.",
-                    color: C.blue,
-                  },
-                  {
-                    icon: Zap,
-                    title: "Record sync",
-                    description: "Updates across active sites.",
-                    color: C.teal,
-                  },
-                  {
-                    icon: Clock,
-                    title: "Guided setup",
-                    description: "Start with your first records.",
-                    color: C.blueDeep,
-                  },
-                ].map(({ icon: Icon, title, description, color }) => (
-                  <div
-                    key={title}
-                    className="hover-card flex items-start gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/82 p-4 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
-                  >
-                    <div
-                      className="grid h-10 w-10 flex-none place-items-center rounded-xl text-white shadow-md"
-                      style={{ background: color }}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-[hsl(var(--navy-950))] dark:text-white">
-                        {title}
-                      </div>
-                      <div className="text-sm text-[hsl(var(--muted-foreground))]">
-                        {description}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className="grid">
-            <div
-              className="hover-card flex h-full flex-col justify-between rounded-3xl border border-[hsl(var(--border))] bg-white/78 p-7 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
-              data-reveal="right"
-            >
-              <div>
-                <div className="mb-5 h-40 overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/45 dark:border-white/10">
-                  <img
-                    src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=85"
-                    alt={copy.platform.title}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <p className="text-base italic leading-relaxed text-[hsl(var(--navy-950))]/80 dark:text-white/80">
-                  {copy.platform.quote}
-                </p>
-              </div>
-              <button
-                onClick={() => scrollToId("contact")}
-                className="primary-action mt-7 inline-flex w-fit items-center gap-2 px-5 py-2.5 text-sm"
-              >
-                {copy.actions.requestDemo}
-                <ArrowRight className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </div>
         </div>
 
         <DemoTabs />
@@ -1972,7 +1640,7 @@ function CTABanner({ copy }: { copy: SiteCopy }) {
   );
 }
 
-function Contact({ copy }: { copy: SiteCopy }) {
+export function Contact({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="contact"
@@ -2239,81 +1907,6 @@ function FormField({
   );
 }
 
-function Footer({ copy }: { copy: SiteCopy }) {
-  return (
-    <footer className="border-t border-[hsl(var(--border))] bg-white py-12 dark:border-white/10 dark:bg-[hsl(var(--muted))]/20">
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="flex flex-col items-start justify-between gap-10 lg:flex-row">
-          <div className="max-w-xs">
-            {/* <Logo subtitle={copy.logoSubtitle} /> */}
-            <Image
-              src="/logos/vera-logo-blue-transparent.png"
-              alt="Vera Systems"
-              width={150}
-              height={90}
-              className="h-auto w-32 dark:hidden"
-            />
-            <Image
-              src="/logos/vera-logo-light-transparent.png"
-              alt="Vera Systems"
-              width={150}
-              height={90}
-              className="hidden h-auto w-32 dark:block"
-            />
-            <p className="mt-4 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
-              {copy.footer.summary}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
-            {copy.footer.columns.map((column) => (
-              <div key={column.heading}>
-                <p
-                  className="text-[10px] font-black uppercase tracking-[0.22em]"
-                  style={{ color: C.teal }}
-                >
-                  {column.heading}
-                </p>
-
-                <ul className="mt-4 space-y-3">
-                  {column.links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
-                        className="story-link text-sm text-[hsl(var(--muted-foreground))] transition hover:text-[hsl(var(--navy-950))] dark:hover:text-white"
-                      >
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-[hsl(var(--border))] pt-6 dark:border-white/10 sm:flex-row">
-          <p className="text-xs text-[hsl(var(--muted-foreground))]">
-            {copy.footer.copyright}
-          </p>
-
-          <div className="flex gap-4 text-[11px] font-black uppercase tracking-[0.22em] text-[hsl(var(--muted-foreground))]">
-            <a href="/admin" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
-              Admin inbox
-            </a>
-            <a href="#" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
-              LinkedIn
-            </a>
-            <a href="#" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
-              Twitter
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 function EmailConfirmationNotice() {
   const [confirmation, setConfirmation] = useState<ConfirmationState>({
     status: "idle",
@@ -2431,7 +2024,7 @@ export default function HomePage() {
     <main className="relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
      <EmailConfirmationNotice />
 
-      <Navbar
+      <SiteHeader
         dark={dark}
         toggleDark={toggle}
         language={language}
@@ -2449,7 +2042,7 @@ export default function HomePage() {
       <WhyVeraSection copy={copy} />
       <CTABanner copy={copy} />
       <Contact copy={copy} />
-      <Footer copy={copy} />
+      <SiteFooter copy={copy} />
     </main>
   );
 }
