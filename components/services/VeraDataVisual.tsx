@@ -8,7 +8,7 @@ import {
   PieChart,
   ResponsiveContainer,
 } from "recharts";
-import { Activity, Radio } from "lucide-react";
+import { Pulse, Radio } from "@phosphor-icons/react";
 
 const C = {
   navy: "#1A3A5C",
@@ -60,7 +60,7 @@ export default function VeraDataVisual() {
           className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[10px] font-bold text-white"
           style={{ backgroundColor: C.teal }}
         >
-          <Radio className="h-3 w-3" />
+          <Radio className="h-3 w-3" weight="bold" />
           Live
         </span>
       </div>
@@ -122,7 +122,7 @@ export default function VeraDataVisual() {
               </span>
             </p>
             <p className="mt-1 inline-flex items-center gap-1 text-[10px] font-bold" style={{ color: C.teal }}>
-              <Activity className="h-3 w-3" />
+              <Pulse className="h-3 w-3" weight="bold" />
               Across 6 sites
             </p>
           </div>

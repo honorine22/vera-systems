@@ -1,18 +1,20 @@
-import { Activity, Award, BarChart3, Globe } from "lucide-react";
+"use client";
+
+import { Medal, Pulse, ChartBar, Globe } from "@phosphor-icons/react";
 import type { SiteCopy } from "../translations";
+import SectionBackground from "../SectionBackground";
 
 const C = {
   blue: "#4A7BAF",
   teal: "#18A89D",
   blueDeep: "#1A3A5C",
-  amber: "#F0A22E",
 };
 
 const whyCards = [
-  { icon: Award, accent: C.blue },
-  { icon: Activity, accent: C.teal },
-  { icon: BarChart3, accent: C.blueDeep },
-  { icon: Globe, accent: C.amber },
+  { icon: Medal, accent: C.blue },
+  { icon: Pulse, accent: C.teal },
+  { icon: ChartBar, accent: C.blueDeep },
+  { icon: Globe, accent: C.blueDeep },
 ];
 
 function SectionHeader({
@@ -32,7 +34,7 @@ function SectionHeader({
         <span className="h-px w-8 bg-current opacity-50" />
       </p>
 
-      <h2 className="mt-5 text-balance font-display text-3xl font-semibold tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-5xl">
+      <h2 className="mt-5 text-balance font-display text-4xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl">
         {title}
       </h2>
 
@@ -54,11 +56,10 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="why"
-      className="relative overflow-hidden bg-white py-28 dark:bg-[hsl(var(--background))]"
+      className="relative overflow-hidden bg-white py-28 dark:bg-[hsl(var(--background))] md:py-32"
     >
       <div className="absolute inset-0 dot-grid opacity-25" />
-      <div className="absolute left-0 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[hsl(var(--blue-100))]/50 blur-3xl dark:bg-[hsl(var(--blue-700))]/10" />
-      <div className="absolute bottom-0 right-0 h-80 w-80 translate-x-1/3 translate-y-1/3 rounded-full bg-[hsl(var(--teal))]/10 blur-3xl" />
+      <SectionBackground variant="collage" colors={[C.blue, C.teal, C.blueDeep]} />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
@@ -83,10 +84,10 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
 
                 <div className="relative flex h-full flex-col">
                   <div
-                    className="mb-5 grid h-12 w-12 place-items-center rounded-2xl text-white shadow-md"
-                    style={{ background: card.accent }}
+                    className="mb-5 grid h-12 w-12 place-items-center rounded-full border-[1.5px]"
+                    style={{ borderColor: card.accent, color: card.accent }}
                   >
-                    <Icon className="h-5 w-5" />
+                    <Icon className="h-5 w-5" weight="fill" />
                   </div>
 
                   <p

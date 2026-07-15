@@ -5,8 +5,6 @@ node_modules/
 .next/
 
 # Environment variables
-.env
-.env.*
 
 # Logs
 npm-debug.log*
@@ -32,5 +30,5 @@ coverage/
 data/contact-submissions.json
 
 # IDEs
-.vscode/
 .idea/
+config.bat

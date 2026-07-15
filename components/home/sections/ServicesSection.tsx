@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@phosphor-icons/react";
 import type { SiteCopy } from "../translations";
 import { servicesMeta } from "../../services/meta";
+import SectionBackground from "../SectionBackground";
 
 function SectionHeader({
   eyebrow,
@@ -40,9 +41,10 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="services"
-      className="relative w-full max-w-full overflow-x-clip bg-white py-16 dark:bg-[hsl(var(--muted))]/20 md:py-20"
+      className="relative w-full max-w-full overflow-x-clip bg-white py-20 dark:bg-[hsl(var(--muted))]/20 md:py-28"
     >
-      <div className="mx-auto max-w-7xl px-6">
+      <SectionBackground variant="dots" colors={["#4A7BAF", "#18A89D", "#1A3A5C"]} />
+      <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
           eyebrow={copy.services.eyebrow}
           title={copy.services.title}
@@ -81,7 +83,7 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
                     className="absolute left-3 top-3 grid h-8 w-8 place-items-center rounded-lg text-white"
                     style={{ backgroundColor: meta.accent }}
                   >
-                    <Icon className="h-4 w-4" />
+                    <Icon className="h-4 w-4" weight="duotone" />
                   </div>
                 </div>
 

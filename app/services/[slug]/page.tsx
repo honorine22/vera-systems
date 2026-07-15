@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { siteCopy } from "../../../components/home/translations";
-import { servicesMeta, type ServiceSlug } from "../../../components/services/meta";
+import { serviceSlugs, type ServiceSlug } from "../../../components/services/slugs";
 import ServicePageClient from "../../../components/services/ServicePageClient";
 
 export function generateStaticParams() {
-  return servicesMeta.map((service) => ({ slug: service.slug }));
+  return serviceSlugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -14,7 +14,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const index = servicesMeta.findIndex((service) => service.slug === slug);
+  const index = serviceSlugs.findIndex((s) => s === slug);
   const item = siteCopy.en.services.items[index];
 
   if (!item) return {};
@@ -31,7 +31,7 @@ export default async function ServicePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const index = servicesMeta.findIndex((service) => service.slug === slug);
+  const index = serviceSlugs.findIndex((s) => s === slug);
 
   if (index === -1) notFound();
 
