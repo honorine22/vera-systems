@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight } from "@phosphor-icons/react";
 import {
   getLocalizedCopy,
   languageOptions,
@@ -117,7 +117,7 @@ export default function ServicesIndexClient() {
                       className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[10px] font-bold text-white"
                       style={{ backgroundColor: service.accent }}
                     >
-                      <Icon className="h-3.5 w-3.5" />
+                      <Icon className="h-3.5 w-3.5" weight="duotone" />
                       {item.label}
                     </div>
                   </div>

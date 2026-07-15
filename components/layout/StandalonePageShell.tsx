@@ -9,6 +9,7 @@ import {
 } from "../home/translations";
 import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
+import WhatsAppButton from "./WhatsAppButton";
 
 function useRevealOnScroll() {
   useEffect(() => {
@@ -98,6 +99,7 @@ export default function StandalonePageShell({
       />
       <div className="pt-20">{children(copy)}</div>
       <SiteFooter copy={copy} />
+      <WhatsAppButton />
     </main>
   );
 }
