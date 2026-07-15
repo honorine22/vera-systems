@@ -2,7 +2,7 @@
 
 import StandalonePageShell from "../layout/StandalonePageShell";
 import StackExperience from "../home/sections/HowItWorks";
-import { PlatformDemo } from "../home/HomePage";
+import { PlatformDemo, Testimonials } from "../home/HomePage";
 import DeviationTrendVisual from "../platform/DeviationTrendVisual";
 
 export default function PlatformPageClient() {
@@ -19,6 +19,8 @@ export default function PlatformPageClient() {
           </section>
 
           <PlatformDemo copy={copy} />
+
+          <Testimonials copy={copy} />
         </>
       )}
     </StandalonePageShell>

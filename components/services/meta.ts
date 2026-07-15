@@ -1,12 +1,11 @@
-import { Cpu, GraduationCap, Megaphone, Shield, type LucideIcon } from "lucide-react";
+import { Cpu, GraduationCap, Megaphone, Shield, type Icon } from "@phosphor-icons/react";
+import type { ServiceSlug } from "./slugs";
 
-// Order here MUST match the order of `services.items` in components/home/translations.ts
-// (index 0 = Vera Consulting, 1 = Vera Data, 2 = Vera Academy, 3 = Vera Media).
-export type ServiceSlug = "vera-consulting" | "vera-data" | "vera-academy" | "vera-media";
+export type { ServiceSlug } from "./slugs";
 
 export type ServiceMeta = {
   slug: ServiceSlug;
-  icon: LucideIcon;
+  icon: Icon;
   accent: string;
   image: string;
 };
