@@ -44,7 +44,7 @@ export const siteCopy = {
       titleStart: "From inspection records to",
       highlight: "daily control",
       titleEnd: ".",
-      body: "Vera brings HACCP, ISO 22000, supplier checks, temperature logs, and corrective actions into one workspace built for food teams in East Africa.",
+      body: "Vera brings HACCP, ISO 22000, supplier checks, temperature logs, and corrective actions into one workspace built for food teams in Africa.",
       stats: [
         { k: "3", l: "cold-room deviations in 3 months" },
         { k: "1", l: "pending supplier visit" },
@@ -52,7 +52,7 @@ export const siteCopy = {
       ],
     },
     clients: {
-      eyebrow: "Trusted by food businesses across Rwanda & East Africa",
+      eyebrow: "Trusted by food businesses across Rwanda & Africa",
       items: [
         "Processors",
         "Restaurants",
@@ -184,7 +184,7 @@ What distinguishes Vera Academy from conventional training providers is the inte
           impact:
             `Vera Media is the communications and public education arm of Vera Systems, translating complex food safety science into accessible, engaging, and visually compelling content for professional and public audiences. In a region where food safety awareness remains low and the demand for reliable, practitioner-led guidance is growing, Vera Media fills a critical gap between technical knowledge and everyday understanding.
 The division operates across multiple content formats: educational social media content that equips food handlers, managers, and consumers with practical knowledge; a structured podcast where industry experts, auditors, and scientists discuss real-world food safety challenges; and professionally designed awareness banners and posters deployed in food production and hospitality environments to reinforce compliance culture at the point of work.
-Vera Media does not produce generic content. Every piece of output is grounded in the technical standards and operational realities that Vera Systems encounters daily across its consulting, training, and laboratory work, making it one of the most credible voices in food safety communication across East Africa.`,
+Vera Media does not produce generic content. Every piece of output is grounded in the technical standards and operational realities that Vera Systems encounters daily across its consulting, training, and laboratory work, making it one of the most credible voices in food safety communication across Africa.`,
           bullets: [
             `Educational social media content (infographics, carousels, reels, and awareness campaigns)`,
             `Podcast production featuring industry experts and thought leaders`,
@@ -371,7 +371,7 @@ Vera Media does not produce generic content. Every piece of output is grounded i
           body: "Findings become measurable outputs that are easier to verify and report.",
         },
         {
-          title: "Made for East Africa",
+          title: "Made for Africa",
           body: "Designed around local supply-chain realities, team capacity, and the pace of food operations.",
         },
       ],
@@ -419,7 +419,7 @@ Vera Media does not produce generic content. Every piece of output is grounded i
     },
     footer: {
       summary:
-        "Precision food safety for East Africa. Practical standards, clean records, and stronger daily control.",
+        "Precision food safety for Africa. Practical standards, clean records, and stronger daily control.",
       columns: [
         { heading: "Company", links: ["About", "Services", "Platform", "Why Vera"] },
         { heading: "Resources", links: ["Insights", "Case studies", "Documentation", "Pricing"] },

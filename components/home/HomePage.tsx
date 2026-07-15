@@ -195,7 +195,7 @@ const radarData = [
 
 const pieData = [
   { name: "Within range", value: 12, color: C.green },
-  { name: "Watch", value: 1, color: C.amber },
+  { name: "Watch", value: 0, color: C.amber },
   { name: "Resolved", value: 8, color: C.teal },
   { name: "Pending", value: 2, color: C.violet },
 ];
@@ -767,8 +767,8 @@ function Hero({ copy }: { copy: SiteCopy }) {
                 <div className="mt-4 grid grid-cols-3 gap-2">
                   {[
                     { value: "12", label: "CCPs OK", color: "#2FA772" },
-                    { value: "1", label: "Watch", color: "#D99A3D" },
-                    { value: "0", label: "Critical", color: "#D95C59" },
+                    { value: "0", label: "Watch", color: "#D99A3D" },
+                    { value: "1", label: "Critical", color: "#D95C59" },
                   ].map((item) => (
                     <div
                       key={item.label}
@@ -1032,49 +1032,6 @@ function PlatformDemo({ copy }: { copy: SiteCopy }) {
                   </ResponsiveContainer>
                 </div>
               </div>
-
-              <div className="flex flex-col justify-center gap-3">
-                {[
-                  {
-                    icon: Shield,
-                    title: "ISO 22000 ready",
-                    description: "Audit-grade evidence by default.",
-                    color: C.blue,
-                  },
-                  {
-                    icon: Zap,
-                    title: "Record sync",
-                    description: "Updates across active sites.",
-                    color: C.teal,
-                  },
-                  {
-                    icon: Clock,
-                    title: "Guided setup",
-                    description: "Start with your first records.",
-                    color: C.blueDeep,
-                  },
-                ].map(({ icon: Icon, title, description, color }) => (
-                  <div
-                    key={title}
-                    className="hover-card flex items-start gap-4 rounded-2xl border border-[hsl(var(--border))] bg-white/82 p-4 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
-                  >
-                    <div
-                      className="grid h-10 w-10 flex-none place-items-center rounded-xl text-white shadow-md"
-                      style={{ background: color }}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-[hsl(var(--navy-950))] dark:text-white">
-                        {title}
-                      </div>
-                      <div className="text-sm text-[hsl(var(--muted-foreground))]">
-                        {description}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
           <div className="grid">
@@ -1270,9 +1227,9 @@ function CCPDashboard() {
         </div>
 
         <div className="grid grid-cols-3 gap-3">
-          <HealthStatCard value="12" label="Within range" tone="success" />
-          <HealthStatCard value="1" label="Watch" tone="warning" />
-          <HealthStatCard value="0" label="Critical" tone="danger" />
+          <HealthStatCard value="3" label="Within range" tone="success" />
+          <HealthStatCard value="0" label="Watch" tone="warning" />
+          <HealthStatCard value="1" label="Critical" tone="danger" />
         </div>
       </div>
 
@@ -1287,7 +1244,7 @@ function CCPDashboard() {
         />
         <CCPCard
           name="Pasteurization"
-          value="74.2"
+          value="72.2 (holding time: 15s)"
           unit="°C"
           range="≥72°C"
           status="Within range"
@@ -1297,9 +1254,9 @@ function CCPDashboard() {
           name="Receiving Dock"
           value="9.4"
           unit="°C"
-          range="0–7°C"
+          range="0–4 (°C)"
           status="Watch"
-          tone="warning"
+          tone="danger"
         />
       </div>
 
@@ -1537,8 +1494,7 @@ function SupplierDashboard() {
         {suppliers.map(([name, category, score, tier]) => (
           <div
             key={name}
-            className="hover-card rounded-2xl border border-[hsl(var(--border))] bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[hsl(var(--card))]"
-            style={{ borderLeftColor: scoreColor(score), borderLeftWidth: 3 }}
+            className="rounded-2xl bg-white p-5 shadow-sm dark:border-white/10 dark:bg-[hsl(var(--card))]"
           >
             <div className="flex items-center justify-between">
               <div>

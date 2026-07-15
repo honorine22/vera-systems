@@ -384,7 +384,7 @@ function LiveDashboard() {
       <div className="space-y-3 text-[10px]">
         {[
           ["Cold Storage", "3.8°C"],
-          ["Pasteurization", "74.2°C"],
+          ["Pasteurization", "72.2°C"],
           ["Receiving Dock", "9.4°C"],
         ].map(([label, value]) => (
           <div key={label} className="flex items-center justify-between gap-3">
