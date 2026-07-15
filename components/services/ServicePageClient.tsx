@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check } from "@phosphor-icons/react";
 import {
   getLocalizedCopy,
   languageOptions,
@@ -141,7 +141,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
                 className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[10px] font-bold text-white"
                 style={{ backgroundColor: meta.accent }}
               >
-                <Icon className="h-3.5 w-3.5" />
+                <Icon className="h-3.5 w-3.5" weight="duotone" />
                 {item.label}
               </div>
 
@@ -168,7 +168,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
                   className="inline-flex items-center gap-2 rounded-2xl border px-4 py-3"
                   style={{ borderColor: `${meta.accent}35`, background: `${meta.accent}0d` }}
                 >
-                  <Icon className="h-4 w-4" style={{ color: meta.accent }} />
+                  <Icon className="h-4 w-4" weight="duotone" style={{ color: meta.accent }} />
                   <p className="max-w-[11rem] text-xs font-bold uppercase tracking-wide leading-tight" style={{ color: meta.accent }}>
                     {item.statLabel}
                   </p>
@@ -224,12 +224,36 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
                   className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full"
                   style={{ backgroundColor: `${meta.accent}18` }}
                 >
-                  <Check className="h-3.5 w-3.5" style={{ color: meta.accent }} />
+                  <Check className="h-3.5 w-3.5" weight="bold" style={{ color: meta.accent }} />
                 </span>
                 <span>{bullet}</span>
               </li>
             ))}
           </ul>
+
+          {item.roadmap && item.roadmap.length > 0 ? (
+            <div className="mt-10 rounded-2xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--muted))]/20 p-6 dark:border-white/15 dark:bg-white/5">
+              <span
+                className="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white"
+                style={{ backgroundColor: meta.accent }}
+              >
+                On the roadmap
+              </span>
+              <ul className="mt-4 space-y-2">
+                {item.roadmap.map((entry, i) => (
+                  <li
+                    key={i}
+                    className="text-sm leading-6 text-[hsl(var(--muted-foreground))]"
+                  >
+                    {entry}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-3 text-xs text-[hsl(var(--muted-foreground))]/80">
+                In development, not yet part of the live {item.label} offering.
+              </p>
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -280,10 +304,10 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
                   className="group flex flex-col rounded-2xl border border-[hsl(var(--border))] bg-white p-5 transition hover:-translate-y-1 hover:shadow-[0_24px_50px_-32px_rgba(15,23,42,.5)] dark:border-white/10 dark:bg-[hsl(var(--card))]"
                 >
                   <span
-                    className="grid h-9 w-9 place-items-center rounded-xl"
-                    style={{ backgroundColor: `${service.accent}18`, color: service.accent }}
+                    className="grid h-9 w-9 place-items-center rounded-full border-[1.5px]"
+                    style={{ borderColor: service.accent, color: service.accent }}
                   >
-                    <OtherIcon className="h-4 w-4" />
+                    <OtherIcon className="h-4 w-4" weight="fill" />
                   </span>
                   <p className="mt-4 text-sm font-bold text-[hsl(var(--navy-950))] dark:text-white">
                     {serviceItem.label}
