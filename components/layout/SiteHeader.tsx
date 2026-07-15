@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { ArrowRight, ChevronDown, LogIn, Menu, Moon, Sun, X } from "lucide-react";
+import { ArrowRight, CaretDown, SignIn, List, Moon, Sun, X } from "@phosphor-icons/react";
 import {
   languageOptions,
   navItems,
@@ -101,7 +101,9 @@ export default function SiteHeader({
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav",
         lightOnDark
-          ? "bg-transparent"
+          ? scrolled
+            ? "border-b border-white/10 bg-[#0A1B2E]/78 shadow-[0_18px_45px_-35px_rgba(0,0,0,.55)] backdrop-blur-xl"
+            : "bg-transparent"
           : scrolled
           ? "border-[hsl(var(--border))] border-b bg-white/90 shadow-[0_18px_45px_-35px_rgba(15,23,42,.55)] backdrop-blur-xl dark:border-white/10 dark:bg-[#061225]/95"
           : "bg-white/82 backdrop-blur-xl dark:bg-[#061225]/95"
@@ -167,7 +169,7 @@ export default function SiteHeader({
                   )}
                 >
                   {homeLabel(item.key)}
-                  <ChevronDown
+                  <CaretDown
                     className={cn(
                       "h-3.5 w-3.5 transition-transform duration-200",
                       servicesHover && "rotate-180"
@@ -204,10 +206,10 @@ export default function SiteHeader({
                           className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition hover:bg-[hsl(var(--muted))]/70 dark:hover:bg-white/5"
                         >
                           <span
-                            className="mt-0.5 grid h-8 w-8 flex-none place-items-center rounded-lg"
-                            style={{ backgroundColor: `${meta.accent}18`, color: meta.accent }}
+                            className="mt-0.5 grid h-8 w-8 flex-none place-items-center rounded-full border-[1.5px]"
+                            style={{ borderColor: meta.accent, color: meta.accent }}
                           >
-                            <Icon className="h-4 w-4" />
+                            <Icon className="h-4 w-4" weight="fill" />
                           </span>
                           <span className="min-w-0">
                             <span className="block text-sm font-bold text-[hsl(var(--navy-950))] dark:text-white">
@@ -299,7 +301,7 @@ export default function SiteHeader({
             href="/admin"
             className="hidden items-center gap-2 rounded-xl border border-[hsl(var(--border))] bg-white/80 px-4 py-3 text-sm font-bold text-[hsl(var(--navy-950))] transition hover:-translate-y-0.5 hover:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 md:inline-flex"
           >
-            <LogIn className="h-3.5 w-3.5" />
+            <SignIn className="h-3.5 w-3.5" />
             Dashboard
           </a>
 
@@ -311,7 +313,7 @@ export default function SiteHeader({
             {open ? (
               <X className="h-4 w-4 dark:text-white" />
             ) : (
-              <Menu className="h-4 w-4 dark:text-white" />
+              <List className="h-4 w-4 dark:text-white" />
             )}
           </button>
         </div>
@@ -337,7 +339,7 @@ export default function SiteHeader({
                   )}
                 >
                   {homeLabel(item.key)}
-                  <ChevronDown
+                  <CaretDown
                     className={cn(
                       "h-4 w-4 transition-transform",
                       mobileServicesOpen && "rotate-180"
@@ -392,7 +394,7 @@ export default function SiteHeader({
             href="/admin"
             className="mt-2 flex items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] px-4 py-3 text-sm font-bold text-white dark:bg-white dark:text-[hsl(var(--navy-950))]"
           >
-            <LogIn className="h-4 w-4" />
+            <SignIn className="h-4 w-4" />
             Dashboard login
           </a>
         </nav>
