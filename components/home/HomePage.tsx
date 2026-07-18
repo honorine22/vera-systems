@@ -40,7 +40,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import Image from "next/image";
 import {
   getLocalizedCopy,
   languageOptions,
@@ -231,7 +230,9 @@ function useDarkMode() {
 
   useEffect(() => {
     const stored = localStorage.getItem("vera-theme");
-    const isDark = stored === "dark";
+    const isDark = stored
+      ? stored === "dark"
+      : document.documentElement.classList.contains("dark");
 
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
@@ -416,7 +417,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
           playsInline
           preload="metadata"
           poster="https://images.pexels.com/videos/8633309/tomato-plant-8633309.jpeg?auto=compress&cs=tinysrgb&h=1200"
-          className="h-full w-full object-cover opacity-90"
+          className="h-full w-full object-cover opacity-72"
         >
           <source
             src="https://videos.pexels.com/video-files/8633309/8633309-hd_1920_1080_30fps.mp4"
@@ -425,8 +426,9 @@ function Hero({ copy }: { copy: SiteCopy }) {
         </video>
 
         {/* Directional scrim: near-opaque navy behind the copy, opening up toward the visual */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A1B2E] via-[#0A1B2E]/88 to-[#0A1B2E]/45 sm:via-[#0A1B2E]/80 sm:to-[#0A1B2E]/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1B2E] via-transparent to-[#0A1B2E]/40" />
+        <div className="absolute inset-0 bg-black/28" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#07131F]/[.98] via-[#07131F]/90 to-[#07131F]/62 sm:to-[#07131F]/48" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#07131F]/95 via-transparent to-[#07131F]/55" />
       </motion.div>
 
       <motion.div
@@ -1385,13 +1387,14 @@ export function Testimonials({ copy }: { copy: SiteCopy }) {
 
   return (
     <motion.section
-      className="relative overflow-hidden bg-gradient-to-br from-[#EAF1FB] via-[#EAF6F7] to-[#E2F7F3] py-28 dark:from-[#0A1B2E] dark:via-[#123F66] dark:to-[#18A89D] md:py-32"
+      className="relative overflow-hidden bg-white py-28 dark:bg-[#061225] md:py-32"
       style={{ backgroundSize: "200% 200%" }}
       animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
       transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
     >
       <div className="absolute inset-0 dot-grid opacity-25 dark:hidden" />
-      <div className="absolute inset-0 hidden dot-grid-white opacity-40 dark:block" />
+      <div className="absolute inset-0 hidden dot-grid-white opacity-[0.14] dark:block" />
+      <div className="absolute inset-0 hidden bg-[radial-gradient(circle_at_50%_25%,rgba(74,123,175,.15),transparent_42%)] dark:block" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
@@ -1401,18 +1404,16 @@ export function Testimonials({ copy }: { copy: SiteCopy }) {
           body={copy.outcomes.body}
         />
 
-        <div className="mt-14 grid gap-7 md:grid-cols-3 lg:gap-8">
+        <div className="mt-14 grid grid-cols-1 items-start gap-7 md:grid-cols-3 lg:gap-8">
           {outcomeItems.map((item, index) => (
             <div
               key={item.name}
               data-reveal
               className={cn(
-                "hover-card group relative overflow-hidden rounded-2xl bg-white shadow-[0_1px_2px_rgba(15,23,42,.04),0_16px_36px_-24px_rgba(15,23,42,.18)] dark:border dark:border-white/8 dark:bg-[hsl(var(--card))]",
+                "hover-card group w-full overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white shadow-[0_1px_2px_rgba(15,23,42,.04),0_16px_36px_-24px_rgba(15,23,42,.18)] dark:border-white/[.12] dark:bg-gradient-to-br dark:from-[#10263E] dark:to-[#0A1B2E] dark:shadow-[0_28px_70px_-38px_rgba(0,0,0,.9),inset_0_1px_0_rgba(255,255,255,.08)]",
                 `reveal-delay-${index + 1}`
               )}
             >
-              <div className="h-[3px]" style={{ background: item.accent }} />
-
               <div
                 className="pointer-events-none absolute -right-6 -top-6 h-32 w-32 rounded-full opacity-[0.07] blur-2xl transition-opacity duration-500 group-hover:opacity-[0.14]"
                 style={{ background: item.accent }}
@@ -1431,11 +1432,13 @@ export function Testimonials({ copy }: { copy: SiteCopy }) {
                   &ldquo;{item.quote}&rdquo;
                 </p>
 
-                <div className="mt-8 flex items-center gap-2">
+                <div className="mt-8 flex items-center gap-3">
                   <span
-                    className="h-1.5 w-1.5 flex-none rounded-full"
-                    style={{ background: item.accent }}
-                  />
+                    className="grid h-9 w-9 flex-none place-items-center rounded-full border text-xs font-black"
+                    style={{ borderColor: `${item.accent}88`, color: item.accent, background: `${item.accent}18` }}
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   <div>
                     <p className="text-[15px] font-bold text-[hsl(var(--navy-950))] dark:text-white">
                       {item.name}
@@ -2056,7 +2059,7 @@ export default function HomePage() {
   useRevealOnScroll();
 
   return (
-    <main className="relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
+    <main className="vera-public relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
      <EmailConfirmationNotice />
 
       <SiteHeader

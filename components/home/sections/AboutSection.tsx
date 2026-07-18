@@ -108,7 +108,7 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-[hsl(var(--muted))]/40 py-24 dark:bg-[hsl(var(--background))] md:py-28"
+      className="vera-section-surface relative overflow-hidden bg-[hsl(var(--muted))]/40 py-24 md:py-28"
     >
       <div className="absolute inset-0 dot-grid opacity-35 dark:opacity-20" />
       <SectionBackground variant="collage" colors={[C.blue, C.teal, C.blueDeep]} />

@@ -18,7 +18,9 @@ function useDarkMode() {
 
   useEffect(() => {
     const stored = localStorage.getItem("vera-theme");
-    const isDark = stored === "dark";
+    const isDark = stored
+      ? stored === "dark"
+      : document.documentElement.classList.contains("dark");
 
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
@@ -65,7 +67,7 @@ export default function ServicesIndexClient() {
   const { language, setLanguage, copy } = useLanguage();
 
   return (
-    <main className="relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
+    <main className="vera-public relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
       <SiteHeader
         dark={dark}
         toggleDark={toggle}
@@ -74,19 +76,20 @@ export default function ServicesIndexClient() {
         copy={copy}
       />
 
-      <section className="pb-16 pt-32 md:pb-20 md:pt-40">
+      <section className="vera-section-surface relative overflow-hidden pb-20 pt-32 md:pb-28 md:pt-40">
+        <div className="brand-aurora opacity-30" />
         <div className="mx-auto max-w-7xl px-6">
           <p className="text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
             {copy.services.eyebrow}
           </p>
-          <h1 className="mt-3 max-w-3xl text-balance font-display text-3xl font-semibold tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-5xl">
+          <h1 className="mt-3 max-w-4xl text-balance font-display text-4xl font-semibold tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl">
             {copy.services.title}
           </h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-[hsl(var(--muted-foreground))] md:text-lg">
             {copy.services.body}
           </p>
 
-          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+          <div className="mt-12 grid grid-cols-1 items-start gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-4">
             {servicesMeta.map((service, index) => {
               const item = copy.services.items[index];
               const Icon = service.icon;
@@ -97,14 +100,14 @@ export default function ServicesIndexClient() {
                 <Link
                   key={service.slug}
                   href={`/services/${service.slug}`}
-                  className="group relative flex flex-col overflow-hidden rounded-[1.65rem] border border-[hsl(var(--border))] bg-white shadow-[0_22px_56px_-42px_rgba(26,58,92,.46)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_66px_-42px_rgba(26,58,92,.54)] dark:border-white/10 dark:bg-[hsl(var(--card))]"
+                  className="vera-card-surface group relative flex w-full flex-col overflow-hidden rounded-[1.45rem] border border-[hsl(var(--border))] bg-white shadow-[0_22px_56px_-42px_rgba(26,58,92,.46)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_66px_-42px_rgba(26,58,92,.54)] dark:border-white/10"
                 >
-                  <div className="relative h-44 w-full overflow-hidden">
+                  <div className="relative h-40 w-full overflow-hidden">
                     <Image
                       src={service.image}
                       alt={item.label}
                       fill
-                      sizes="(min-width: 640px) 50vw, 100vw"
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       className="object-cover transition duration-500 group-hover:scale-105"
                     />
                     <div
@@ -122,8 +125,8 @@ export default function ServicesIndexClient() {
                     </div>
                   </div>
 
-                  <div className="flex flex-1 flex-col p-6">
-                    <h2 className="text-lg font-semibold leading-snug text-[hsl(var(--navy-950))] dark:text-white">
+                  <div className="flex flex-1 flex-col p-5">
+                    <h2 className="text-base font-semibold leading-snug text-[hsl(var(--navy-950))] dark:text-white">
                       {item.title}
                     </h2>
                     <p className="mt-3 line-clamp-3 text-sm leading-6 text-[hsl(var(--muted-foreground))]">

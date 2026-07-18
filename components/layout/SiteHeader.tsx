@@ -38,6 +38,7 @@ export default function SiteHeader({
   const router = useRouter();
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isServiceDetail = pathname.startsWith("/services/");
 
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -79,7 +80,7 @@ export default function SiteHeader({
     return () => observer.disconnect();
   }, [isHome]);
 
-  const lightOnDark = overHero;
+  const lightOnDark = overHero || (isServiceDetail && !scrolled);
 
   function goHome() {
     if (isHome) {

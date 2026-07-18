@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { ArrowRight, CaretLeft, CaretRight } from "@phosphor-icons/react";
+import { ArrowRight } from "@phosphor-icons/react";
 import type { SiteCopy } from "../translations";
 
 const C = {
@@ -60,26 +59,15 @@ function SectionHeader({
 }
 
 export default function InsightsSection({ copy }: { copy: SiteCopy }) {
-  const railRef = useRef<HTMLDivElement>(null);
   const insightItems = copy.insights.items.map((item, index) => ({
     ...insights[index],
     ...item,
   }));
 
-  function scrollInsights(direction: -1 | 1) {
-    const rail = railRef.current;
-    if (!rail) return;
-
-    rail.scrollBy({
-      left: direction * Math.min(rail.clientWidth * 0.72, 640),
-      behavior: "smooth",
-    });
-  }
-
   return (
     <section
       id="insights"
-      className="relative overflow-visible bg-white py-24 dark:bg-[#07131F] md:py-28"
+      className="vera-section-surface relative overflow-hidden bg-white py-24 md:py-28"
     >
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -98,30 +86,10 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
         </div>
       </div>
 
-      <div className="relative mt-10">
-        <button
-          type="button"
-          onClick={() => scrollInsights(-1)}
-          aria-label="Previous article"
-          className="absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:-translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
-        >
-          <CaretLeft className="h-5 w-5" />
-        </button>
-        <button
-          type="button"
-          onClick={() => scrollInsights(1)}
-          aria-label="Next article"
-          className="absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
-        >
-          <CaretRight className="h-5 w-5" />
-        </button>
-
-        <div
-          ref={railRef}
-          className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-6 pb-8 pt-2 [scroll-padding-inline:1.5rem] lg:px-[max(1.5rem,calc((100vw-80rem)/2+1.5rem))] lg:[scroll-padding-inline:max(1.5rem,calc((100vw-80rem)/2+1.5rem))]"
-        >
-          {insightItems.map((item) => (
-            <InsightCard key={item.title} item={item} />
+      <div className="relative mx-auto mt-10 max-w-7xl px-6">
+        <div className="columns-1 gap-5 md:columns-2 lg:columns-3">
+          {insightItems.map((item, index) => (
+            <InsightCard key={item.title} item={item} index={index} />
           ))}
         </div>
       </div>
@@ -129,13 +97,15 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
   );
 }
 
-function InsightCard({ item }: { item: InsightItem }) {
+function InsightCard({ item, index }: { item: InsightItem; index: number }) {
+  const imageHeight = ["h-44", "h-56", "h-48", "h-64"][index % 4];
+
   return (
      <a
       href="#"
-      className="hover-card group relative flex h-[450px] w-[min(78vw,360px)] flex-none snap-start flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white shadow-[0_22px_58px_-46px_rgba(26,58,92,0.62)] dark:border-white/10 dark:bg-[hsl(var(--background))]"
+      className="vera-card-surface group relative mb-5 inline-flex w-full break-inside-avoid flex-col overflow-hidden rounded-[1.4rem] border border-[hsl(var(--border))] bg-white shadow-[0_18px_44px_-34px_rgba(26,58,92,0.48)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-32px_rgba(26,58,92,.58)] dark:border-white/10"
     >
-      <div className="relative h-44 w-full overflow-hidden rounded-[1.55rem]">
+      <div className={`relative w-full overflow-hidden rounded-[1.3rem] ${imageHeight}`}>
         <img
           src={item.image}
           alt=""
@@ -144,26 +114,26 @@ function InsightCard({ item }: { item: InsightItem }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#07182A]/48 via-transparent to-transparent" />
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col p-5">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <span className="inline-flex items-center rounded-full bg-[hsl(var(--teal))]/10 px-3 py-1.5 text-xs font-bold" style={{ color: C.teal }}>
+      <div className="flex min-h-0 flex-1 flex-col p-4 sm:p-5">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <span className="inline-flex items-center rounded-full bg-[hsl(var(--teal))]/10 px-2.5 py-1 text-[11px] font-bold" style={{ color: C.teal }}>
             {item.tag}
           </span>
           <ArrowRight className="h-5 w-5 shrink-0 text-[hsl(var(--blue-700))] transition group-hover:translate-x-1 dark:text-[hsl(var(--blue-300))]" />
         </div>
 
-        <h3 className="text-balance pt-6 font-display text-xl font-semibold leading-tight text-[hsl(var(--navy-950))] dark:text-white">
+        <h3 className="text-balance font-display text-lg font-semibold leading-snug text-[hsl(var(--navy-950))] dark:text-white">
           {item.title}
         </h3>
 
-        <p className="mt-4 text-sm leading-6 text-[hsl(var(--muted-foreground))]">
+        <p className="mt-3 text-sm leading-6 text-[hsl(var(--muted-foreground))]">
           {item.body}
         </p>
 
-        <div className="mt-auto flex flex-wrap items-center gap-3 pt-6 text-sm font-bold text-[hsl(var(--muted-foreground))]">
+        <div className="mt-5 flex flex-wrap items-center gap-2.5 text-xs font-bold text-[hsl(var(--muted-foreground))]">
           <span>{item.read}</span>
           <span className="h-1 w-1 rounded-full bg-[hsl(var(--muted-foreground))]/40" />
-          <span className="inline-flex items-center gap-1 rounded-full bg-[hsl(var(--blue-100))] px-3 py-1.5 text-[hsl(var(--blue-700))] dark:bg-white/10 dark:text-[hsl(var(--blue-300))]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[hsl(var(--blue-100))] px-2.5 py-1 text-[hsl(var(--blue-700))] dark:bg-white/10 dark:text-[hsl(var(--blue-300))]">
             Read story
             <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-1" />
           </span>

@@ -41,7 +41,7 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="services"
-      className="relative w-full max-w-full overflow-x-clip bg-white py-20 dark:bg-[hsl(var(--muted))]/20 md:py-28"
+      className="vera-section-surface relative w-full max-w-full overflow-x-clip bg-white py-20 md:py-28"
     >
       <SectionBackground variant="dots" colors={["#4A7BAF", "#18A89D", "#1A3A5C"]} />
       <div className="relative mx-auto max-w-7xl px-6">
@@ -63,7 +63,7 @@ export default function ServicesSection({ copy }: { copy: SiteCopy }) {
                 key={meta.slug}
                 href={`/services/${meta.slug}`}
                 data-reveal
-                className="group flex flex-col overflow-hidden rounded-[1.5rem] border border-[hsl(var(--border))] bg-white shadow-[0_22px_56px_-42px_rgba(26,58,92,.46)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_66px_-42px_rgba(26,58,92,.54)] dark:border-white/10 dark:bg-[hsl(var(--card))]"
+                className="vera-card-surface group flex flex-col overflow-hidden rounded-[1.5rem] border border-[hsl(var(--border))] bg-white shadow-[0_22px_56px_-42px_rgba(26,58,92,.46)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_66px_-42px_rgba(26,58,92,.54)] dark:border-white/10"
               >
                 <div className="relative h-32 w-full overflow-hidden">
                   <Image

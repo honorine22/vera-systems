@@ -20,7 +20,7 @@
 
 :root {
   color-scheme: light;
-  --background: 210 30% 98%;
+  --background: 0 0% 100%;
   --foreground: 215 45% 10%;
   --muted: 214 28% 94%;
   --muted-foreground: 215 18% 44%;
@@ -63,7 +63,7 @@
 
 .dark {
   color-scheme: dark;
-  --background: 220 40% 6%;
+  --background: 215 61% 8%;
   --foreground: 210 40% 94%;
   --muted: 218 38% 11%;
   --muted-foreground: 210 22% 62%;
@@ -80,6 +80,41 @@
   --blue-300: 208 80% 84%;
   --blue-100: 215 40% 22%;
 }
+
+/* One continuous night canvas across every public page. Individual sections
+   keep depth through translucent cards and brand-colour glows, not competing
+   navy fills. */
+.dark body,
+.dark main,
+.dark section {
+  background-color: #061225;
+}
+
+.dark .vera-section-surface {
+  background-color: #061225 !important;
+  background-image:
+    radial-gradient(circle at 8% 18%, rgba(74, 123, 175, .13), transparent 32%),
+    radial-gradient(circle at 92% 78%, rgba(24, 168, 157, .09), transparent 30%);
+}
+
+.dark .vera-card-surface {
+  background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.025));
+  border-color: rgba(255,255,255,.11);
+}
+
+.vera-public .primary-action {
+  box-shadow: 0 18px 38px -18px rgba(18, 63, 102, .72);
+}
+
+.vera-public section {
+  background-color: #ffffff;
+  background-image: none;
+}
+
+.dark .vera-public section {
+  background-color: #061225;
+}
+
 
 @layer base {
   * {
@@ -593,6 +628,11 @@
     opacity: 1;
     transform: translate3d(0, 0, 0);
     filter: blur(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] { opacity: 1; transform: none; filter: none; transition: none; }
+    .brand-aurora, .float-soft { animation: none; }
   }
 
   .animate-fade-up {

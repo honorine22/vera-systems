@@ -12,7 +12,10 @@ import {
 import SiteHeader from "../layout/SiteHeader";
 import SiteFooter from "../layout/SiteFooter";
 import { servicesMeta, type ServiceSlug } from "./meta";
-import VeraDataVisual from "./VeraDataVisual";
+
+function cn(...classes: Array<string | false | null | undefined>) {
+  return classes.filter(Boolean).join(" ");
+}
 
 function useRevealOnScroll() {
   useEffect(() => {
@@ -39,7 +42,9 @@ function useDarkMode() {
 
   useEffect(() => {
     const stored = localStorage.getItem("vera-theme");
-    const isDark = stored === "dark";
+    const isDark = stored
+      ? stored === "dark"
+      : document.documentElement.classList.contains("dark");
 
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
@@ -102,7 +107,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
   const otherServices = servicesMeta.filter((service) => service.slug !== slug);
 
   return (
-    <main className="relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
+    <main className="vera-public relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
       <SiteHeader
         dark={dark}
         toggleDark={toggle}
@@ -111,31 +116,26 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
         copy={copy}
       />
 
-      <section className="relative overflow-hidden pb-16 pt-32 md:pb-20 md:pt-40">
+      <section className="relative isolate min-h-[650px] overflow-hidden pb-14 pt-28 md:pb-16 md:pt-32">
+        <Image
+          src={meta.image}
+          alt=""
+          fill
+          priority
+          className={cn("-z-20 object-cover", slug === "vera-media" && "scale-105 opacity-55 blur-[1px]")}
+          sizes="100vw"
+        />
+        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-[#061225]/88" : "bg-[#07131F]/80")} />
+        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-[radial-gradient(circle_at_50%_42%,rgba(217,154,61,.10),transparent_42%)]" : "bg-gradient-to-r from-[#07131F]/95 via-[#07131F]/82 to-[#07131F]/50")} />
         <div
-          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          className="pointer-events-none absolute inset-0 opacity-[0.14]"
           style={{
             backgroundImage: `radial-gradient(circle at 20% 20%, ${meta.accent}, transparent 55%)`,
           }}
         />
 
         <div className="relative mx-auto max-w-7xl px-6">
-          <nav className="flex items-center gap-2 text-xs font-semibold text-[hsl(var(--muted-foreground))]">
-            <Link href="/" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
-              Home
-            </Link>
-            <span>/</span>
-            <Link
-              href="/services"
-              className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white"
-            >
-              Services
-            </Link>
-            <span>/</span>
-            <span className="text-[hsl(var(--navy-950))] dark:text-white">{item.label}</span>
-          </nav>
-
-          <div className="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="mx-auto mt-6 max-w-6xl text-center">
             <div data-reveal>
               <div
                 className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[10px] font-bold text-white"
@@ -145,17 +145,11 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
                 {item.label}
               </div>
 
-              <h1 className="mt-6 text-balance font-display text-3xl font-semibold leading-[1.15] tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-5xl">
+              <h1 className="mx-auto mt-5 max-w-6xl text-balance font-display text-4xl font-semibold leading-[1.08] tracking-tight text-white md:text-5xl lg:text-[3.5rem]">
                 {item.title}
               </h1>
 
-              <div className="mt-6 space-y-4 text-base leading-relaxed text-[hsl(var(--muted-foreground))] md:text-lg">
-                {paragraphs.map((paragraph, i) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
-              </div>
-
-              <div className="mt-8 flex flex-wrap items-center gap-4">
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
                 <Link
                   href="/contact"
                   className="primary-action inline-flex items-center gap-2 px-5 py-3 text-sm"
@@ -174,30 +168,14 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
                   </p>
                 </div>
               </div>
+
+              <div className="mx-auto mt-7 max-w-6xl space-y-4 text-base leading-8 text-white/80 md:text-lg">
+                {paragraphs.slice(0, 2).map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </div>
             </div>
 
-            {slug === "vera-data" ? (
-              <div className="relative aspect-[4/3]">
-                <VeraDataVisual />
-              </div>
-            ) : (
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] border border-[hsl(var(--border))] shadow-[0_28px_70px_-32px_rgba(15,23,42,.55)] dark:border-white/10">
-                <Image
-                  src={meta.image}
-                  alt={item.label}
-                  fill
-                  sizes="(min-width: 1024px) 45vw, 100vw"
-                  className="object-cover"
-                  priority
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: `linear-gradient(180deg, transparent 40%, ${meta.accent}55 100%)`,
-                  }}
-                />
-              </div>
-            )}
           </div>
         </div>
       </section>
@@ -259,19 +237,19 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
 
       <section className="py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-col items-start justify-between gap-6 rounded-[1.75rem] border border-[hsl(var(--border))] bg-[hsl(var(--navy-950))] p-8 text-white dark:border-white/10 sm:flex-row sm:items-center md:p-10">
+          <div className="flex flex-col items-start justify-between gap-6 rounded-[1.75rem] border border-[#D7E3EE] bg-white p-8 text-[#173657] shadow-[0_20px_55px_-34px_rgba(18,63,102,.38)] dark:border-white/10 dark:bg-[#0A1B2E] dark:text-white dark:shadow-[0_24px_60px_-34px_rgba(0,0,0,.75)] sm:flex-row sm:items-center md:p-10">
             <div>
-              <p className="text-xs font-black uppercase tracking-[0.22em] text-white/60">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#6A8096] dark:text-white/60">
                 Ready to talk?
               </p>
-              <h3 className="mt-2 text-balance font-display text-xl font-semibold md:text-2xl">
+              <h3 className="mt-2 text-balance font-display text-xl font-semibold text-[#173657] dark:text-white md:text-2xl">
                 Discuss {item.label.toLowerCase()} with our team.
               </h3>
             </div>
 
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-[hsl(var(--navy-950))] transition hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#8FC2E8] bg-[#4A7BAF] px-5 py-3 text-sm font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-[#5A8BC2]"
             >
               {copy.actions.sendMessage}
               <ArrowRight className="h-4 w-4" />

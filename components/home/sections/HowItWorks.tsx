@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowRight, CaretDown } from "@phosphor-icons/react";
 import type { SiteCopy } from "../translations";
 
@@ -53,8 +53,6 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
   const [expandedSteps, setExpandedSteps] = useState<Record<string, boolean>>(
     {}
   );
-  const [progress, setProgress] = useState(0);
-  const trackRef = useRef<HTMLDivElement>(null);
 
   const journey = copy.stack as unknown as JourneyCopy;
 
@@ -76,33 +74,6 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
   // far through the journey am I" signal instead of relying on scroll
   // position alone. Plain window scroll listener, read-only (no preventDefault,
   // no scroll manipulation) so it can't interfere with native scrolling.
-  useEffect(() => {
-    let raf = 0;
-
-    function measure() {
-      const el = trackRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const anchor = window.innerHeight * 0.5;
-      const raw = (anchor - rect.top) / rect.height;
-      setProgress(Math.min(1, Math.max(0, raw)));
-    }
-
-    function onScroll() {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(measure);
-    }
-
-    measure();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-
   function toggleStep(stepNumber: string) {
     setExpandedSteps((prev) => ({
       ...prev,
@@ -115,7 +86,7 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="how-it-works"
-      className="relative isolate overflow-x-clip bg-[#F7FBFE] py-20 dark:bg-[#09213D] sm:py-28"
+      className="vera-section-surface relative isolate overflow-x-clip bg-[#F7FBFE] py-20 sm:py-28"
     >
       <div className="mx-auto max-w-7xl px-6">
         <header className="max-w-3xl border-b border-[#D7E3EE] pb-7 dark:border-white/10">
@@ -139,19 +110,10 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
           ) : null}
         </header>
 
-        <div ref={trackRef} className="relative mt-12 max-w-2xl">
-          <div
-            aria-hidden="true"
-            className="absolute left-4 top-1 bottom-1 w-px bg-[#D7E3EE] dark:bg-white/10"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute left-4 top-1 w-px bg-gradient-to-b from-[#4A7BAF] via-[#18A89D] to-[#8ADFD4]"
-            style={{ height: `${progress * 100}%` }}
-          />
-
-          <div className="space-y-9 sm:space-y-10">
-            {steps.map((step) => (
+        <div className="relative mx-auto mt-14 max-w-5xl">
+          <div aria-hidden="true" className="absolute bottom-4 left-4 top-4 w-px bg-gradient-to-t from-[#18A89D] via-[#4A7BAF] to-[#8FC2E8] md:left-1/2" />
+          <div className="flex flex-col gap-10 md:gap-5">
+            {[...steps].reverse().map((step, index) => (
               <StepRow
                 key={`${step.number}-${step.title}`}
                 step={step}
@@ -159,6 +121,7 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
                 onToggle={() => toggleStep(step.number)}
                 readMoreLabel={journey.readMoreLabel ?? "Read more"}
                 showLessLabel={journey.showLessLabel ?? "Show less"}
+                index={index}
               />
             ))}
           </div>
@@ -190,23 +153,25 @@ function StepRow({
   onToggle,
   readMoreLabel,
   showLessLabel,
+  index,
 }: {
   step: JourneyStep;
   expanded: boolean;
   onToggle: () => void;
   readMoreLabel: string;
   showLessLabel: string;
+  index: number;
 }) {
   const hasMoreContent = step.body.length > 130;
 
   return (
-    <div data-reveal className="relative flex gap-5 sm:gap-6">
-      <div className="relative z-10 grid h-8 w-8 flex-none place-items-center rounded-full border-2 border-[#D7E3EE] bg-[#F7FBFE] text-[11px] font-black text-[#4A7BAF] dark:border-white/15 dark:bg-[#09213D] dark:text-[#9BC5EA]">
+    <div data-reveal className={cn("relative min-h-[150px] pl-12 md:grid md:grid-cols-2 md:gap-16 md:pl-0", index % 2 === 0 ? "md:text-right" : "md:text-left")}>
+      <div className="absolute left-0 top-0 z-10 grid h-8 w-8 place-items-center rounded-full border border-[#4A7BAF] bg-white text-[10px] font-black text-[#4A7BAF] shadow-[0_0_0_5px_rgba(143,194,232,.12)] dark:bg-[#061225] dark:text-[#9BC5EA] md:left-1/2 md:-translate-x-1/2">
         {step.number}
       </div>
 
-      <div className="flex-1 pb-1 pt-0.5">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className={cn("pt-0", index % 2 === 0 ? "md:col-start-1 md:pr-2" : "md:col-start-2 md:pl-2")}>
+        <div className={cn("flex flex-wrap items-center gap-2", index % 2 === 0 && "md:justify-end")}>
           <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[#4A7BAF] dark:text-[#9BC5EA]">
             {step.phase}
           </span>

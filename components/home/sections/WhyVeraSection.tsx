@@ -56,7 +56,7 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="why"
-      className="relative overflow-hidden bg-white py-28 dark:bg-[hsl(var(--background))] md:py-32"
+      className="vera-section-surface relative overflow-hidden bg-white py-28 md:py-32"
     >
       <div className="absolute inset-0 dot-grid opacity-25" />
       <SectionBackground variant="collage" colors={[C.blue, C.teal, C.blueDeep]} />
@@ -75,7 +75,7 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
             return (
               <article
                 key={card.title}
-                className="hover-card group relative flex min-h-[270px] flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
+                className="vera-card-surface hover-card group relative flex min-h-[270px] flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-6 shadow-soft backdrop-blur dark:border-white/10"
               >
                 <div
                   className="absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-10 blur-3xl transition-opacity group-hover:opacity-25"

@@ -36,7 +36,9 @@ function useDarkMode() {
 
   useEffect(() => {
     const stored = localStorage.getItem("vera-theme");
-    const isDark = stored === "dark";
+    const isDark = stored
+      ? stored === "dark"
+      : document.documentElement.classList.contains("dark");
 
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
@@ -89,7 +91,7 @@ export default function StandalonePageShell({
   useRevealOnScroll();
 
   return (
-    <main className="relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
+    <main className="vera-public relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
       <SiteHeader
         dark={dark}
         toggleDark={toggle}
