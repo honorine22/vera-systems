@@ -19,7 +19,7 @@ export const languageOptions: Array<{ code: Language; short: string; label: stri
 export const siteCopy = {
   en: {
     languageLabel: "Language",
-    logoSubtitle: "Precision food safety",
+    logoSubtitle: "Precision food safety, powered by data",
     nav: {
       about: "About",
       services: "Services",
@@ -41,14 +41,14 @@ export const siteCopy = {
       darkMode: "Dark mode",
     },
     hero: {
-      titleStart: "From inspection records to",
-      highlight: "daily control",
+      titleStart: "From backfilled paperwork to",
+      highlight: "real-time control",
       titleEnd: ".",
-      body: "Vera brings HACCP, ISO 22000, supplier checks, temperature logs, and corrective actions into one workspace built for food teams in Africa.",
+      body: "Africa's leading food safety consultancy — we build the awareness and capacity food teams need, and power it with real-time monitoring, so HACCP and ISO 22000 become daily practice, not paperwork.",
       stats: [
-        { k: "3", l: "cold-room deviations in 3 months" },
-        { k: "1", l: "pending supplier visit" },
-        { k: "Live", l: "supplier competence visibility" },
+        { k: "24/7", l: "CCP monitoring, not spot checks" },
+        { k: "0", l: "backdated log entries" },
+        { k: "100%", l: "digital HACCP & ISO 22000 evidence" },
       ],
     },
     clients: {
@@ -73,6 +73,15 @@ export const siteCopy = {
       missionLabel: "Mission",
       mission:
         "To elevate food safety across Africa through scientific rigor and data-driven systems that improve compliance, efficiency, and trust.",
+      visionLabel: "Vision",
+      vision:
+        "To become the definitive source of objective evidence for African food safety, building an intelligent, data-driven ecosystem where scientific rigor and real-time traceability drive industry-wide excellence.",
+      whyLabel: "Why we're here",
+      why: "We've stood in enough kitchens and factories across the region to recognize the pattern: logs backfilled the night before an audit, a deviation quietly smoothed over, a HACCP file that reads perfectly and means nothing. Not because anyone set out to cut corners — because no one had ever built them a system where doing it right was also the easy way. That gap, between what's on paper and what's actually happening on the floor, is what we exist to close. Food safety should be something a team lives, not something it performs once a year for an inspector — built on scientific rigor, real data, and standards that still hold up after we've walked out the door.",
+      howLabel: "What we bring",
+      how: "We start on the floor, not with the binder. Before we design anything, we spend time with the people who keep the operation running — auditors, technicians, the staff filling in the logs at 6am — because they're the ones who know where a system actually breaks down. From there, we bring together four things most consultancies keep in separate rooms: standards expertise, live data infrastructure, hands-on training, and clear communication, so a HACCP method isn't just written down — it's something your team can check, understand, and trust every day.",
+      whatLabel: "What to expect",
+      what: "In practice, that means designing HACCP and ISO 22000 systems that fit how your operation actually works, building dashboards that show a Critical Control Point drifting in real time instead of a month later, training and certifying the people who keep it all running, and helping you tell that story honestly to regulators, partners, and the public. Vera Consulting, Vera Data, Vera Academy, and Vera Media aren't four separate services — they're one system, built so food safety becomes part of the daily rhythm of your business, not a scramble before someone walks through the door.",
       pills: [
         {
           title: "Standards-led",
@@ -158,6 +167,9 @@ We develop real-time software dashboards, digital monitoring infrastructure, and
             "Statistical process control (SPC) and trend analysis",
             "Digital transformation of manual compliance processes."
           ],
+          roadmap: [
+            "Blockchain-based supply-chain traceability for batch and lot-level provenance",
+          ],
           statLabel: "faster follow-up",
         },
         {
@@ -209,8 +221,8 @@ Vera Media does not produce generic content. Every piece of output is grounded i
       previousStep: "Previous step",
       nextStep: "Next step",
       cta:
-        "Start with a free scoping call. We respond with a practical plan within 48 hours.",
-      ctaAction: "Book a free scoping call",
+        "Start with a GAP Analysis call. We respond with a practical plan within 48 hours.",
+      ctaAction: "Book a GAP Analysis call",
       cards: [
         {
           title: "Inquiry & scoping",
@@ -290,42 +302,42 @@ Vera Media does not produce generic content. Every piece of output is grounded i
     },
     platform: {
       eyebrow: "The Platform",
-      title: "One workspace for the records that matter.",
+      title: "One workspace for your records.",
       quote:
         "A control desk for food-safety work: deviations logged, suppliers scored, CCPs visible, and reports ready when needed.",
     },
     outcomes: {
-      eyebrow: "Client priorities",
-      title: "What better records make easier.",
+      eyebrow: "Testimonials",
+      title: "What our clients experience.",
       body: "The focus is simple: less chasing, fewer missing logs, clearer accountability, and stronger audit preparation.",
       items: [
         {
           quote:
             "Audit preparation becomes faster because documents, checks, and sign-offs are already organized.",
-          name: "Audit readiness",
-          role: "Evidence in one place",
-          initials: "AR",
+          name: "Operations Manager",
+          role: "Food Manufacturer",
+          initials: "OM",
         },
         {
           quote:
             "Supervisors can see which deviations still need action instead of waiting for end-of-day reviews.",
-          name: "Team follow-up",
-          role: "Clear ownership",
-          initials: "TF",
+          name: "Quality Assurance Lead",
+          role: "Beverage Processor",
+          initials: "QA",
         },
         {
           quote:
             "Supplier reviews become easier when receiving checks, documents, and corrective actions are tracked together.",
-          name: "Supplier control",
-          role: "Better purchasing decisions",
-          initials: "SC",
+          name: "Procurement Manager",
+          role: "Food Distributor",
+          initials: "PM",
         },
       ],
     },
     insights: {
-      eyebrow: "Insights",
-      title: "Notes from food operations.",
-      body: "Practical observations from compliance work, supplier checks, CCP monitoring, and daily food-safety routines.",
+      eyebrow: "Articles",
+      title: "Papers and articles from our team.",
+      body: "Research notes, technical articles, and case studies from food-safety practice — published as the work happens.",
       items: [
         {
           tag: "Case note",
@@ -359,20 +371,41 @@ Vera Media does not produce generic content. Every piece of output is grounded i
       body: "Vera keeps the focus on usable controls, clear records, and evidence that helps managers act quickly.",
       cards: [
         {
-          title: "Standards-based work",
-          body: "Recommendations connect to HACCP control points, ISO clauses, audit evidence, or operating data.",
+          title: "Standards, not guesswork",
+          body: "Every recommendation traces back to a HACCP control point, an ISO clause, or verifiable operating data.",
         },
         {
-          title: "Live risk visibility",
-          body: "Teams can see CCP status, deviation alerts, and corrective action progress from one workspace.",
+          title: "Risk, visible in real time",
+          body: "CCP status, deviation alerts, and corrective actions surface the moment they happen, not at the next audit.",
         },
         {
           title: "Compliance mapped to data",
-          body: "Findings become measurable outputs that are easier to verify and report.",
+          body: "Every finding becomes a measurable, verifiable record, evidence an auditor can trust on sight.",
         },
         {
-          title: "Made for Africa",
-          body: "Designed around local supply-chain realities, team capacity, and the pace of food operations.",
+          title: "Built for how Africa operates",
+          body: "Shaped by local supply-chain realities and the pace of real food operations, not translated from elsewhere.",
+        },
+      ],
+    },
+    explore: {
+      eyebrow: "Go deeper",
+      title: "More on who we are and how it works.",
+      items: [
+        {
+          label: "About Vera",
+          body: "Food science, data science, and audit experience, in one team.",
+          href: "/about",
+        },
+        {
+          label: "The Platform",
+          body: "Live CCP dashboards, deviation tracking, and supplier scoring.",
+          href: "/platform",
+        },
+        {
+          label: "Articles",
+          body: "Scientific papers and field notes from food-safety practice.",
+          href: "/insights",
         },
       ],
     },
@@ -383,7 +416,7 @@ Vera Media does not produce generic content. Every piece of output is grounded i
     },
     contact: {
       eyebrow: "Get in touch",
-      title: "Start with clarity. Move to control.",
+      title: "Learning food safety, with experience",
       body: "Book a consultation and see how Vera can improve compliance work, records, and follow-up.",
       talk: "Talk to us",
       cardTitle: "Ready to improve your food-safety system?",
@@ -408,12 +441,40 @@ Vera Media does not produce generic content. Every piece of output is grounded i
         phone: "+250 …",
         message: "Tell us about your operation, scale, and current pain points.",
       },
-      interests: [
-        "Food Safety Consultancy",
-        "Digital Records Platform",
-        "Platform Demo Request",
-        "Both Services",
+      interestGroups: [
+        {
+          group: "Vera Consulting",
+          options: [
+            "HACCP Plan Design & Implementation",
+            "ISO 22000 / FSSC 22000 Certification Support",
+            "Internal Audits & Pre-Audit Preparation",
+            "Supplier & Second-Party Audits",
+          ],
+        },
+        {
+          group: "Vera Data",
+          options: [
+            "Real-Time CCP Monitoring Dashboard",
+            "Compliance Data & Reporting Systems",
+            "Predictive Risk Modelling",
+          ],
+        },
+        {
+          group: "Vera Academy",
+          options: [
+            "HACCP & ISO 22000 Training",
+            "Food Safety Staffing & Placement",
+          ],
+        },
+        {
+          group: "Vera Media",
+          options: [
+            "Food Safety Awareness Content",
+            "Corporate Communications & Photography/Video",
+          ],
+        },
       ],
+      interestOther: "Not sure yet",
       success: "Message sent. Vera Systems will get back to you shortly.",
       error: "Could not send message. Please try again.",
     },

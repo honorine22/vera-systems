@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, CaretLeft, CaretRight } from "@phosphor-icons/react";
 import type { SiteCopy } from "../translations";
 
 const C = {
@@ -19,11 +19,11 @@ const insights = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=85",
+      "https://images.pexels.com/photos/8488032/pexels-photo-8488032.jpeg?auto=compress&cs=tinysrgb&w=900",
   },
   {
     image:
-      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=85",
+      "https://images.pexels.com/photos/8944957/pexels-photo-8944957.jpeg?auto=compress&cs=tinysrgb&w=900",
   },
 ];
 
@@ -46,7 +46,7 @@ function SectionHeader({
         <span className="h-px w-8 bg-current opacity-50" />
       </p>
 
-      <h2 className="mt-5 text-balance font-display text-3xl font-semibold tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-5xl">
+      <h2 className="mt-5 text-balance font-display text-4xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl">
         {title}
       </h2>
 
@@ -79,7 +79,7 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="insights"
-      className="relative overflow-visible bg-white dark:bg-[#07131F]"
+      className="relative overflow-visible bg-white py-24 dark:bg-[#07131F] md:py-28"
     >
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -105,7 +105,7 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
           aria-label="Previous article"
           className="absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:-translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <CaretLeft className="h-5 w-5" />
         </button>
         <button
           type="button"
@@ -113,7 +113,7 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
           aria-label="Next article"
           className="absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[hsl(var(--border))] bg-white/92 text-[hsl(var(--blue-700))] shadow-soft backdrop-blur transition hover:translate-x-0.5 hover:bg-white dark:border-white/10 dark:bg-[hsl(var(--card))]/85 dark:text-white md:flex"
         >
-          <ChevronRight className="h-5 w-5" />
+          <CaretRight className="h-5 w-5" />
         </button>
 
         <div
