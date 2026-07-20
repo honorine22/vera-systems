@@ -95,6 +95,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
   const index = servicesMeta.findIndex((service) => service.slug === slug);
   const meta = servicesMeta[index];
   const item = copy.services.items[index];
+  const accent = "#4A7BAF";
 
   if (!meta || !item) return null;
 
@@ -116,30 +117,30 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
         copy={copy}
       />
 
-      <section className="relative isolate min-h-[650px] overflow-hidden pb-14 pt-28 md:pb-16 md:pt-32">
+      <section id="hero" className="relative isolate flex min-h-[100svh] items-center overflow-hidden pb-10 pt-24 lg:h-[100svh] lg:pb-8 lg:pt-20">
         <Image
           src={meta.image}
           alt=""
           fill
           priority
-          className={cn("-z-20 object-cover", slug === "vera-media" && "scale-105 opacity-55 blur-[1px]")}
+          className={cn("-z-20 object-cover", slug === "vera-media" && "scale-105 opacity-50 blur-[1px]")}
           sizes="100vw"
         />
-        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-[#061225]/88" : "bg-[#07131F]/80")} />
-        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-[radial-gradient(circle_at_50%_42%,rgba(217,154,61,.10),transparent_42%)]" : "bg-gradient-to-r from-[#07131F]/95 via-[#07131F]/82 to-[#07131F]/50")} />
+        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-black/75" : "bg-[#07131F]/80")} />
+        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-gradient-to-t from-black/75 via-black/25 to-black/60" : "bg-gradient-to-r from-[#07131F]/95 via-[#07131F]/82 to-[#07131F]/50")} />
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.14]"
           style={{
-            backgroundImage: `radial-gradient(circle at 20% 20%, ${meta.accent}, transparent 55%)`,
+            backgroundImage: `radial-gradient(circle at 20% 20%, ${accent}, transparent 55%)`,
           }}
         />
 
         <div className="relative mx-auto max-w-7xl px-6">
-          <div className="mx-auto mt-6 max-w-6xl text-center">
+          <div className="mx-auto max-w-6xl text-center">
             <div data-reveal>
               <div
                 className="inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[10px] font-bold text-white"
-                style={{ backgroundColor: meta.accent }}
+                style={{ backgroundColor: accent }}
               >
                 <Icon className="h-3.5 w-3.5" weight="duotone" />
                 {item.label}
@@ -160,10 +161,10 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
 
                 <div
                   className="inline-flex items-center gap-2 rounded-2xl border px-4 py-3"
-                  style={{ borderColor: `${meta.accent}35`, background: `${meta.accent}0d` }}
+                  style={{ borderColor: `${accent}55`, background: `${accent}18` }}
                 >
-                  <Icon className="h-4 w-4" weight="duotone" style={{ color: meta.accent }} />
-                  <p className="max-w-[11rem] text-xs font-bold uppercase tracking-wide leading-tight" style={{ color: meta.accent }}>
+                  <Icon className="h-4 w-4" weight="duotone" style={{ color: "#9BC5EA" }} />
+                  <p className="max-w-[11rem] text-xs font-bold uppercase tracking-wide leading-tight text-[#BFE0FA]">
                     {item.statLabel}
                   </p>
                 </div>
@@ -184,7 +185,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
         <div className="mx-auto max-w-7xl px-6">
           <p
             className="text-sm font-bold"
-            style={{ color: meta.accent }}
+            style={{ color: accent }}
           >
             What&rsquo;s included
           </p>
@@ -200,9 +201,9 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
               >
                 <span
                   className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full"
-                  style={{ backgroundColor: `${meta.accent}18` }}
+                  style={{ backgroundColor: `${accent}18` }}
                 >
-                  <Check className="h-3.5 w-3.5" weight="bold" style={{ color: meta.accent }} />
+                  <Check className="h-3.5 w-3.5" weight="bold" style={{ color: accent }} />
                 </span>
                 <span>{bullet}</span>
               </li>
@@ -213,7 +214,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
             <div className="mt-10 rounded-2xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--muted))]/20 p-6 dark:border-white/15 dark:bg-white/5">
               <span
                 className="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white"
-                style={{ backgroundColor: meta.accent }}
+                style={{ backgroundColor: accent }}
               >
                 On the roadmap
               </span>

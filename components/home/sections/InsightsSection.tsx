@@ -3,10 +3,6 @@
 import { ArrowRight } from "@phosphor-icons/react";
 import type { SiteCopy } from "../translations";
 
-const C = {
-  teal: "#18A89D",
-};
-
 const insights = [
   {
     image:
@@ -38,16 +34,11 @@ function SectionHeader({
   body?: string;
 }) {
   return (
-    <div className="max-w-3xl" data-reveal>
-      <p className="inline-flex items-center gap-2.5 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
-        <span className="h-px w-8 bg-current opacity-50" />
-        {eyebrow}
-        <span className="h-px w-8 bg-current opacity-50" />
-      </p>
+    <div className="max-w-4xl" data-reveal>
 
-      <h2 className="mt-5 text-balance font-display text-4xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl">
+      <h6 className="mt-5 text-balance font-display text-2xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-4xl">
         {title}
-      </h2>
+      </h6>
 
       {body && (
         <p className="mt-5 max-w-2xl text-base leading-relaxed text-[hsl(var(--muted-foreground))] md:text-lg">
@@ -67,7 +58,7 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="insights"
-      className="vera-section-surface relative overflow-hidden bg-white py-24 md:py-28"
+      className="vera-section-surface relative overflow-hidden bg-white py-16 md:py-20"
     >
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -87,7 +78,7 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
       </div>
 
       <div className="relative mx-auto mt-10 max-w-7xl px-6">
-        <div className="columns-1 gap-5 md:columns-2 lg:columns-3">
+        <div className="grid grid-cols-1 items-start gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {insightItems.map((item, index) => (
             <InsightCard key={item.title} item={item} index={index} />
           ))}
@@ -98,14 +89,14 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
 }
 
 function InsightCard({ item, index }: { item: InsightItem; index: number }) {
-  const imageHeight = ["h-44", "h-56", "h-48", "h-64"][index % 4];
+  const stagger = index % 2 === 1 ? "lg:mt-10" : "";
 
   return (
      <a
       href="#"
-      className="vera-card-surface group relative mb-5 inline-flex w-full break-inside-avoid flex-col overflow-hidden rounded-[1.4rem] border border-[hsl(var(--border))] bg-white shadow-[0_18px_44px_-34px_rgba(26,58,92,0.48)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-32px_rgba(26,58,92,.58)] dark:border-white/10"
+      className={`group relative flex w-full flex-col transition duration-300 hover:-translate-y-1 ${stagger}`}
     >
-      <div className={`relative w-full overflow-hidden rounded-[1.3rem] ${imageHeight}`}>
+      <div className="relative h-48 w-full overflow-hidden rounded-[1.4rem] bg-[hsl(var(--muted))] sm:h-52">
         <img
           src={item.image}
           alt=""
@@ -114,9 +105,9 @@ function InsightCard({ item, index }: { item: InsightItem; index: number }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#07182A]/48 via-transparent to-transparent" />
       </div>
 
-      <div className="flex min-h-0 flex-1 flex-col p-4 sm:p-5">
+      <div className="flex min-h-0 flex-1 flex-col px-1 pt-5">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <span className="inline-flex items-center rounded-full bg-[hsl(var(--teal))]/10 px-2.5 py-1 text-[11px] font-bold" style={{ color: C.teal }}>
+          <span className="inline-flex items-center rounded-full bg-[hsl(var(--blue-100))] px-2.5 py-1 text-[11px] font-bold text-[hsl(var(--blue-700))] dark:bg-white/10 dark:text-[hsl(var(--blue-300))]">
             {item.tag}
           </span>
           <ArrowRight className="h-5 w-5 shrink-0 text-[hsl(var(--blue-700))] transition group-hover:translate-x-1 dark:text-[hsl(var(--blue-300))]" />

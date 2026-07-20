@@ -12,10 +12,14 @@ const C = {
 
 const whyCards = [
   { icon: Medal, accent: C.blue },
-  { icon: Pulse, accent: C.teal },
+  { icon: Pulse, accent: "#6FA7D8" },
   { icon: ChartBar, accent: C.blueDeep },
   { icon: Globe, accent: C.blueDeep },
 ];
+
+function cn(...classes: Array<string | false | null | undefined>) {
+  return classes.filter(Boolean).join(" ");
+}
 
 function SectionHeader({
   eyebrow,
@@ -28,13 +32,7 @@ function SectionHeader({
 }) {
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <p className="inline-flex items-center gap-2.5 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
-        <span className="h-px w-8 bg-current opacity-50" />
-        {eyebrow}
-        <span className="h-px w-8 bg-current opacity-50" />
-      </p>
-
-      <h2 className="mt-5 text-balance font-display text-4xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl">
+      <h2 className="text-balance font-display text-4xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl">
         {title}
       </h2>
 
@@ -56,7 +54,7 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="why"
-      className="vera-section-surface relative overflow-hidden bg-white py-28 md:py-32"
+      className="vera-section-surface relative overflow-hidden bg-white py-16 md:py-20"
     >
       <div className="absolute inset-0 dot-grid opacity-25" />
       <SectionBackground variant="collage" colors={[C.blue, C.teal, C.blueDeep]} />
@@ -68,14 +66,17 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
           body={copy.why.body}
         />
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 md:grid-cols-4 md:items-start">
           {whyItems.map((card, index) => {
             const Icon = card.icon;
 
             return (
               <article
                 key={card.title}
-                className="vera-card-surface hover-card group relative flex min-h-[270px] flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-6 shadow-soft backdrop-blur dark:border-white/10"
+                className={cn(
+                  "vera-card-surface hover-card group relative flex min-h-[250px] flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-5 shadow-soft backdrop-blur dark:border-white/10",
+                  index % 2 === 1 && "md:mt-8"
+                )}
               >
                 <div
                   className="absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-10 blur-3xl transition-opacity group-hover:opacity-25"

@@ -76,19 +76,34 @@ export default function ServicesIndexClient() {
         copy={copy}
       />
 
-      <section className="vera-section-surface relative overflow-hidden pb-20 pt-32 md:pb-28 md:pt-40">
-        <div className="brand-aurora opacity-30" />
-        <div className="mx-auto max-w-7xl px-6">
-          <p className="text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
-            {copy.services.eyebrow}
-          </p>
-          <h1 className="mt-3 max-w-4xl text-balance font-display text-4xl font-semibold tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl">
+      <section id="hero" className="relative isolate flex min-h-[100svh] items-center overflow-hidden pb-14 pt-24 lg:h-[100svh]">
+        <Image
+          src={servicesMeta[0].image}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="-z-20 object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-[#061225]/80" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#061225]/95 via-[#061225]/82 to-[#061225]/55" />
+        <div className="mx-auto w-full max-w-7xl px-6 text-center">
+          <h1 className="mx-auto max-w-4xl text-balance font-display text-4xl font-semibold tracking-tight text-white md:text-6xl">
             {copy.services.title}
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-[hsl(var(--muted-foreground))] md:text-lg">
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-white/80 drop-shadow-[0_2px_14px_rgba(0,0,0,.5)] md:text-lg">
             {copy.services.body}
           </p>
+        </div>
+      </section>
 
+      <section className="py-14 md:py-16">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="mb-10 flex items-end justify-between gap-6">
+            <div>
+              <h2 className="mt-2 font-display text-3xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">Explore Vera Systems</h2>
+            </div>
+          </div>
           <div className="mt-12 grid grid-cols-1 items-start gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-4">
             {servicesMeta.map((service, index) => {
               const item = copy.services.items[index];
@@ -100,7 +115,7 @@ export default function ServicesIndexClient() {
                 <Link
                   key={service.slug}
                   href={`/services/${service.slug}`}
-                  className="vera-card-surface group relative flex w-full flex-col overflow-hidden rounded-[1.45rem] border border-[hsl(var(--border))] bg-white shadow-[0_22px_56px_-42px_rgba(26,58,92,.46)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_66px_-42px_rgba(26,58,92,.54)] dark:border-white/10"
+                  className={`vera-card-surface group relative flex w-full flex-col overflow-hidden rounded-[1.45rem] border border-[hsl(var(--border))] bg-white shadow-[0_22px_56px_-42px_rgba(26,58,92,.46)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_30px_66px_-42px_rgba(26,58,92,.54)] dark:border-white/10 ${index % 2 === 1 ? "lg:mt-8" : ""}`}
                 >
                   <div className="relative h-40 w-full overflow-hidden">
                     <Image
@@ -113,12 +128,12 @@ export default function ServicesIndexClient() {
                     <div
                       className="absolute inset-0"
                       style={{
-                        background: `linear-gradient(180deg, transparent 30%, ${service.accent}66 100%)`,
+                      background: "linear-gradient(180deg, transparent 30%, rgba(26,58,92,.72) 100%)",
                       }}
                     />
                     <div
                       className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[10px] font-bold text-white"
-                      style={{ backgroundColor: service.accent }}
+                      style={{ backgroundColor: "#4A7BAF" }}
                     >
                       <Icon className="h-3.5 w-3.5" weight="duotone" />
                       {item.label}
@@ -135,7 +150,7 @@ export default function ServicesIndexClient() {
 
                     <span
                       className="mt-5 inline-flex items-center gap-2 text-sm font-bold transition group-hover:gap-3"
-                      style={{ color: service.accent }}
+                      style={{ color: "#4A7BAF" }}
                     >
                       {copy.actions.learnMore}
                       <ArrowRight className="h-4 w-4" />

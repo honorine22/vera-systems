@@ -86,48 +86,46 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="how-it-works"
-      className="vera-section-surface relative isolate overflow-x-clip bg-[#F7FBFE] py-20 sm:py-28"
+      className="vera-section-surface relative isolate overflow-x-clip bg-[#F7FBFE] py-12 sm:py-16"
     >
       <div className="mx-auto max-w-7xl px-6">
-        <header className="max-w-3xl border-b border-[#D7E3EE] pb-7 dark:border-white/10">
-          <p className="text-[10px] font-black uppercase tracking-[0.22em] text-[#4A7BAF] dark:text-[#9BC5EA]">
-            {journey.eyebrow ?? "How it works"}
-          </p>
-
-          <p className="mt-3 text-[10px] font-black uppercase tracking-[0.2em] text-[#6F8297] dark:text-white/55">
-            {journey.journeyLabel ??
-              "Vera Systems client journey — from first inquiry to continuous live compliance"}
-          </p>
-
-          <h2 className="mt-4 font-display text-4xl font-medium leading-[1.05] tracking-[-0.045em] text-[#173657] dark:text-white sm:text-6xl">
+        <header className="max-w-3xl">
+          <h2 className="font-display text-4xl font-medium leading-[1.05] tracking-[-0.045em] text-[#173657] dark:text-white sm:text-6xl">
             {journey.title ?? "Your journey with Vera"}
           </h2>
-
-          {journey.body ? (
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#6A8096] dark:text-white/72 sm:text-base">
-              {journey.body}
-            </p>
-          ) : null}
         </header>
 
-        <div className="relative mx-auto mt-14 max-w-5xl">
-          <div aria-hidden="true" className="absolute bottom-4 left-4 top-4 w-px bg-gradient-to-t from-[#18A89D] via-[#4A7BAF] to-[#8FC2E8] md:left-1/2" />
-          <div className="flex flex-col gap-10 md:gap-5">
-            {[...steps].reverse().map((step, index) => (
-              <StepRow
-                key={`${step.number}-${step.title}`}
-                step={step}
-                expanded={Boolean(expandedSteps[step.number])}
-                onToggle={() => toggleStep(step.number)}
-                readMoreLabel={journey.readMoreLabel ?? "Read more"}
-                showLessLabel={journey.showLessLabel ?? "Show less"}
-                index={index}
-              />
+        <div className="relative mt-8">
+          <div aria-hidden="true" className="absolute bottom-4 left-4 top-4 w-px bg-gradient-to-b from-[#4A7BAF] via-[#18A89D] to-[#8ADFD4] md:hidden" />
+          <div className="space-y-10 md:space-y-3">
+            {[steps.slice(0, 4), steps.slice(4, 8)].map((group, pathIndex) => (
+              <div key={pathIndex} className="relative md:min-h-[260px]">
+                <div
+                  aria-hidden="true"
+                  className="absolute left-[3%] right-[3%] top-2 hidden h-24 rounded-[50%] border-t-2 border-[#6F8297]/45 md:block dark:border-[#8FC2E8]/30"
+                />
+                {pathIndex === 0 ? (
+                  <div aria-hidden="true" className="absolute -bottom-3 right-[3%] top-8 hidden w-10 rounded-r-[2rem] border-b border-r border-[#6F8297]/35 md:block dark:border-[#8FC2E8]/25" />
+                ) : null}
+                <div className="grid gap-10 md:grid-cols-4 md:gap-7">
+                  {group.map((step, index) => (
+                    <StepRow
+                      key={`${step.number}-${step.title}`}
+                      step={step}
+                      expanded={Boolean(expandedSteps[step.number])}
+                      onToggle={() => toggleStep(step.number)}
+                      readMoreLabel={journey.readMoreLabel ?? "Read more"}
+                      showLessLabel={journey.showLessLabel ?? "Show less"}
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-[#D7E3EE] pt-6 dark:border-white/10 sm:flex-row sm:items-center">
+        <div className="mt-6 flex flex-col items-start justify-between gap-4 border-t border-[#D7E3EE] pt-6 dark:border-white/10 sm:flex-row sm:items-center">
           <p className="max-w-2xl text-sm leading-6 text-[#6A8096] dark:text-white/70">
             {journey.cta ??
               "Start with a GAP Analysis call. We respond with a practical plan within 48 hours."}
@@ -163,15 +161,16 @@ function StepRow({
   index: number;
 }) {
   const hasMoreContent = step.body.length > 130;
+  const desktopOffsets = ["md:mt-24", "md:mt-16", "md:mt-10", "md:mt-7"];
 
   return (
-    <div data-reveal className={cn("relative min-h-[150px] pl-12 md:grid md:grid-cols-2 md:gap-16 md:pl-0", index % 2 === 0 ? "md:text-right" : "md:text-left")}>
-      <div className="absolute left-0 top-0 z-10 grid h-8 w-8 place-items-center rounded-full border border-[#4A7BAF] bg-white text-[10px] font-black text-[#4A7BAF] shadow-[0_0_0_5px_rgba(143,194,232,.12)] dark:bg-[#061225] dark:text-[#9BC5EA] md:left-1/2 md:-translate-x-1/2">
+    <div data-reveal className={cn("relative min-h-[150px] pl-12 md:min-h-0 md:pl-0", desktopOffsets[index])}>
+      <div className="absolute left-0 top-0 z-10 grid h-8 w-8 place-items-center rounded-full border border-[#4A7BAF] bg-white text-[10px] font-black text-[#4A7BAF] shadow-[0_0_0_5px_rgba(143,194,232,.12)] dark:bg-[#061225] dark:text-[#9BC5EA] md:relative">
         {step.number}
       </div>
 
-      <div className={cn("pt-0", index % 2 === 0 ? "md:col-start-1 md:pr-2" : "md:col-start-2 md:pl-2")}>
-        <div className={cn("flex flex-wrap items-center gap-2", index % 2 === 0 && "md:justify-end")}>
+      <div className="relative z-10 pt-0 md:ml-4 md:border-l md:border-[#6F8297]/40 md:bg-[#F7FBFE] md:pl-4 md:pt-3 dark:md:border-white/20 dark:md:bg-[#061225]">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[#4A7BAF] dark:text-[#9BC5EA]">
             {step.phase}
           </span>

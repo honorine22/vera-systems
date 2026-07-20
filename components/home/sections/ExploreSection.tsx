@@ -6,21 +6,17 @@ import type { SiteCopy } from "../translations";
 import SectionBackground from "../SectionBackground";
 
 const icons = [Users, SquaresFour, BookOpen];
-const accents = ["#4A7BAF", "#18A89D", "#1A3A5C"];
+const accents = ["#4A7BAF", "#6FA7D8", "#1A3A5C"];
 
 export default function ExploreSection({ copy }: { copy: SiteCopy }) {
   const items = copy.explore.items;
 
   return (
-    <section className="relative overflow-hidden border-t border-[hsl(var(--border))] bg-[hsl(var(--muted))]/20 py-20 dark:border-white/10 dark:bg-white/[0.02] md:py-24">
+    <section className="relative overflow-hidden border-t border-[hsl(var(--border))] bg-[hsl(var(--muted))]/20 py-16 dark:border-white/10 dark:bg-white/[0.02] md:py-20">
       <SectionBackground variant="topo" colors={accents as [string, string, string]} />
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="max-w-2xl" data-reveal>
-          <p className="type-eyebrow inline-flex items-center gap-2.5 text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
-            <span className="h-px w-8 bg-current opacity-45" />
-            {copy.explore.eyebrow}
-          </p>
-          <h2 className="mt-4 text-balance font-display text-3xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-4xl">
+          <h2 className="font-display text-3xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-4xl">
             {copy.explore.title}
           </h2>
         </div>

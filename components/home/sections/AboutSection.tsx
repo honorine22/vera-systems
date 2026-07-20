@@ -41,12 +41,8 @@ function SectionHeader({
 }) {
   return (
     <div className="max-w-3xl">
-      <p className="inline-flex items-center gap-2.5 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
-        <span className="h-px w-8 bg-current opacity-50" />
-        {eyebrow}
-      </p>
 
-      <h2 className="mt-4 text-balance font-display text-4xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-5xl">
+      <h2 className="font-display text-4xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-5xl">
         {title}
       </h2>
 
@@ -108,42 +104,27 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="about"
-      className="vera-section-surface relative overflow-hidden bg-[hsl(var(--muted))]/40 py-24 md:py-28"
+      className="vera-section-surface relative -mt-20 overflow-hidden bg-[hsl(var(--muted))]/40"
     >
-      <div className="absolute inset-0 dot-grid opacity-35 dark:opacity-20" />
-      <SectionBackground variant="collage" colors={[C.blue, C.teal, C.blueDeep]} />
-
-      <div className="relative mx-auto max-w-7xl px-6">
-        <div className="grid gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
-          <div data-reveal="left">
-            <div className="hover-card relative aspect-[4/4.7] overflow-hidden rounded-[2rem] border border-[hsl(var(--border))] shadow-vera dark:border-white/10">
-              <img
-                src="https://images.pexels.com/photos/18712504/pexels-photo-18712504.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt={copy.about.title}
-                className="h-full w-full object-cover transition duration-1000 hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-950))]/72 via-[hsl(var(--navy-950))]/10 to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/50 bg-white/90 p-4 backdrop-blur-xl dark:border-white/10 dark:bg-[hsl(var(--card))]/88">
-                <p className="text-xs font-bold text-[hsl(var(--teal))]">
-                  {copy.about.established}
-                </p>
-                <p className="font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">
-                  {copy.about.location}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div data-reveal="right">
-            <SectionHeader
-              eyebrow={copy.about.eyebrow}
-              title={copy.about.title}
-              body={copy.about.body}
-            />
-
-          </div>
+      <div id="hero" className="relative isolate flex min-h-[100svh] items-center overflow-hidden pb-10 pt-24 lg:h-[100svh] lg:pb-8 lg:pt-20">
+        <img
+          src="https://images.pexels.com/photos/18712504/pexels-photo-18712504.jpeg?auto=compress&cs=tinysrgb&w=1800"
+          alt=""
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 -z-10 bg-[#061225]/76" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#061225]/95 via-[#061225]/76 to-[#061225]/48" />
+        <div className="mx-auto w-full px-6 text-center" data-reveal>
+          <h1 className="mx-auto text-balance font-display text-4xl font-semibold leading-[1.06] tracking-[-0.04em] text-white md:text-6xl">
+            {copy.about.title}
+          </h1>
+          <p className="mx-auto mt-6 max-w-5xl text-base leading-8 text-white/80 drop-shadow-[0_2px_14px_rgba(0,0,0,.5)] md:text-lg">
+            {copy.about.body}
+          </p>
         </div>
+      </div>
 
+      <div className="relative mx-auto max-w-7xl px-6 py-16 md:py-20">
         <NarrativeSection copy={copy} />
 
         <div className="mt-14" data-reveal>

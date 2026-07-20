@@ -317,19 +317,6 @@ function SectionHeader({
 }) {
   return (
     <div className={cn("", centered && "mx-auto text-center")} data-reveal>
-      <p
-        className={cn(
-          "inline-flex items-center gap-2.5 text-sm font-bold",
-          light
-            ? "text-white/55"
-            : "text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]"
-        )}
-      >
-        <span className="h-px w-8 bg-current opacity-50" />
-        {eyebrow}
-        <span className="h-px w-8 bg-current opacity-50" />
-      </p>
-
       <h2
         className={cn(
           "mt-5 text-balance font-display text-4xl font-medium tracking-tight md:text-6xl",
@@ -392,7 +379,7 @@ const heroFadeUpVariants = {
 function Hero({ copy }: { copy: SiteCopy }) {
   const heroStats = copy.hero.stats.map((stat, index) => ({
     ...stat,
-    lightColor: ["#8FC2E8", "#8ADFD4", "#EAF4FC"][index],
+    lightColor: ["#8FC2E8", "#6FA7D8", "#EAF4FC"][index],
   }));
 
   const titleWords = copy.hero.titleStart.trim().split(/\s+/);
@@ -402,7 +389,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="hero"
-      className="relative isolate w-full max-w-full overflow-x-clip pb-20 pt-28 sm:pt-32 lg:pb-28 lg:pt-36"
+      className="relative isolate w-full max-w-full overflow-x-clip pb-14 pt-24 sm:pb-16 sm:pt-28 lg:pb-16 lg:pt-28"
     >
       <motion.div
         className="pointer-events-none absolute inset-0 -z-30 overflow-hidden bg-[#0A1B2E]"
@@ -417,7 +404,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
           playsInline
           preload="metadata"
           poster="https://images.pexels.com/videos/8633309/tomato-plant-8633309.jpeg?auto=compress&cs=tinysrgb&h=1200"
-          className="h-full w-full object-cover opacity-72"
+          className="h-full w-full object-cover opacity-90"
         >
           <source
             src="https://videos.pexels.com/video-files/8633309/8633309-hd_1920_1080_30fps.mp4"
@@ -426,9 +413,9 @@ function Hero({ copy }: { copy: SiteCopy }) {
         </video>
 
         {/* Directional scrim: near-opaque navy behind the copy, opening up toward the visual */}
-        <div className="absolute inset-0 bg-black/28" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#07131F]/[.98] via-[#07131F]/90 to-[#07131F]/62 sm:to-[#07131F]/48" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#07131F]/95 via-transparent to-[#07131F]/55" />
+        <div className="absolute inset-0 bg-black/18" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#07131F]/90 via-[#07131F]/70 to-[#07131F]/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#07131F]/75 via-transparent to-[#07131F]/40" />
       </motion.div>
 
       <motion.div
@@ -439,16 +426,8 @@ function Hero({ copy }: { copy: SiteCopy }) {
       >
         <div className="grid items-center gap-12 xl:grid-cols-[minmax(0,1.1fr)_minmax(430px,.9fr)] xl:gap-12">
           <div>
-            <motion.div
-              variants={heroFadeUpVariants}
-              className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-white/90 backdrop-blur"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#8ADFD4]" />
-              {copy.logoSubtitle}
-            </motion.div>
-
             <h1
-              className="!normal-case mt-6 max-w-[760px] font-display text-6xl font-medium leading-[0.96] tracking-[-0.07em] text-white sm:text-7xl"
+              className="!normal-case mt-5 max-w-[680px] font-display text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-white drop-shadow-[0_3px_20px_rgba(0,0,0,.35)] sm:text-5xl lg:text-6xl"
               style={{ textTransform: "none" }}
             >
               <span className="block overflow-hidden pb-[0.1em]">
@@ -470,14 +449,14 @@ function Hero({ copy }: { copy: SiteCopy }) {
 
             <motion.p
               variants={heroFadeUpVariants}
-              className="mt-8 max-w-[700px] leading-[1.6] tracking-[-0.025em] text-white/75"
+              className="mt-6 max-w-[650px] leading-[1.6] tracking-[-0.02em] text-white/85 drop-shadow-[0_2px_12px_rgba(0,0,0,.45)]"
             >
               {copy.hero.body}
             </motion.p>
 
             <motion.div
               variants={heroFadeUpVariants}
-              className="mt-9 flex flex-wrap items-center gap-3 sm:gap-4"
+              className="mt-7 flex flex-wrap items-center gap-3 sm:gap-4"
             >
               <button
                 type="button"
@@ -502,12 +481,12 @@ function Hero({ copy }: { copy: SiteCopy }) {
 
             <motion.div
               variants={heroFadeUpVariants}
-              className="mt-10 grid max-w-[790px] gap-3 sm:grid-cols-3"
+              className="mt-8 grid max-w-[790px] gap-3 sm:grid-cols-3"
             >
               {heroStats.map((stat) => (
                 <div
                   key={stat.l}
-                  className="hero-stat-card-dark min-h-[125px] rounded-[1.35rem] border border-white/15 bg-white/8 p-5 backdrop-blur-md"
+                  className="hero-stat-card-dark min-h-[105px] rounded-[1.25rem] border border-white/15 bg-[#07131F]/45 p-4 backdrop-blur-md"
                 >
                   <p
                     className="font-display text-[clamp(1.9rem,2.5vw,2.55rem)] font-semibold leading-none tracking-[-0.05em]"
@@ -621,7 +600,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
                         type="monotone"
                         dataKey="p"
                         name="Target"
-                        stroke="#8ADFD4"
+                        stroke="#8FC2E8"
                         strokeWidth={1.5}
                         strokeDasharray="4 4"
                         dot={false}
@@ -656,7 +635,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
               </div>
 
               <div className="hero-chip-card absolute -bottom-4 -right-4 hidden rounded-2xl border border-white/25 bg-[#0A1B2E]/80 px-4 py-3 text-xs shadow-[0_18px_35px_-22px_rgba(0,0,0,.55)] backdrop-blur-xl md:block">
-                <p className="font-bold text-[#8ADFD4]">Audit ready</p>
+                <p className="font-bold text-[#8FC2E8]">Audit ready</p>
                 <p className="mt-0.5 font-semibold text-white">
                   ISO 22000 — 96%
                 </p>
@@ -757,7 +736,7 @@ function Services({ copy }: { copy: SiteCopy }) {
                         <Icon className="h-3.5 w-3.5" weight="duotone" />
                         {service.label}
                       </div>
-                      <h3 className="mt-4 text-balance font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">
+                      <h3 className="font-display text-2xl font-semibold text-[hsl(var(--navy-950))] dark:text-white">
                         {service.title}
                       </h3>
                     </div>
@@ -1359,7 +1338,7 @@ function ReportsDashboard() {
           >
             {badge}
           </span>
-          <p className="mt-4 text-balance font-display text-base font-extrabold text-[hsl(var(--navy-950))] dark:text-white">
+          <p className="font-display text-base font-extrabold text-[hsl(var(--navy-950))] dark:text-white">
             {title}
           </p>
           <p className="mt-2 text-sm leading-relaxed text-[hsl(var(--muted-foreground))]">
@@ -1382,12 +1361,12 @@ function ReportsDashboard() {
 export function Testimonials({ copy }: { copy: SiteCopy }) {
   const outcomeItems = copy.outcomes.items.map((item, index) => ({
     ...item,
-    accent: [C.blue, C.teal, C.blueDeep][index],
+    accent: [C.blue, "#6FA7D8", C.blueDeep][index],
   }));
 
   return (
     <motion.section
-      className="relative overflow-hidden bg-white py-28 dark:bg-[#061225] md:py-32"
+      className="relative overflow-hidden bg-white py-16 dark:bg-[#061225] md:py-20"
       style={{ backgroundSize: "200% 200%" }}
       animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
       transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
@@ -1672,10 +1651,10 @@ export function Contact({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[hsl(var(--muted))]/30 py-28 dark:bg-[hsl(var(--background))] md:py-32"
+      className="relative overflow-hidden bg-[hsl(var(--muted))]/30 py-16 dark:bg-[hsl(var(--background))] md:py-20"
     >
       <div className="absolute inset-0 dot-grid opacity-30" />
-      <div className="absolute left-0 top-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/4 rounded-full bg-[hsl(var(--blue-100))]/55 blur-3xl dark:bg-[hsl(var(--teal))]/6" />
+      <div className="absolute left-0 top-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/4 rounded-full bg-[hsl(var(--blue-100))]/55 blur-3xl dark:bg-[#4A7BAF]/8" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
@@ -1692,7 +1671,7 @@ export function Contact({ copy }: { copy: SiteCopy }) {
           >
             <p
               className="text-[10px] font-black uppercase tracking-[0.22em]"
-              style={{ color: C.teal }}
+              style={{ color: C.blue }}
             >
               {copy.contact.talk}
             </p>

@@ -38,13 +38,17 @@ export default function SiteHeader({
   const router = useRouter();
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const isServiceDetail = pathname.startsWith("/services/");
 
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [servicesHover, setServicesHover] = useState(false);
-  const [overHero, setOverHero] = useState(false);
+  const [overHero, setOverHero] = useState(
+    pathname === "/" ||
+      pathname === "/about" ||
+      pathname === "/services" ||
+      pathname.startsWith("/services/")
+  );
 
   useEffect(() => {
     const update = () => setScrolled(window.scrollY > 28);
@@ -59,11 +63,6 @@ export default function SiteHeader({
   // transparent + light-on-dark while it's still overlapping the hero, then
   // flip to the normal opaque/light-header treatment once scrolled past it.
   useEffect(() => {
-    if (!isHome) {
-      setOverHero(false);
-      return;
-    }
-
     const heroEl = document.getElementById("hero");
     if (!heroEl) {
       setOverHero(false);
@@ -78,9 +77,9 @@ export default function SiteHeader({
     observer.observe(heroEl);
 
     return () => observer.disconnect();
-  }, [isHome]);
+  }, [pathname]);
 
-  const lightOnDark = overHero || (isServiceDetail && !scrolled);
+  const lightOnDark = overHero;
 
   function goHome() {
     if (isHome) {
@@ -102,9 +101,7 @@ export default function SiteHeader({
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav",
         lightOnDark
-          ? scrolled
-            ? "border-b border-white/10 bg-[#0A1B2E]/78 shadow-[0_18px_45px_-35px_rgba(0,0,0,.55)] backdrop-blur-xl"
-            : "bg-transparent"
+          ? "bg-transparent"
           : scrolled
           ? "border-[hsl(var(--border))] border-b bg-white/90 shadow-[0_18px_45px_-35px_rgba(15,23,42,.55)] backdrop-blur-xl dark:border-white/10 dark:bg-[#061225]/95"
           : "bg-white/82 backdrop-blur-xl dark:bg-[#061225]/95"
