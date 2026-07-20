@@ -123,11 +123,11 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
           alt=""
           fill
           priority
-          className={cn("-z-20 object-cover", slug === "vera-media" && "scale-105 opacity-50 blur-[1px]")}
+          className={cn("-z-20 object-cover", slug === "vera-media" && "scale-105 opacity-90")}
           sizes="100vw"
         />
-        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-black/75" : "bg-[#07131F]/80")} />
-        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-gradient-to-t from-black/75 via-black/25 to-black/60" : "bg-gradient-to-r from-[#07131F]/95 via-[#07131F]/82 to-[#07131F]/50")} />
+        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-black/52" : "bg-[#07131F]/55")} />
+        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-gradient-to-t from-black/60 via-black/15 to-black/42" : "bg-gradient-to-r from-[#07131F]/78 via-[#07131F]/58 to-[#07131F]/25")} />
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.14]"
           style={{
@@ -181,7 +181,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
         </div>
       </section>
 
-      <section className="border-t border-[hsl(var(--border))] bg-white py-16 dark:border-white/10 dark:bg-[hsl(var(--muted))]/10 md:py-20">
+      <section className="vera-page-gradient border-t border-[hsl(var(--border))] bg-white py-16 dark:border-white/10 dark:bg-[hsl(var(--muted))]/10 md:py-20">
         <div className="mx-auto max-w-7xl px-6">
           <p
             className="text-sm font-bold"
@@ -236,7 +236,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
         </div>
       </section>
 
-      <section className="py-16 md:py-20">
+      <section className="vera-page-gradient py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-6">
           <div className="flex flex-col items-start justify-between gap-6 rounded-[1.75rem] border border-[#D7E3EE] bg-white p-8 text-[#173657] shadow-[0_20px_55px_-34px_rgba(18,63,102,.38)] dark:border-white/10 dark:bg-[#0A1B2E] dark:text-white dark:shadow-[0_24px_60px_-34px_rgba(0,0,0,.75)] sm:flex-row sm:items-center md:p-10">
             <div>
@@ -259,7 +259,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
         </div>
       </section>
 
-      <section className="border-t border-[hsl(var(--border))] py-16 dark:border-white/10 md:py-20">
+      <section className="vera-page-gradient border-t border-[hsl(var(--border))] py-16 dark:border-white/10 md:py-20">
         <div className="mx-auto max-w-7xl px-6">
           <p className="text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
             Explore more

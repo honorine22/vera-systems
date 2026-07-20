@@ -46,7 +46,6 @@ import {
   type Language,
   type SiteCopy,
 } from "./translations";
-import ServicesSection from "./sections/ServicesSection";
 import WhyVeraSection from "./sections/WhyVeraSection";
 import ExploreSection from "./sections/ExploreSection";
 import SiteHeader from "../layout/SiteHeader";
@@ -389,7 +388,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="hero"
-      className="relative isolate w-full max-w-full overflow-x-clip pb-14 pt-24 sm:pb-16 sm:pt-28 lg:pb-16 lg:pt-28"
+      className="relative isolate flex min-h-screen w-full max-w-full items-center overflow-x-clip pb-12 pt-24 sm:pb-14 sm:pt-24 lg:h-screen lg:min-h-[680px] lg:pb-12 lg:pt-20"
     >
       <motion.div
         className="pointer-events-none absolute inset-0 -z-30 overflow-hidden bg-[#0A1B2E]"
@@ -419,7 +418,7 @@ function Hero({ copy }: { copy: SiteCopy }) {
       </motion.div>
 
       <motion.div
-        className="relative mx-auto max-w-7xl px-6"
+        className="relative mx-auto w-full max-w-7xl px-6"
         variants={heroContainerVariants}
         initial="hidden"
         animate="visible"
@@ -2050,7 +2049,6 @@ export default function HomePage() {
       />
       <Hero copy={copy} />
       <ClientTypes copy={copy} />
-      <ServicesSection copy={copy} />
       <WhyVeraSection copy={copy} />
       <Testimonials copy={copy} />
       <ExploreSection copy={copy} />

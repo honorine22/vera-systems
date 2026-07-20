@@ -192,6 +192,13 @@ export default function SiteHeader({
                   )}
                 >
                   <div className="overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-white shadow-[0_28px_70px_-32px_rgba(15,23,42,.55)] dark:border-white/10 dark:bg-[#0A1B2E]">
+                    <Link
+                      href="/services"
+                      className="mb-1 flex items-center justify-between border-b border-[hsl(var(--border))] px-3 py-3 text-sm font-bold text-[hsl(var(--blue-700))] transition hover:bg-[hsl(var(--muted))]/70 dark:border-white/10 dark:text-[hsl(var(--blue-300))] dark:hover:bg-white/5"
+                    >
+                      All services
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
                     {copy.services.items.map((service, index) => {
                       const meta = servicesMeta[index];
                       if (!meta) return null;
@@ -221,13 +228,6 @@ export default function SiteHeader({
                       );
                     })}
 
-                    <Link
-                      href="/services"
-                      className="mt-1 flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-bold text-[hsl(var(--blue-700))] transition hover:bg-[hsl(var(--muted))]/70 dark:text-[hsl(var(--blue-300))] dark:hover:bg-white/5"
-                    >
-                      All services
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
                   </div>
                 </div>
               </div>
@@ -327,26 +327,34 @@ export default function SiteHeader({
           {navItems.map((item) =>
             item.key === "services" ? (
               <div key={item.href}>
-                <button
-                  onClick={() => setMobileServicesOpen((value) => !value)}
-                  className={cn(
-                    "flex w-full items-center justify-between rounded-xl px-4 py-3 text-left text-sm font-semibold transition",
+                <div className={cn(
+                    "flex w-full items-center rounded-xl text-sm font-semibold transition",
                     isActivePath(item.href)
                       ? "bg-[hsl(var(--blue-100))]/60 text-[hsl(var(--blue-700))] dark:bg-white/8 dark:text-[hsl(var(--blue-300))]"
                       : "text-[hsl(var(--navy-950))] hover:bg-[hsl(var(--muted))]/60 dark:text-white dark:hover:bg-white/5"
-                  )}
-                >
-                  {homeLabel(item.key)}
-                  <CaretDown
-                    className={cn(
-                      "h-4 w-4 transition-transform",
-                      mobileServicesOpen && "rotate-180"
-                    )}
-                  />
-                </button>
+                  )}>
+                  <Link href="/services" onClick={() => setOpen(false)} className="flex-1 px-4 py-3">
+                    {homeLabel(item.key)}
+                  </Link>
+                  <button
+                    type="button"
+                    aria-label="Toggle service links"
+                    onClick={() => setMobileServicesOpen((value) => !value)}
+                    className="grid h-11 w-11 place-items-center"
+                  >
+                    <CaretDown className={cn("h-4 w-4 transition-transform", mobileServicesOpen && "rotate-180")} />
+                  </button>
+                </div>
 
                 {mobileServicesOpen && (
                   <div className="ml-2 mt-1 flex flex-col gap-1 border-l border-[hsl(var(--border))] pl-3 dark:border-white/10">
+                    <Link
+                      href="/services"
+                      onClick={() => setOpen(false)}
+                      className="rounded-lg px-3 py-2 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]"
+                    >
+                      All services
+                    </Link>
                     {copy.services.items.map((service, index) => {
                       const meta = servicesMeta[index];
                       if (!meta) return null;
@@ -362,13 +370,6 @@ export default function SiteHeader({
                         </Link>
                       );
                     })}
-                    <Link
-                      href="/services"
-                      onClick={() => setOpen(false)}
-                      className="rounded-lg px-3 py-2 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]"
-                    >
-                      All services
-                    </Link>
                   </div>
                 )}
               </div>

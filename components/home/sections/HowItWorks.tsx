@@ -86,7 +86,7 @@ export default function StackExperience({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="how-it-works"
-      className="vera-section-surface relative isolate overflow-x-clip bg-[#F7FBFE] py-12 sm:py-16"
+      className="vera-section-surface vera-page-gradient relative isolate overflow-x-clip bg-[#F7FBFE] py-12 sm:py-16"
     >
       <div className="mx-auto max-w-7xl px-6">
         <header className="max-w-3xl">

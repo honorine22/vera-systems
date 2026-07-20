@@ -1,15 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookOpen, SquaresFour, Users } from "@phosphor-icons/react";
+import { ArrowRight, BookOpen, Briefcase, SquaresFour, Users } from "@phosphor-icons/react";
 import type { SiteCopy } from "../translations";
 import SectionBackground from "../SectionBackground";
 
-const icons = [Users, SquaresFour, BookOpen];
-const accents = ["#4A7BAF", "#6FA7D8", "#1A3A5C"];
+const icons = [Users, SquaresFour, BookOpen, Briefcase];
+const accents = ["#4A7BAF", "#6FA7D8", "#1A3A5C", "#4A7BAF"];
 
 export default function ExploreSection({ copy }: { copy: SiteCopy }) {
-  const items = copy.explore.items;
+  const items = [
+    ...copy.explore.items,
+    {
+      label: copy.nav.services,
+      body: "Explore Vera Consulting, Data, Academy, and Media in one connected service system.",
+      href: "/services",
+    },
+  ];
 
   return (
     <section className="relative overflow-hidden border-t border-[hsl(var(--border))] bg-[hsl(var(--muted))]/20 py-16 dark:border-white/10 dark:bg-white/[0.02] md:py-20">
@@ -21,7 +28,7 @@ export default function ExploreSection({ copy }: { copy: SiteCopy }) {
           </h2>
         </div>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-3">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => {
             const Icon = icons[index] ?? Users;
             const accent = accents[index] ?? "#4A7BAF";

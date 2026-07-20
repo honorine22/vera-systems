@@ -85,19 +85,19 @@ export default function ServicesIndexClient() {
           sizes="100vw"
           className="-z-20 object-cover"
         />
-        <div className="absolute inset-0 -z-10 bg-[#061225]/80" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#061225]/95 via-[#061225]/82 to-[#061225]/55" />
+        <div className="absolute inset-0 -z-10 bg-[#061225]/55" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#061225]/78 via-[#061225]/58 to-[#061225]/25" />
         <div className="mx-auto w-full max-w-7xl px-6 text-center">
           <h1 className="mx-auto max-w-4xl text-balance font-display text-4xl font-semibold tracking-tight text-white md:text-6xl">
             {copy.services.title}
           </h1>
-          <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-white/80 drop-shadow-[0_2px_14px_rgba(0,0,0,.5)] md:text-lg">
+          <p className="mx-auto mt-5 text-base leading-8 text-white/80 drop-shadow-[0_2px_14px_rgba(0,0,0,.5)] md:text-lg">
             {copy.services.body}
           </p>
         </div>
       </section>
 
-      <section className="py-14 md:py-16">
+      <section className="vera-page-gradient py-14 md:py-16">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>

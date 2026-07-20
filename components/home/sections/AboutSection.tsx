@@ -57,41 +57,59 @@ function SectionHeader({
 
 function NarrativeSection({ copy }: { copy: SiteCopy }) {
   const items = [
-    { icon: Target, label: copy.about.whyLabel, body: copy.about.why, accent: C.teal },
+    { icon: Target, label: copy.about.whyLabel, body: copy.about.why, accent: C.blue },
     { icon: Compass, label: copy.about.howLabel, body: copy.about.how, accent: C.blue },
     { icon: Stack, label: copy.about.whatLabel, body: copy.about.what, accent: C.blueDeep },
   ];
 
   return (
     <motion.div
-      className="relative mt-16 border-t border-[hsl(var(--border))] pt-14 dark:border-white/10 sm:mt-20"
+      className="relative"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       variants={narrativeContainerVariants}
     >
-      <div className="grid gap-6 sm:grid-cols-3">
-        {items.map((item) => {
+      <div className="grid items-start gap-5 sm:grid-cols-3">
+        {items.map((item, index) => {
           const Icon = item.icon;
           return (
             <motion.div
               key={item.label}
               variants={narrativeCardVariants}
-              className="hover-card rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
+              className={`vera-card-surface hover-card group relative flex min-h-[260px] flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-5 shadow-soft backdrop-blur dark:border-white/10 ${index % 2 === 1 ? "md:mt-8" : ""}`}
             >
               <div
-                className="flex h-11 w-11 items-center justify-center rounded-full border-[1.5px] bg-white dark:bg-[hsl(var(--background))]"
+                className="absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-10 blur-3xl transition-opacity group-hover:opacity-25"
+                style={{ background: item.accent }}
+              />
+
+              <div
+                className="relative flex h-12 w-12 items-center justify-center rounded-full border-[1.5px] bg-white dark:bg-[hsl(var(--background))]"
                 style={{ borderColor: item.accent, color: item.accent }}
               >
                 <Icon className="h-5 w-5" weight="fill" />
               </div>
 
-              <h3 className="mt-5 font-display text-xl font-bold text-[hsl(var(--navy-950))] dark:text-white sm:text-2xl">
+              <p className="relative mt-5 font-mono text-xs font-bold" style={{ color: item.accent }}>
+                0{index + 1}
+              </p>
+
+              <h3 className="relative mt-2 font-display text-lg font-extrabold text-[hsl(var(--navy-950))] dark:text-white sm:text-xl">
                 {item.label}
               </h3>
-              <p className="mt-3 text-sm leading-7 text-[hsl(var(--muted-foreground))] sm:text-base">
-                {item.body}
-              </p>
+
+              <details className="group/details relative mt-3">
+                <p className="line-clamp-6 text-sm leading-7 text-[hsl(var(--muted-foreground))] group-open/details:line-clamp-none">
+                  {item.body}
+                </p>
+                <summary className="mt-3 cursor-pointer list-none text-xs font-extrabold text-[#4A7BAF] marker:hidden after:content-['Read_more'] group-open/details:after:content-['Show_less']" />
+              </details>
+
+              <div
+                className="relative mt-5 h-1 w-12 rounded-full transition-all duration-500 group-hover:w-full"
+                style={{ background: item.accent }}
+              />
             </motion.div>
           );
         })}
@@ -104,7 +122,7 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="about"
-      className="vera-section-surface relative -mt-20 overflow-hidden bg-[hsl(var(--muted))]/40"
+      className="vera-section-surface vera-page-gradient relative -mt-20 overflow-hidden bg-[hsl(var(--muted))]/40"
     >
       <div id="hero" className="relative isolate flex min-h-[100svh] items-center overflow-hidden pb-10 pt-24 lg:h-[100svh] lg:pb-8 lg:pt-20">
         <img
@@ -112,19 +130,19 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
           alt=""
           className="absolute inset-0 -z-20 h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0 -z-10 bg-[#061225]/76" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#061225]/95 via-[#061225]/76 to-[#061225]/48" />
+        <div className="absolute inset-0 -z-10 bg-[#061225]/62" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(6,18,37,.78)_0%,rgba(6,18,37,.58)_48%,rgba(6,18,37,.38)_100%)]" />
         <div className="mx-auto w-full px-6 text-center" data-reveal>
-          <h1 className="mx-auto text-balance font-display text-4xl font-semibold leading-[1.06] tracking-[-0.04em] text-white md:text-6xl">
+          <h1 className="mx-auto text-balance font-display text-4xl font-semibold leading-[1.06] tracking-[-0.04em] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,.72)] md:text-6xl">
             {copy.about.title}
           </h1>
-          <p className="mx-auto mt-6 max-w-5xl text-base leading-8 text-white/80 drop-shadow-[0_2px_14px_rgba(0,0,0,.5)] md:text-lg">
+          <p className="mx-auto mt-6 max-w-4xl text-base font-medium leading-8 text-white drop-shadow-[0_3px_18px_rgba(0,0,0,.8)] md:text-lg">
             {copy.about.body}
           </p>
         </div>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 py-16 md:py-20">
+      <div className="relative mx-auto max-w-7xl px-6 pb-16 pt-6 md:pb-20">
         <NarrativeSection copy={copy} />
 
         <div className="mt-14" data-reveal>

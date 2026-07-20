@@ -206,6 +206,22 @@
 }
 
 @layer components {
+  .vera-page-gradient {
+    background-image:
+      radial-gradient(circle at 8% 10%, rgba(74, 123, 175, .12), transparent 30rem),
+      radial-gradient(circle at 92% 82%, rgba(143, 194, 232, .14), transparent 32rem),
+      linear-gradient(135deg, rgba(234, 244, 253, .42), transparent 48%);
+    background-attachment: scroll;
+  }
+
+  .dark .vera-page-gradient {
+    background-color: #061225;
+    background-image:
+      radial-gradient(circle at 8% 10%, rgba(74, 123, 175, .18), transparent 32rem),
+      radial-gradient(circle at 92% 82%, rgba(111, 167, 216, .12), transparent 34rem),
+      linear-gradient(135deg, rgba(26, 58, 92, .16), transparent 52%);
+  }
+
   .font-display {
     font-family: var(--font-display);
   }

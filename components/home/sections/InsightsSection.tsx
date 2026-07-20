@@ -58,7 +58,7 @@ export default function InsightsSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="insights"
-      className="vera-section-surface relative overflow-hidden bg-white py-16 md:py-20"
+      className="vera-section-surface vera-page-gradient relative overflow-hidden bg-white py-12 md:py-14"
     >
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
