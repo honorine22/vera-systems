@@ -1365,12 +1365,11 @@ export function Testimonials({ copy }: { copy: SiteCopy }) {
 
   return (
     <motion.section
-      className="relative overflow-hidden bg-white py-16 dark:bg-[#061225] md:py-20"
+      className="relative overflow-hidden py-14 md:py-16"
       style={{ backgroundSize: "200% 200%" }}
       animate={{ backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"] }}
       transition={{ duration: 26, repeat: Infinity, ease: "easeInOut" }}
     >
-      <div className="absolute inset-0 dot-grid opacity-25 dark:hidden" />
       <div className="absolute inset-0 hidden dot-grid-white opacity-[0.14] dark:block" />
       <div className="absolute inset-0 hidden bg-[radial-gradient(circle_at_50%_25%,rgba(74,123,175,.15),transparent_42%)] dark:block" />
 
@@ -1448,7 +1447,6 @@ function Insights({ copy }: { copy: SiteCopy }) {
       id="insights"
       className="relative overflow-hidden bg-[#F4F8FB] py-28 dark:bg-[#07131F]"
     >
-      <div className="absolute inset-0 dot-grid opacity-25 dark:opacity-10" />
       <div className="mx-auto max-w-7xl px-6">
         <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <SectionHeader
@@ -1579,7 +1577,6 @@ function WhyVera({ copy }: { copy: SiteCopy }) {
       id="why"
       className="relative bg-white py-28 dark:bg-[hsl(var(--background))]"
     >
-      <div className="absolute inset-0 dot-grid opacity-25" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
@@ -1650,7 +1647,7 @@ export function Contact({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-[hsl(var(--muted))]/30 py-16 dark:bg-[hsl(var(--background))] md:py-20"
+      className="relative vera-section-surface vera-surface-sky overflow-hidden py-16 dark:bg-[hsl(var(--background))] md:py-20"
     >
       <div className="absolute inset-0 dot-grid opacity-30" />
       <div className="absolute left-0 top-0 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/4 rounded-full bg-[hsl(var(--blue-100))]/55 blur-3xl dark:bg-[#4A7BAF]/8" />
@@ -2051,8 +2048,8 @@ export default function HomePage() {
       <ClientTypes copy={copy} />
       <WhyVeraSection copy={copy} />
       <Testimonials copy={copy} />
-      <ExploreSection copy={copy} />
       <Contact copy={copy} />
+      <ExploreSection copy={copy} />
       <SiteFooter copy={copy} />
       <WhatsAppButton />
     </main>

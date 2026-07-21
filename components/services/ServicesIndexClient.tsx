@@ -97,7 +97,7 @@ export default function ServicesIndexClient() {
         </div>
       </section>
 
-      <section className="vera-page-gradient py-14 md:py-16">
+      <section className="vera-surface-ice py-14 md:py-16">
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 flex items-end justify-between gap-6">
             <div>

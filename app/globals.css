@@ -94,7 +94,7 @@
   background-color: #061225 !important;
   background-image:
     radial-gradient(circle at 8% 18%, rgba(74, 123, 175, .13), transparent 32%),
-    radial-gradient(circle at 92% 78%, rgba(24, 168, 157, .09), transparent 30%);
+    radial-gradient(circle at 92% 78%, rgba(111, 167, 216, .11), transparent 30%);
 }
 
 .dark .vera-card-surface {
@@ -105,16 +105,6 @@
 .vera-public .primary-action {
   box-shadow: 0 18px 38px -18px rgba(18, 63, 102, .72);
 }
-
-.vera-public section {
-  background-color: #ffffff;
-  background-image: none;
-}
-
-.dark .vera-public section {
-  background-color: #061225;
-}
-
 
 @layer base {
   * {
@@ -165,15 +155,15 @@
   }
 
   h1 {
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.05em;
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.045em;
   }
 
   h2 {
-    font-weight: 600;
-    line-height: 1.15;
-    letter-spacing: -0.03em;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
   }
 
   h3 {
@@ -220,6 +210,104 @@
       radial-gradient(circle at 8% 10%, rgba(74, 123, 175, .18), transparent 32rem),
       radial-gradient(circle at 92% 82%, rgba(111, 167, 216, .12), transparent 34rem),
       linear-gradient(135deg, rgba(26, 58, 92, .16), transparent 52%);
+  }
+
+  .vera-surface-ice {
+    background-color: #f7fbfe;
+    background-image: radial-gradient(circle at 88% 18%, rgba(143, 194, 232, .2), transparent 28rem);
+  }
+
+  .vera-surface-sky {
+    background-color: #eef6fc;
+    background-image:
+      radial-gradient(circle at 10% 12%, rgba(74, 123, 175, .12), transparent 26rem),
+      linear-gradient(145deg, rgba(255,255,255,.92), rgba(234,244,253,.58));
+  }
+
+  .vera-surface-blue {
+    background-color: #e7f1fa;
+    background-image: linear-gradient(135deg, rgba(74,123,175,.15), rgba(143,194,232,.08) 56%, transparent);
+  }
+
+  .dark .vera-surface-ice,
+  .dark .vera-surface-sky,
+  .dark .vera-surface-blue {
+    background-color: #061225;
+    background-image:
+      radial-gradient(circle at 10% 12%, rgba(74,123,175,.18), transparent 30rem),
+      radial-gradient(circle at 92% 84%, rgba(111,167,216,.1), transparent 32rem);
+  }
+
+  .stacked-section {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  @media (min-width: 768px) {
+    .stacked-section {
+      position: sticky;
+      top: 4.75rem;
+      margin-top: -1.5rem;
+      border-radius: 2rem 2rem 0 0;
+      box-shadow:
+        0 -1px 0 rgba(143, 194, 232, .2),
+        0 -28px 68px -52px rgba(18, 63, 102, .7);
+    }
+  }
+
+  .dark .stacked-section {
+    box-shadow:
+      0 -1px 0 rgba(155, 197, 234, .13),
+      0 -28px 72px -52px rgba(0, 0, 0, .9);
+  }
+
+  .vera-public h1 {
+    font-weight: 500;
+    letter-spacing: -.045em;
+  }
+
+  .vera-public h2 {
+    font-weight: 500;
+    letter-spacing: -.035em;
+  }
+
+  .vera-public h3 {
+    font-weight: 550;
+    letter-spacing: -.025em;
+  }
+
+  .vera-public .type-eyebrow {
+    letter-spacing: .16em;
+  }
+
+  @supports (animation-timeline: view()) {
+    .stacked-section {
+      animation: vera-section-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 20%;
+    }
+
+    .stacked-section > div {
+      animation: vera-content-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry 30%;
+    }
+  }
+
+  @keyframes vera-section-enter {
+    from { opacity: .9; transform: translateY(30px) scale(.992); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes vera-content-enter {
+    from { opacity: .35; transform: translateY(34px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stacked-section,
+    .stacked-section > div { animation: none !important; transform: none !important; }
   }
 
   .font-display {

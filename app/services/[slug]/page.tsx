@@ -20,8 +20,14 @@ export async function generateMetadata({
   if (!item) return {};
 
   return {
-    title: `${item.label} — Vera Systems`,
+    title: item.label,
     description: item.impact.replace(/\s+/g, " ").trim().slice(0, 155),
+    alternates: { canonical: `/services/${slug}` },
+    openGraph: {
+      url: `/services/${slug}`,
+      title: `${item.label} | Vera Systems`,
+      description: item.impact.replace(/\s+/g, " ").trim().slice(0, 155),
+    },
   };
 }
 

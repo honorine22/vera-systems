@@ -19,7 +19,7 @@ export default function ExploreSection({ copy }: { copy: SiteCopy }) {
   ];
 
   return (
-    <section className="relative overflow-hidden border-t border-[hsl(var(--border))] bg-[hsl(var(--muted))]/20 py-16 dark:border-white/10 dark:bg-white/[0.02] md:py-20">
+    <section className="relative overflow-hidden py-14 dark:border-white/10 md:py-16">
       <SectionBackground variant="topo" colors={accents as [string, string, string]} />
       <div className="relative mx-auto max-w-7xl px-6">
         <div className="max-w-2xl" data-reveal>
