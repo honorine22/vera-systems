@@ -54,9 +54,8 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="why"
-      className="vera-section-surface relative overflow-hidden bg-white py-16 md:py-20"
+      className="vera-section-surface vera-surface-ice relative overflow-hidden py-14 md:py-16"
     >
-      <div className="absolute inset-0 dot-grid opacity-25" />
       <SectionBackground variant="collage" colors={[C.blue, C.teal, C.blueDeep]} />
 
       <div className="relative mx-auto max-w-7xl px-6">
