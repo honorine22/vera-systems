@@ -85,8 +85,8 @@ export default function ServicesIndexClient() {
           sizes="100vw"
           className="-z-20 object-cover"
         />
-        <div className="absolute inset-0 -z-10 bg-[#061225]/55" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#061225]/78 via-[#061225]/58 to-[#061225]/25" />
+        <div className="absolute inset-0 -z-10 bg-[#061225]/70" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#061225]/90 via-[#061225]/75 to-[#061225]/50" />
         <div className="mx-auto w-full max-w-7xl px-6 text-center">
           <h1 className="mx-auto max-w-4xl text-balance font-display text-4xl font-semibold tracking-tight text-white md:text-6xl">
             {copy.services.title}

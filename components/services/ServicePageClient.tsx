@@ -99,6 +99,8 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
 
   if (!meta || !item) return null;
 
+  const roadmap = "roadmap" in item ? item.roadmap : undefined;
+
   const Icon = meta.icon;
   const paragraphs = item.impact
     .split("\n")
@@ -123,11 +125,33 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
           alt=""
           fill
           priority
-          className={cn("-z-20 object-cover", slug === "vera-media" && "scale-105 opacity-90")}
+          className={cn(
+            "-z-20 object-cover",
+            slug === "vera-media" && "scale-105 opacity-85",
+            slug === "vera-data" && "scale-[1.03] brightness-75 blur-[2px]"
+          )}
           sizes="100vw"
         />
-        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-black/52" : "bg-[#07131F]/55")} />
-        <div className={cn("absolute inset-0 -z-10", slug === "vera-media" ? "bg-gradient-to-t from-black/60 via-black/15 to-black/42" : "bg-gradient-to-r from-[#07131F]/78 via-[#07131F]/58 to-[#07131F]/25")} />
+        <div
+          className={cn(
+            "absolute inset-0 -z-10",
+            slug === "vera-media"
+              ? "bg-black/70"
+              : slug === "vera-data"
+              ? "bg-[#061225]/80"
+              : "bg-[#061225]/70"
+          )}
+        />
+        <div
+          className={cn(
+            "absolute inset-0 -z-10",
+            slug === "vera-media"
+              ? "bg-gradient-to-t from-black/80 via-black/40 to-black/60"
+              : slug === "vera-data"
+              ? "bg-[radial-gradient(ellipse_at_center,rgba(6,18,37,.74)_0%,rgba(6,18,37,.66)_50%,rgba(6,18,37,.78)_100%)]"
+              : "bg-gradient-to-r from-[#061225]/90 via-[#061225]/75 to-[#061225]/55"
+          )}
+        />
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.14]"
           style={{
@@ -210,7 +234,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
             ))}
           </ul>
 
-          {item.roadmap && item.roadmap.length > 0 ? (
+          {roadmap && roadmap.length > 0 ? (
             <div className="mt-10 rounded-2xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--muted))]/20 p-6 dark:border-white/15 dark:bg-white/5">
               <span
                 className="inline-flex items-center rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white"
@@ -219,7 +243,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
                 On the roadmap
               </span>
               <ul className="mt-4 space-y-2">
-                {item.roadmap.map((entry, i) => (
+                {roadmap.map((entry, i) => (
                   <li
                     key={i}
                     className="text-sm leading-6 text-[hsl(var(--muted-foreground))]"
