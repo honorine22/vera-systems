@@ -1,19 +1,25 @@
-import { Activity, Award, BarChart3, Globe } from "lucide-react";
+"use client";
+
+import { Medal, Pulse, ChartBar, Globe } from "@phosphor-icons/react";
 import type { SiteCopy } from "../translations";
+import SectionBackground from "../SectionBackground";
 
 const C = {
   blue: "#4A7BAF",
   teal: "#18A89D",
   blueDeep: "#1A3A5C",
-  amber: "#F0A22E",
 };
 
 const whyCards = [
-  { icon: Award, accent: C.blue },
-  { icon: Activity, accent: C.teal },
-  { icon: BarChart3, accent: C.blueDeep },
-  { icon: Globe, accent: C.amber },
+  { icon: Medal, accent: C.blue },
+  { icon: Pulse, accent: "#6FA7D8" },
+  { icon: ChartBar, accent: C.blueDeep },
+  { icon: Globe, accent: C.blueDeep },
 ];
+
+function cn(...classes: Array<string | false | null | undefined>) {
+  return classes.filter(Boolean).join(" ");
+}
 
 function SectionHeader({
   eyebrow,
@@ -26,13 +32,7 @@ function SectionHeader({
 }) {
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <p className="inline-flex items-center gap-2.5 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]">
-        <span className="h-px w-8 bg-current opacity-50" />
-        {eyebrow}
-        <span className="h-px w-8 bg-current opacity-50" />
-      </p>
-
-      <h2 className="mt-5 text-balance font-display text-3xl font-semibold tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-5xl">
+      <h2 className="text-balance font-display text-4xl font-medium tracking-tight text-[hsl(var(--navy-950))] dark:text-white md:text-6xl">
         {title}
       </h2>
 
@@ -54,11 +54,10 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
   return (
     <section
       id="why"
-      className="relative overflow-hidden bg-white py-28 dark:bg-[hsl(var(--background))]"
+      className="vera-section-surface relative overflow-hidden bg-white py-16 md:py-20"
     >
       <div className="absolute inset-0 dot-grid opacity-25" />
-      <div className="absolute left-0 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[hsl(var(--blue-100))]/50 blur-3xl dark:bg-[hsl(var(--blue-700))]/10" />
-      <div className="absolute bottom-0 right-0 h-80 w-80 translate-x-1/3 translate-y-1/3 rounded-full bg-[hsl(var(--teal))]/10 blur-3xl" />
+      <SectionBackground variant="collage" colors={[C.blue, C.teal, C.blueDeep]} />
 
       <div className="relative mx-auto max-w-7xl px-6">
         <SectionHeader
@@ -67,14 +66,17 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
           body={copy.why.body}
         />
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 md:grid-cols-4 md:items-start">
           {whyItems.map((card, index) => {
             const Icon = card.icon;
 
             return (
               <article
                 key={card.title}
-                className="hover-card group relative flex min-h-[270px] flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-6 shadow-soft backdrop-blur dark:border-white/10 dark:bg-white/5"
+                className={cn(
+                  "vera-card-surface hover-card group relative flex min-h-[250px] flex-col overflow-hidden rounded-3xl border border-[hsl(var(--border))] bg-white/90 p-5 shadow-soft backdrop-blur dark:border-white/10",
+                  index % 2 === 1 && "md:mt-8"
+                )}
               >
                 <div
                   className="absolute -right-10 -top-10 h-32 w-32 rounded-full opacity-10 blur-3xl transition-opacity group-hover:opacity-25"
@@ -83,10 +85,10 @@ export default function WhyVeraSection({ copy }: { copy: SiteCopy }) {
 
                 <div className="relative flex h-full flex-col">
                   <div
-                    className="mb-5 grid h-12 w-12 place-items-center rounded-2xl text-white shadow-md"
-                    style={{ background: card.accent }}
+                    className="mb-5 grid h-12 w-12 place-items-center rounded-full border-[1.5px]"
+                    style={{ borderColor: card.accent, color: card.accent }}
                   >
-                    <Icon className="h-5 w-5" />
+                    <Icon className="h-5 w-5" weight="fill" />
                   </div>
 
                   <p
