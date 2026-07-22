@@ -229,9 +229,7 @@ function useDarkMode() {
 
   useEffect(() => {
     const stored = localStorage.getItem("vera-theme");
-    const isDark = stored
-      ? stored === "dark"
-      : document.documentElement.classList.contains("dark");
+    const isDark = stored === "dark";
 
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
@@ -1788,7 +1786,7 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
     <form
       onSubmit={handleSubmit}
       data-reveal="right"
-      className="hover-card rounded-3xl border border-[hsl(var(--border))] bg-white p-8 shadow-vera dark:border-white/10 dark:bg-[hsl(var(--card))]"
+      className="hover-card rounded-3xl border border-[hsl(var(--border))] bg-white p-4 shadow-vera dark:border-white/10 dark:bg-[hsl(var(--card))] sm:p-8"
     >
       <p
         className="text-[10px] font-black uppercase tracking-[0.22em]"
@@ -1814,7 +1812,7 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
           {message}
         </p>
       )}
-      <div className="mt-6 grid gap-5 sm:grid-cols-2">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-5">
         <FormField
           label={copy.contact.fields.name}
           name="name"
@@ -1841,13 +1839,13 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
         />
 
         <div className="sm:col-span-2">
-          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">
+          <label className="mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
             {copy.contact.fields.interest}
           </label>
           <div className="relative">
             <select
               name="subject"
-              className="w-full appearance-none rounded-2xl border border-[hsl(var(--border))] bg-white px-4 py-4 pr-10 text-sm text-[hsl(var(--foreground))] outline-none transition focus:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-[hsl(var(--card))] dark:focus:bg-white/[0.04]"
+              className="min-h-14 w-full appearance-none rounded-2xl border border-[hsl(var(--border))] bg-white px-4 py-4 pr-10 text-base text-[hsl(var(--foreground))] outline-none transition focus:border-[hsl(var(--blue-400))] dark:border-white/10 dark:bg-[hsl(var(--card))] dark:focus:bg-white/[0.04]"
             >
               {copy.contact.interestGroups.map((group) => (
                 <optgroup key={group.group} label={group.group}>
@@ -1867,7 +1865,7 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
         </div>
 
         <div className="sm:col-span-2">
-          <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">
+          <label className="mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
             {copy.contact.fields.message}
           </label>
           <textarea
@@ -1875,7 +1873,7 @@ function ContactForm({ copy }: { copy: SiteCopy }) {
             rows={4}
             required
             placeholder={copy.contact.placeholders.message}
-            className="w-full resize-none rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/30 px-4 py-4 text-sm text-[hsl(var(--foreground))] outline-none transition placeholder:text-[hsl(var(--muted-foreground))]/50 focus:border-[hsl(var(--blue-400))] focus:bg-white dark:border-white/10 dark:bg-white/5 dark:focus:bg-white/[0.08]"
+            className="min-h-36 w-full resize-none rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/30 px-4 py-4 text-base text-[hsl(var(--foreground))] outline-none transition placeholder:text-[hsl(var(--muted-foreground))]/60 focus:border-[hsl(var(--blue-400))] focus:bg-white dark:border-white/10 dark:bg-white/5 dark:focus:bg-white/[0.08]"
           />
         </div>
       </div>
@@ -1906,7 +1904,7 @@ function FormField({
 }) {
   return (
     <div>
-      <label className="mb-2 block text-[10px] font-black uppercase tracking-[0.2em] text-[hsl(var(--muted-foreground))]">
+      <label className="mb-2 block text-xs font-bold uppercase tracking-[0.14em] text-[hsl(var(--muted-foreground))]">
         {label}
       </label>
       <input
@@ -1914,7 +1912,7 @@ function FormField({
         type={type}
         required={required}
         placeholder={placeholder}
-        className="w-full rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/30 px-4 py-4 text-sm text-[hsl(var(--foreground))] outline-none transition placeholder:text-[hsl(var(--muted-foreground))]/50 focus:border-[hsl(var(--blue-400))] focus:bg-white dark:border-white/10 dark:bg-white/5 dark:focus:bg-white/[0.08]"
+        className="min-h-14 w-full rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--muted))]/30 px-4 py-4 text-base text-[hsl(var(--foreground))] outline-none transition placeholder:text-[hsl(var(--muted-foreground))]/60 focus:border-[hsl(var(--blue-400))] focus:bg-white dark:border-white/10 dark:bg-white/5 dark:focus:bg-white/[0.08]"
       />
     </div>
   );

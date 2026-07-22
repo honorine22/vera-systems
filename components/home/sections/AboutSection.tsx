@@ -119,6 +119,8 @@ function NarrativeSection({ copy }: { copy: SiteCopy }) {
 }
 
 export default function AboutSection({ copy }: { copy: SiteCopy }) {
+  const heroSentences = copy.about.body.match(/[^.!?]+[.!?]+|[^.!?]+$/g) ?? [copy.about.body];
+
   return (
     <section
       id="about"
@@ -136,9 +138,23 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
           <h1 className="mx-auto text-balance font-display text-4xl font-semibold leading-[1.06] tracking-[-0.04em] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,.72)] md:text-6xl">
             {copy.about.title}
           </h1>
-          <p className="mx-auto mt-6 max-w-4xl text-base font-medium leading-8 text-white drop-shadow-[0_3px_18px_rgba(0,0,0,.8)] md:text-lg">
-            {copy.about.body}
-          </p>
+          <div className="mx-auto mt-6 max-w-4xl font-medium text-white drop-shadow-[0_3px_18px_rgba(0,0,0,.8)]">
+            <p className="text-sm leading-7 sm:text-base sm:leading-8 md:text-lg">
+              {heroSentences.slice(0, 2).join(" ").trim()}
+            </p>
+            {heroSentences.length > 2 ? (
+              <details className="group mt-3 sm:hidden">
+                <summary className="mx-auto w-fit cursor-pointer list-none rounded-full border border-white/25 bg-[#061225]/30 px-4 py-2 text-xs font-bold marker:hidden backdrop-blur">
+                  <span className="group-open:hidden">Read more</span>
+                  <span className="hidden group-open:inline">Show less</span>
+                </summary>
+                <p className="mt-3 text-sm leading-7 text-white/[0.85]">{heroSentences.slice(2).join(" ").trim()}</p>
+              </details>
+            ) : null}
+            <p className="mt-3 hidden text-base leading-8 text-white/[0.88] sm:block md:text-lg">
+              {heroSentences.slice(2).join(" ").trim()}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -171,11 +187,11 @@ export default function AboutSection({ copy }: { copy: SiteCopy }) {
                   style={{ background: [C.blue, C.teal][index] ?? C.blueDeep }}
                 />
                 <div className="relative grid gap-5 sm:grid-cols-[148px_1fr]">
-                  <div className="relative h-48 overflow-hidden rounded-3xl border border-white/80 bg-[hsl(var(--blue-100))] shadow-md dark:border-white/10 sm:h-full">
+                  <div className="relative h-auto overflow-hidden rounded-3xl border border-transparent bg-transparent shadow-none sm:h-full sm:border-white/80 sm:bg-[hsl(var(--blue-100))] sm:shadow-md dark:sm:border-white/10">
                     <img
                       src={founderImages[index] ?? founderImages[0]}
                       alt={member.name}
-                      className="h-full min-h-[190px] w-full object-cover object-top transition duration-700 group-hover:scale-105"
+                      className="h-auto w-full object-contain object-top transition duration-700 group-hover:scale-[1.01] sm:h-full sm:min-h-[190px] sm:object-cover sm:group-hover:scale-105"
                     />
                     <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[hsl(var(--navy-950))]/36 to-transparent" />
                     <div

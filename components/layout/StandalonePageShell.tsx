@@ -36,9 +36,7 @@ function useDarkMode() {
 
   useEffect(() => {
     const stored = localStorage.getItem("vera-theme");
-    const isDark = stored
-      ? stored === "dark"
-      : document.documentElement.classList.contains("dark");
+    const isDark = stored === "dark";
 
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);

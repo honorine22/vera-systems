@@ -119,6 +119,14 @@
     scroll-behavior: smooth;
   }
 
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
@@ -308,6 +316,17 @@
   @media (prefers-reduced-motion: reduce) {
     .stacked-section,
     .stacked-section > div { animation: none !important; transform: none !important; }
+  }
+
+  @media (max-width: 639px) {
+    .vera-public .px-6 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .vera-public section {
+      scroll-margin-top: 4.5rem;
+    }
   }
 
   .font-display {

@@ -18,9 +18,7 @@ function useDarkMode() {
 
   useEffect(() => {
     const stored = localStorage.getItem("vera-theme");
-    const isDark = stored
-      ? stored === "dark"
-      : document.documentElement.classList.contains("dark");
+    const isDark = stored === "dark";
 
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
@@ -65,6 +63,8 @@ function useLanguage() {
 export default function ServicesIndexClient() {
   const { dark, toggle } = useDarkMode();
   const { language, setLanguage, copy } = useLanguage();
+  const descriptionSentences = copy.services.body.match(/[^.!?]+[.!?]+|[^.!?]+$/g) ?? [copy.services.body];
+  const descriptionSplit = Math.max(1, Math.ceil(descriptionSentences.length / 2));
 
   return (
     <main className="vera-public relative bg-[hsl(var(--background))] text-[hsl(var(--foreground))]">
@@ -91,9 +91,26 @@ export default function ServicesIndexClient() {
           <h1 className="mx-auto max-w-4xl text-balance font-display text-4xl font-semibold tracking-tight text-white md:text-6xl">
             {copy.services.title}
           </h1>
-          <p className="mx-auto mt-5 text-base leading-8 text-white/80 drop-shadow-[0_2px_14px_rgba(0,0,0,.5)] md:text-lg">
-            {copy.services.body}
-          </p>
+          <div className="mx-auto mt-6 max-w-5xl text-white/[0.9] drop-shadow-[0_2px_14px_rgba(0,0,0,.72)]">
+            <p className="text-sm leading-7 sm:hidden">
+              {descriptionSentences.slice(0, 2).join(" ").trim()}
+            </p>
+            {descriptionSentences.length > 2 ? (
+              <details className="group mt-3 sm:hidden">
+                <summary className="mx-auto w-fit cursor-pointer list-none rounded-full border border-white/25 bg-white/10 px-4 py-2 text-xs font-bold text-white backdrop-blur marker:hidden">
+                  <span className="group-open:hidden">Read more</span>
+                  <span className="hidden group-open:inline">Show less</span>
+                </summary>
+                <p className="mt-3 text-sm leading-7 text-white/80">
+                  {descriptionSentences.slice(2).join(" ").trim()}
+                </p>
+              </details>
+            ) : null}
+            <div className="mx-auto hidden max-w-4xl space-y-3 text-center sm:block md:text-base md:leading-8">
+              <p className="mx-auto max-w-3xl">{descriptionSentences.slice(0, descriptionSplit).join(" ").trim()}</p>
+              <p className="mx-auto max-w-4xl">{descriptionSentences.slice(descriptionSplit).join(" ").trim()}</p>
+            </div>
+          </div>
         </div>
       </section>
 
