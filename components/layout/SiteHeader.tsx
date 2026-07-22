@@ -41,7 +41,6 @@ export default function SiteHeader({
 
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [servicesHover, setServicesHover] = useState(false);
   const [overHero, setOverHero] = useState(
     pathname === "/" ||
@@ -79,6 +78,27 @@ export default function SiteHeader({
     return () => observer.disconnect();
   }, [pathname]);
 
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
   const lightOnDark = overHero;
 
   function goHome() {
@@ -97,6 +117,7 @@ export default function SiteHeader({
   const homeLabel = (key: NavKey) => copy.nav[key];
 
   return (
+    <>
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500 animate-nav",
@@ -107,7 +128,7 @@ export default function SiteHeader({
           : "bg-white/82 backdrop-blur-xl dark:bg-[#061225]/95"
       )}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-6 py-2.5 sm:gap-4">
         <button
           onClick={goHome}
           className="-ml-1 rounded-2xl outline-none transition focus-visible:ring-2 focus-visible:ring-[hsl(var(--blue-400))]"
@@ -282,14 +303,14 @@ export default function SiteHeader({
           <button
             onClick={toggleDark}
             aria-label="Toggle theme"
-            className="grid h-11 w-11 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/80 text-[hsl(var(--muted-foreground))] transition hover:bg-[hsl(var(--muted))] hover:text-[hsl(var(--navy-950))] dark:border-white/10 dark:bg-white/5 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
+            className="grid h-10 w-10 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/80 text-[hsl(var(--muted-foreground))] transition hover:bg-[hsl(var(--muted))] hover:text-[hsl(var(--navy-950))] dark:border-white/10 dark:bg-white/5 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
           >
             {dark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
 
           <Link
             href="/contact"
-            className="primary-action hidden items-center gap-2 px-5 py-3 text-sm sm:inline-flex"
+            className="primary-action hidden items-center gap-2 px-4 py-2.5 text-sm sm:inline-flex"
           >
             {copy.actions.bookDemo}
             <ArrowRight className="h-3.5 w-3.5" />
@@ -305,8 +326,10 @@ export default function SiteHeader({
 
           <button
             onClick={() => setOpen((value) => !value)}
-            aria-label="Menu"
-            className="grid h-11 w-11 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/80 transition hover:bg-[hsl(var(--muted))] dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 lg:hidden"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            className="grid h-10 w-10 place-items-center rounded-xl border border-[hsl(var(--border))] bg-white/80 transition hover:bg-[hsl(var(--muted))] dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 lg:hidden"
           >
             {open ? (
               <X className="h-4 w-4 dark:text-white" />
@@ -317,44 +340,70 @@ export default function SiteHeader({
         </div>
       </div>
 
-      <div
+    </header>
+
+      <button
+        type="button"
+        aria-label="Close menu"
+        onClick={() => setOpen(false)}
         className={cn(
-          "mx-4 origin-top overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-white/95 backdrop-blur-xl transition-all duration-300 dark:border-white/10 dark:bg-[hsl(var(--background))]/95 lg:hidden",
-          open ? "mt-2 max-h-[32rem] opacity-100" : "max-h-0 opacity-0"
+          "fixed inset-0 top-0 z-[51] bg-[#061225]/55 backdrop-blur-sm transition-opacity duration-300 lg:hidden",
+          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        )}
+      />
+
+      <aside
+        id="mobile-navigation"
+        aria-hidden={!open}
+        className={cn(
+          "fixed bottom-0 right-0 top-0 z-[52] flex w-[min(88vw,24rem)] flex-col border-l border-[#D7E3EE] bg-white shadow-[-28px_0_80px_-42px_rgba(6,18,37,.7)] transition-transform duration-500 ease-out dark:border-white/10 dark:bg-[#061225] lg:hidden",
+          open ? "translate-x-0" : "translate-x-full"
         )}
       >
-        <nav className="flex flex-col gap-1 p-3">
+        <div className="flex items-center justify-between border-b border-[#D7E3EE] px-5 py-4 dark:border-white/10">
+          <Image
+            src="/logos/vera-logo-blue-transparent.png"
+            alt="Vera Systems"
+            width={92}
+            height={58}
+            className="h-auto w-20 dark:hidden"
+          />
+          <Image
+            src="/logos/vera-logo-light-transparent.png"
+            alt="Vera Systems"
+            width={92}
+            height={58}
+            className="hidden h-auto w-20 dark:block"
+          />
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Close menu"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[#D7E3EE] text-[#173657] transition hover:bg-[#EEF6FC] dark:border-white/10 dark:text-white dark:hover:bg-white/10"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 py-5">
           {navItems.map((item) =>
             item.key === "services" ? (
               <div key={item.href}>
-                <div className={cn(
-                    "flex w-full items-center rounded-xl text-sm font-semibold transition",
+                <Link
+                  href="/services"
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "flex w-full items-center justify-between rounded-xl px-4 py-3 text-base font-semibold transition",
                     isActivePath(item.href)
                       ? "bg-[hsl(var(--blue-100))]/60 text-[hsl(var(--blue-700))] dark:bg-white/8 dark:text-[hsl(var(--blue-300))]"
                       : "text-[hsl(var(--navy-950))] hover:bg-[hsl(var(--muted))]/60 dark:text-white dark:hover:bg-white/5"
-                  )}>
-                  <Link href="/services" onClick={() => setOpen(false)} className="flex-1 px-4 py-3">
-                    {homeLabel(item.key)}
-                  </Link>
-                  <button
-                    type="button"
-                    aria-label="Toggle service links"
-                    onClick={() => setMobileServicesOpen((value) => !value)}
-                    className="grid h-11 w-11 place-items-center"
-                  >
-                    <CaretDown className={cn("h-4 w-4 transition-transform", mobileServicesOpen && "rotate-180")} />
-                  </button>
-                </div>
+                  )}
+                >
+                  {homeLabel(item.key)}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
 
-                {mobileServicesOpen && (
-                  <div className="ml-2 mt-1 flex flex-col gap-1 border-l border-[hsl(var(--border))] pl-3 dark:border-white/10">
-                    <Link
-                      href="/services"
-                      onClick={() => setOpen(false)}
-                      className="rounded-lg px-3 py-2 text-sm font-bold text-[hsl(var(--blue-700))] dark:text-[hsl(var(--blue-300))]"
-                    >
-                      All services
-                    </Link>
+                  <div className="ml-4 mt-2 flex flex-col gap-1 border-l border-[#D7E3EE] pl-3 dark:border-white/10">
                     {copy.services.items.map((service, index) => {
                       const meta = servicesMeta[index];
                       if (!meta) return null;
@@ -371,7 +420,6 @@ export default function SiteHeader({
                       );
                     })}
                   </div>
-                )}
               </div>
             ) : (
               <Link
@@ -379,7 +427,7 @@ export default function SiteHeader({
                 href={`/${item.href}`}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "rounded-xl px-4 py-3 text-left text-sm font-semibold transition",
+                  "rounded-xl px-4 py-3 text-left text-base font-semibold transition",
                   isActivePath(item.href)
                     ? "bg-[hsl(var(--blue-100))]/60 text-[hsl(var(--blue-700))] dark:bg-white/8 dark:text-[hsl(var(--blue-300))]"
                     : "text-[hsl(var(--navy-950))] hover:bg-[hsl(var(--muted))]/60 dark:text-white dark:hover:bg-white/5"
@@ -391,13 +439,24 @@ export default function SiteHeader({
           )}
           <a
             href="/admin"
-            className="mt-2 flex items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] px-4 py-3 text-sm font-bold text-white dark:bg-white dark:text-[hsl(var(--navy-950))]"
+            className="mt-3 flex items-center gap-2 rounded-xl bg-[hsl(var(--navy-950))] px-4 py-3 text-sm font-bold text-white dark:bg-white dark:text-[hsl(var(--navy-950))]"
           >
             <SignIn className="h-4 w-4" />
             Dashboard login
           </a>
         </nav>
-      </div>
-    </header>
+
+        <div className="border-t border-[#D7E3EE] p-4 dark:border-white/10">
+          <Link
+            href="/contact"
+            onClick={() => setOpen(false)}
+            className="primary-action flex w-full items-center justify-center gap-2 px-5 py-3 text-sm"
+          >
+            {copy.actions.bookDemo}
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </aside>
+    </>
   );
 }

@@ -42,9 +42,7 @@ function useDarkMode() {
 
   useEffect(() => {
     const stored = localStorage.getItem("vera-theme");
-    const isDark = stored
-      ? stored === "dark"
-      : document.documentElement.classList.contains("dark");
+    const isDark = stored === "dark";
 
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
@@ -174,17 +172,17 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
                 {item.title}
               </h1>
 
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
                 <Link
                   href="/contact"
-                  className="primary-action inline-flex items-center gap-2 px-5 py-3 text-sm"
+                  className="primary-action inline-flex items-center gap-2 px-4 py-2.5 text-sm"
                 >
                   {copy.actions.bookConsultation}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
 
                 <div
-                  className="inline-flex items-center gap-2 rounded-2xl border px-4 py-3"
+                  className="inline-flex items-center gap-2 rounded-xl border px-3.5 py-2.5"
                   style={{ borderColor: `${accent}55`, background: `${accent}18` }}
                 >
                   <Icon className="h-4 w-4" weight="duotone" style={{ color: "#9BC5EA" }} />
@@ -194,10 +192,20 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
                 </div>
               </div>
 
-              <div className="mx-auto mt-7 max-w-6xl space-y-4 text-base leading-8 text-white/80 md:text-lg">
-                {paragraphs.slice(0, 2).map((paragraph, i) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
+              <div className="mx-auto mt-6 max-w-5xl text-white/[0.88] drop-shadow-[0_2px_14px_rgba(0,0,0,.72)]">
+                <p className="text-sm leading-7 text-white/[0.92] sm:text-base sm:leading-8">{paragraphs[0]}</p>
+                {paragraphs[1] ? (
+                  <>
+                    <details className="group mt-3 sm:hidden">
+                      <summary className="mx-auto w-fit cursor-pointer list-none rounded-full border border-white/25 bg-white/10 px-4 py-2 text-xs font-bold text-white backdrop-blur marker:hidden">
+                        <span className="group-open:hidden">More details</span>
+                        <span className="hidden group-open:inline">Show less</span>
+                      </summary>
+                      <p className="mt-3 text-sm leading-7 text-white/[0.85]">{paragraphs[1]}</p>
+                    </details>
+                    <p className="mt-3 hidden text-base leading-8 text-white/[0.85] sm:block">{paragraphs[1]}</p>
+                  </>
+                ) : null}
               </div>
             </div>
 
@@ -221,7 +229,7 @@ export default function ServicePageClient({ slug }: { slug: ServiceSlug }) {
             {item.bullets.map((bullet, i) => (
               <li
                 key={i}
-                className="flex items-start gap-3 rounded-2xl border border-[hsl(var(--border))] bg-white p-4 text-sm leading-6 text-[hsl(var(--navy-900))] shadow-[0_16px_40px_-32px_rgba(15,23,42,.5)] dark:border-white/10 dark:bg-[hsl(var(--card))] dark:text-white/85"
+                className="flex items-start gap-3 rounded-2xl border border-[hsl(var(--border))] bg-white p-4 text-sm leading-6 text-[hsl(var(--navy-900))] shadow-[0_16px_40px_-32px_rgba(15,23,42,.5)] dark:border-white/10 dark:bg-[hsl(var(--card))] dark:text-white/[0.85]"
               >
                 <span
                   className="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full"
