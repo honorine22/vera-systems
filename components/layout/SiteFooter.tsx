@@ -1,5 +1,12 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { SiteCopy } from "../home/translations";
+
+const footerRoutes: Array<Array<string | null>> = [
+  ["/about", "/services", "/platform", "/why"],
+  ["/insights", null, null, null],
+  [null, null, null],
+];
 
 export default function SiteFooter({ copy }: { copy: SiteCopy }) {
   return (
@@ -24,7 +31,7 @@ export default function SiteFooter({ copy }: { copy: SiteCopy }) {
           </div>
 
           <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
-            {copy.footer.columns.map((column) => (
+            {copy.footer.columns.map((column, columnIndex) => (
               <div key={column.heading}>
                 <p
                   className="text-[10px] font-black uppercase tracking-[0.22em]"
@@ -34,16 +41,21 @@ export default function SiteFooter({ copy }: { copy: SiteCopy }) {
                 </p>
 
                 <ul className="mt-4 space-y-3">
-                  {column.links.map((link) => (
-                    <li key={link}>
-                      <a
-                        href="#"
-                        className="story-link text-sm text-[hsl(var(--muted-foreground))] transition hover:text-[hsl(var(--navy-950))] dark:hover:text-white"
-                      >
-                        {link}
-                      </a>
-                    </li>
-                  ))}
+                  {column.links.map((link, linkIndex) => {
+                    const href = footerRoutes[columnIndex]?.[linkIndex];
+                    if (!href) return null;
+
+                    return (
+                      <li key={link}>
+                        <Link
+                          href={href}
+                          className="story-link text-sm text-[hsl(var(--muted-foreground))] transition hover:text-[hsl(var(--navy-950))] dark:hover:text-white"
+                        >
+                          {link}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}
@@ -56,19 +68,13 @@ export default function SiteFooter({ copy }: { copy: SiteCopy }) {
           </p>
 
           <div className="flex gap-4 text-[11px] font-black uppercase tracking-[0.22em] text-[hsl(var(--muted-foreground))]">
-            <a href="/admin" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
-              Admin inbox
-            </a>
             <a
-              href="https://www.linkedin.com/company/vera-systems/?viewAsMember=true"
+              href="https://www.linkedin.com/company/vera-systems/"
               target="_blank"
               rel="noopener noreferrer"
               className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white"
             >
               LinkedIn
-            </a>
-            <a href="#" className="story-link hover:text-[hsl(var(--navy-950))] dark:hover:text-white">
-              Twitter
             </a>
           </div>
         </div>

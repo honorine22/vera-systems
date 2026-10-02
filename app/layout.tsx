@@ -35,11 +35,20 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: siteConfig.title,
     description: siteConfig.description,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Vera Systems — Precision Food Safety, Powered by Data",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.title,
     description: siteConfig.description,
+    images: ["/opengraph-image"],
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
@@ -65,7 +74,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["Organization", "ProfessionalService"],
+        "@type": "ProfessionalService",
         "@id": `${siteConfig.url}/#organization`,
         name: siteConfig.name,
         legalName: siteConfig.legalName,
@@ -75,6 +84,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         description: siteConfig.description,
         email: siteConfig.email,
         telephone: siteConfig.telephone,
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          telephone: siteConfig.telephone,
+          email: siteConfig.email,
+          availableLanguage: ["English", "French", "Kinyarwanda"],
+          areaServed: "Africa",
+        },
         sameAs: [siteConfig.linkedIn],
         address: {
           "@type": "PostalAddress",
@@ -94,6 +111,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           "Food safety training",
           "Food safety compliance technology",
         ],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Food safety services",
+          itemListElement: [
+            "Food safety consulting and auditing",
+            "Food safety data and real-time monitoring",
+            "Food safety training and certification",
+            "Food safety communications",
+          ].map((name) => ({
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name },
+          })),
+        },
       },
       {
         "@type": "WebSite",
@@ -111,6 +141,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="google-site-verification" content="L7Tf2Dq-JHZY6HPQ6iCA-uP96PDLPh3YIT4gLvr8csE" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('vera-theme');document.documentElement.classList.toggle('dark',t==='dark')}catch(e){document.documentElement.classList.remove('dark')}})();`,
