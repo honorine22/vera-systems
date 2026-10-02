@@ -11,6 +11,29 @@ npm run dev
 
 Then open `http://localhost:3000`.
 
+## Search indexing setup
+
+The site publishes indexable metadata, organization/service structured data,
+`/robots.txt`, and `/sitemap.xml`. After every production deployment, verify
+that the canonical hostname `https://verasystems.rw` serves all three without
+login, a crawler challenge, or a redirect loop.
+
+Google discovery still requires an owner-controlled step:
+
+1. Add `verasystems.rw` as a **Domain property** in Google Search Console and
+   add the DNS TXT record Google provides.
+2. Submit `https://verasystems.rw/sitemap.xml` under **Indexing → Sitemaps**.
+3. Inspect `https://verasystems.rw/` and select **Request indexing**. Repeat for
+   the main service pages only if they are not discovered from the sitemap.
+4. Keep the verification TXT record in DNS permanently.
+
+If Google offers HTML-tag verification instead, set the exact token value as
+`NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` in the production deployment and
+redeploy. Do not paste the entire `<meta>` tag; use only its `content` value.
+
+Indexing is not immediate or guaranteed. Search Console's Page indexing report
+is the source of truth for crawl errors, exclusions, and discovered URLs.
+
 ## Supabase contact form integration
 
 The frontend submits only to `/api/contact`. That server route validates the submission, reads server-side environment variables, and sends the data to Supabase through the REST API.
