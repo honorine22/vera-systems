@@ -1,0 +1,21 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "feat/improvements",
+    "main",
+    "new-features",
+    "origin"
+  ],
+  "parent": {
+    "feat/improvements": "main",
+    "main": null,
+    "new-features": "main",
+    "origin": "main"
+  },
+  "order": [
+    "main",
+    "feat/improvements",
+    "new-features",
+    "origin"
+  ]
+}
